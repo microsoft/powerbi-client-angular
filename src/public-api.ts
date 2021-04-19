@@ -6,5 +6,5 @@
  */
 
 export * from './services/powerbi-embed.service';
-export * from './components/powerbi-embed/powerbi-embed.component';
+export * from './components/powerbi-report-embed/powerbi-report-embed.component';
 export * from './powerbi-embed.module';

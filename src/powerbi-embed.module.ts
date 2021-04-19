@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 import { NgModule } from '@angular/core';
-import { PowerBIEmbedComponent } from './components/powerbi-embed/powerbi-embed.component';
+import { PowerBIReportEmbedComponent } from './components/powerbi-report-embed/powerbi-report-embed.component';
 
 @NgModule({
-  declarations: [PowerBIEmbedComponent],
+  declarations: [PowerBIReportEmbedComponent],
   imports: [
   ],
-  exports: [PowerBIEmbedComponent]
+  exports: [PowerBIReportEmbedComponent]
 })
 export class PowerBIEmbedModule { }
