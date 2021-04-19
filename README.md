@@ -1,20 +1,24 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# PowerbiClientAngular
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Code scaffolding
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Run `ng generate component component-name --project powerbi-client-angular` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project powerbi-client-angular`.
+> Note: Don't forget to add `--project powerbi-client-angular` or else it will be added to the default project in your `angular.json` file. 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Build
+
+Run `ng build powerbi-client-angular` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Publishing
+
+After building your library with `ng build powerbi-client-angular`, go to the dist folder `cd dist/powerbi-client-angular` and run `npm publish`.
+
+## Running unit tests
+
+Run `ng test powerbi-client-angular` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
