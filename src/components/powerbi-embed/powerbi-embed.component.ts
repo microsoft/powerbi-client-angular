@@ -17,16 +17,18 @@ import { service } from 'powerbi-client';
 
 /**
  * Base component to hold common properties for all the Power BI entities
- * 
+ *
  */
 export class PowerBIEmbedComponent implements OnInit, OnChanges {
 
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)
-  @Input() cssClassName?:string;
+  @Input()
+  cssClassName?: string;
 
   // Provide a custom implementation of PowerBI service (Optional)
-  @Input() service?: service.Service;
+  @Input()
+  service?: service.Service;
 
   ngOnInit(): void {
   }

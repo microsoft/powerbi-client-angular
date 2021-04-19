@@ -1,5 +1,7 @@
 <!--
 Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. -->
-<!-- <powerbi-embed [data]="value"></powerbi-embed> -->
-<powerbi-report-embed></powerbi-report-embed>
+
+<button (click)="embedReport()">Embed the report</button>
+<div>{{displayMessage}}</div>
+<powerbi-report-embed [embedConfig]='reportConfig' [cssClassName]='reportClass' [phasedEmbedding]='phasedEmbeddingFlag'></powerbi-report-embed>
