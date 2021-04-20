@@ -75,8 +75,6 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     if (this.containerRef.nativeElement) {
 
       // Decide to embed, load or bootstrap
-      // [We also need to check embedType & TokenType] [Check in React Wrapper, too]
-      // [It will broke if the above params not passed]
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedEntity();
       }
@@ -101,7 +99,8 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
    *
    * @returns void
    */
-   private embedEntity(): void {
+  private embedEntity(): void {
+
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -131,6 +130,10 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
     }
+
+    // Check if the function is being called the first time
+    // prevEmbedConfig will not be available
+    if (!prevEmbedConfig) return;
 
     // Embed or load in the following scenarios
     //		1. AccessToken was not provided in previous properties (E.g. Report was bootstrapped earlier)
