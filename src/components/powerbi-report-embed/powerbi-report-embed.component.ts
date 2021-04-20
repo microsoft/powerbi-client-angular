@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, factories, IEmbedConfiguration, IReportEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
