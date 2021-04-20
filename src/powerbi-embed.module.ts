@@ -3,9 +3,10 @@
 
 import { NgModule } from '@angular/core';
 import { PowerBIReportEmbedComponent } from './components/powerbi-report-embed/powerbi-report-embed.component';
+import { PowerBIDashboardEmbedComponent } from './components/powerbi-dashboard-embed/powerbi-dashboard-embed.component';
 
 @NgModule({
-  declarations: [PowerBIReportEmbedComponent],
+  declarations: [PowerBIReportEmbedComponent, PowerBIDashboardEmbedComponent],
   imports: [
   ],
   exports: [PowerBIReportEmbedComponent]

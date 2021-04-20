@@ -6,7 +6,7 @@ import { Embed, factories, IEmbedConfiguration, IReportEmbedConfiguration, servi
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
-  selector: 'powerbi-report-embed[embedConfig]',
+  selector: 'powerbi-report[embedConfig]',
   template: '<div class={{cssClassName}} #reportContainer></div>',
 })
 
