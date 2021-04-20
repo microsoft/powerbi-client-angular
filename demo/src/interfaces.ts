@@ -1,7 +1,7 @@
 /* Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. */
 
-export interface ReportConfig {
+export interface ConfigResponse {
     Id: string;
     EmbedUrl: string;
     EmbedToken: {

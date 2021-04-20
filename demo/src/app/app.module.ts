@@ -7,10 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { PowerBIEmbedModule } from 'powerbi-embed';
 
 import { AppComponent } from './app.component';
+import { DashboardEmbedComponent } from './components/dashboard-embed/dashboard-embed.component';
+import { ReportEmbedComponent } from './components/report-embed/report-embed.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardEmbedComponent,
+    ReportEmbedComponent,
   ],
   imports: [
     BrowserModule,

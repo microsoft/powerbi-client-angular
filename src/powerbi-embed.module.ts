@@ -9,6 +9,6 @@ import { PowerBIDashboardEmbedComponent } from './components/powerbi-dashboard-e
   declarations: [PowerBIReportEmbedComponent, PowerBIDashboardEmbedComponent],
   imports: [
   ],
-  exports: [PowerBIReportEmbedComponent]
+  exports: [PowerBIReportEmbedComponent, PowerBIDashboardEmbedComponent]
 })
 export class PowerBIEmbedModule { }
