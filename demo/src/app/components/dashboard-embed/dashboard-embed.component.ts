@@ -26,7 +26,7 @@ export class DashboardEmbedComponent implements OnInit {
     embedUrl: undefined,
     tokenType: models.TokenType.Embed,
     accessToken: undefined
-  }
+  };
 
   constructor(public httpService: HttpService) { }
 
@@ -34,10 +34,10 @@ export class DashboardEmbedComponent implements OnInit {
   }
 
   async embedDashboard() {
-    
+
     // API Endpoint to get the dashboard embed config
     const dashboardUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
-    
+
     let dashboardConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the dashboardConfigResponse
@@ -55,7 +55,7 @@ export class DashboardEmbedComponent implements OnInit {
       id: dashboardConfigResponse.Id,
       embedUrl: dashboardConfigResponse.EmbedUrl,
       accessToken: dashboardConfigResponse.EmbedToken.Token
-    }
+    };
     this.displayMessage = 'The access token is successfully set. Loading the Power BI dashboard';
   }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, factories, IDashboardEmbedConfiguration, IEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
@@ -13,7 +13,7 @@ import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component'
 /**
  * Dashboard component to embed the dashboard, extends the Base component
  */
-export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implements OnInit {
+export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI dashboard entity (Required)
@@ -126,7 +126,9 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
 
     // Check if the function is being called the first time
     // prevEmbedConfig will not be available
-    if (!prevEmbedConfig) return;
+    if (!prevEmbedConfig) {
+      return;
+    }
 
     // Embed or load in the following scenarios
     //		1. AccessToken was not provided in previous properties (E.g. Dashboard was bootstrapped earlier)

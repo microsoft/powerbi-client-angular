@@ -136,7 +136,9 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
 
     // Check if the function is being called the first time
     // prevEmbedConfig will not be available
-    if (!prevEmbedConfig) return;
+    if (!prevEmbedConfig) {
+      return;
+    }
 
     // Embed or load in the following scenarios
     //		1. AccessToken was not provided in previous properties (E.g. Report was bootstrapped earlier)

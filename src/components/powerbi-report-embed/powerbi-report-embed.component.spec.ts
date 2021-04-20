@@ -143,7 +143,7 @@ describe('PowerBIReportEmbedComponent', () => {
         type: 'report',
         id: 'report',
         embedUrl: 'fakeUrl'
-      }
+      };
 
       // Act
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
