@@ -19,6 +19,8 @@ describe('PowerBIReportEmbedComponent', () => {
 
   beforeEach(() => {
 
+    spyOn(console, 'error');
+
     // Reset all methods in PowerBI Service spy object
     mockedMethods.forEach(mockedMethod => {
       mockPowerBIService[mockedMethod].calls.reset();
@@ -313,7 +315,7 @@ describe('PowerBIReportEmbedComponent', () => {
     it('powerbi.reset called when component un-mounts', () => {
 
       // Arrange
-       const config = {
+      const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
@@ -336,12 +338,15 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
+
+      // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };
+
       const newConfig = {
         type: 'report',
         id: 'fakeId',

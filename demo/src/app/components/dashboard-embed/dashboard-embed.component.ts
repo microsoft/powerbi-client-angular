@@ -14,7 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 export class DashboardEmbedComponent implements OnInit {
 
   // Overall status message of embedding
-  displayMessage = 'The dashboard is bootstrapped. Click the Embed Dashboard button to set the access token';
+  displayMessage = 'The dashboard is bootstrapped. Click the Embed Dashboard button to set the access token.';
 
   // CSS Class to be passed to the library
   dashboardClass = 'dashboard-style-class';
@@ -56,6 +56,6 @@ export class DashboardEmbedComponent implements OnInit {
       embedUrl: dashboardConfigResponse.EmbedUrl,
       accessToken: dashboardConfigResponse.EmbedToken.Token
     };
-    this.displayMessage = 'The access token is successfully set. Loading the Power BI dashboard';
+    this.displayMessage = 'The access token is successfully set. Loading the Power BI dashboard.';
   }
 }

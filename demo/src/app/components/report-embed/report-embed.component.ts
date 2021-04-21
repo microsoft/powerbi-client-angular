@@ -14,7 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 export class ReportEmbedComponent implements OnInit {
 
   // Overall status message of embedding
-  displayMessage = 'The report is bootstrapped. Click the Embed Report button to set the access token';
+  displayMessage = 'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
   // CSS Class to be passed to the library
   reportClass = 'report-style-class';
@@ -61,7 +61,7 @@ export class ReportEmbedComponent implements OnInit {
     };
 
     // Update the display message
-    this.displayMessage = 'The access token is successfully set. Loading the Power BI report';
+    this.displayMessage = 'The access token is successfully set. Loading the Power BI report.';
   }
 
 }
