@@ -24,7 +24,7 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
   @ViewChild('dashboardContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
 
-  // Powerbi service
+  // PowerBI service
   private powerbi!: service.Service;
 
   // Embedded entity
@@ -39,9 +39,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
   // Setter for this._embed
   private set embed(newEmbedInstance: Embed | undefined) {
     this._embed = newEmbedInstance;
-
-    // Invoke callback method in props to return this embed instance
-    // this.invokeGetEmbedCallback();
   }
 
   constructor() {
@@ -94,7 +91,7 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
   }
 
   /**
-   * Embed the PowerBI Entity(Load for phased embedding)
+   * Embed the PowerBI Entity
    *
    * @returns void
    */
@@ -106,8 +103,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
     }
 
     this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-    // this.getEmbeddedComponent.emit(this.embed as Dashboard);
-
   }
 
   /**
@@ -148,5 +143,4 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
         });
     }
   }
-
 }

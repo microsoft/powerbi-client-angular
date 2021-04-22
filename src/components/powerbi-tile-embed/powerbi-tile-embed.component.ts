@@ -2,30 +2,26 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, factories, IReportEmbedConfiguration, IEmbedConfiguration, service } from 'powerbi-client';
+import { Embed, factories, ITileEmbedConfiguration, IEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
-  selector: 'powerbi-report[embedConfig]',
-  template: '<div class={{cssClassName}} #reportContainer></div>',
+  selector: 'powerbi-tile[embedConfig]',
+  template: '<div class={{cssClassName}} #tileContainer></div>',
 })
 
 /**
- * Report component to embed the report, extends the Base Component
+ * Tile component to embed the tile, extends Base component
  */
-export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI report entity (Required)
+  // Configuration for embedding the PowerBI tile entity (Required)
   @Input()
-  embedConfig!: IReportEmbedConfiguration | IEmbedConfiguration;
-
-  // Phased embedding flag (Optional)
-  @Input()
-  phasedEmbedding?: boolean;
+  embedConfig!: ITileEmbedConfiguration | IEmbedConfiguration;
 
   // Ref to the HTML div container element
-  @ViewChild('reportContainer')
+  @ViewChild('tileContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
 
   // PowerBI service
@@ -49,7 +45,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     super();
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     if (this.service) {
       this.powerbi = this.service;
     } else {
@@ -63,7 +59,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateAccessToken function
     this.embedOrUpdateAccessToken(prevEmbedConfig);
@@ -95,7 +91,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
   }
 
   /**
-   * Embed the PowerBI Entity(Load for phased embedding)
+   * Embed the PowerBI Entity
    *
    * @returns void
    */
@@ -106,14 +102,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
       return;
     }
 
-    // Load when phasedEmbedding flag is true, embed otherwise
-    if (this.phasedEmbedding) {
-      this.embed = this.powerbi.load(this.containerRef.nativeElement, this.embedConfig);
-    }
-    else {
-      this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-    }
-
+    this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
   }
 
   /**
@@ -123,7 +112,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
    * @param prevEmbedConfig EmbedConfig
    * @returns void
    */
-  private embedOrUpdateAccessToken(prevEmbedConfig: IReportEmbedConfiguration) {
+  private embedOrUpdateAccessToken(prevEmbedConfig: ITileEmbedConfiguration) {
 
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
@@ -137,8 +126,8 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     }
 
     // Embed or load in the following scenarios
-    //		1. AccessToken was not provided in previous properties (E.g. Report was bootstrapped earlier)
-    //		2. Embed URL is updated (E.g. New report is to be embedded)
+    //		1. AccessToken was not provided in previous properties (E.g. Tile was bootstrapped earlier)
+    //		2. Embed URL is updated (E.g. New tile is to be embedded)
     if (this.containerRef.nativeElement && (!prevEmbedConfig.accessToken || this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)) {
       this.embedEntity();
     }
