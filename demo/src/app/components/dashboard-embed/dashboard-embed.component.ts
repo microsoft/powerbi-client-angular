@@ -49,13 +49,14 @@ export class DashboardEmbedComponent implements OnInit {
       return;
     }
 
-    // Updation of dashboardConfig will embed the PowerBI dashboard
+    // Update the dashboardConfig to embed the PowerBI dashboard
     this.dashboardConfig = {
       ...this.dashboardConfig,
       id: dashboardConfigResponse.Id,
       embedUrl: dashboardConfigResponse.EmbedUrl,
       accessToken: dashboardConfigResponse.EmbedToken.Token
     };
+
     this.displayMessage = 'The access token is successfully set. Loading the Power BI dashboard.';
   }
 }

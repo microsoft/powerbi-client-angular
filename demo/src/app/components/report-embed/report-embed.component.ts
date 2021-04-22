@@ -52,7 +52,7 @@ export class ReportEmbedComponent implements OnInit {
       return;
     }
 
-    // Updation of reportConfig will embed the PowerBI report
+    // Update the reportConfig to embed the PowerBI report
     this.reportConfig = {
       ...this.reportConfig,
       id: reportConfigResponse.Id,

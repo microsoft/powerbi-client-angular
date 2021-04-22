@@ -8,3 +8,12 @@ export interface ConfigResponse {
         Token: string;
     };
 }
+
+export interface TileConfigResponse {
+    DashboardId: string;
+    Id: string;
+    EmbedUrl: string;
+    EmbedToken: {
+       Token: string;
+    };
+}
