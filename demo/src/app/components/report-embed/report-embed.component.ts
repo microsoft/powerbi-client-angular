@@ -32,9 +32,9 @@ export class ReportEmbedComponent implements OnInit {
     settings: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedReport() {
     // API Endpoint to get the report embed config

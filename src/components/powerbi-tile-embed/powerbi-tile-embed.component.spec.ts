@@ -23,7 +23,7 @@ describe('PowerBITileEmbedComponent', () => {
     });
   });
 
-  afterEach(() => { });
+  afterEach(() => {});
 
   describe('basic tests', () => {
     it('is an Angular component', () => {
@@ -37,6 +37,7 @@ describe('PowerBITileEmbedComponent', () => {
       component = fixture.componentInstance;
       const config = {
         type: 'tile',
+        dashboardId: 'fakeId',
       };
 
       // Act
@@ -53,6 +54,7 @@ describe('PowerBITileEmbedComponent', () => {
       component = fixture.componentInstance;
       const config = {
         type: 'tile',
+        dashboardId: 'fakeId',
       };
 
       // Act
@@ -70,6 +72,7 @@ describe('PowerBITileEmbedComponent', () => {
       component = fixture.componentInstance;
       const config = {
         type: 'tile',
+        dashboardId: 'fakeId',
       };
 
       // Act
@@ -89,6 +92,7 @@ describe('PowerBITileEmbedComponent', () => {
       component = fixture.componentInstance;
       const config = {
         type: 'tile',
+        dashboardId: 'fakeId',
       };
 
       // Act
@@ -108,6 +112,7 @@ describe('PowerBITileEmbedComponent', () => {
     it('embeds tile when accessToken provided', () => {
       // Arrange
       const config = {
+        dashboardId: 'fakeId',
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
@@ -131,6 +136,7 @@ describe('PowerBITileEmbedComponent', () => {
       const config = {
         type: 'tile',
         id: 'tile',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
       };
 
@@ -151,6 +157,7 @@ describe('PowerBITileEmbedComponent', () => {
       const config = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: undefined,
       };
@@ -158,6 +165,7 @@ describe('PowerBITileEmbedComponent', () => {
       const newConfig = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };
@@ -191,11 +199,12 @@ describe('PowerBITileEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when tile\'s embedUrl is updated in new input data', () => {
+    it("embeds when tile's embedUrl is updated in new input data", () => {
       // Arrange
       const config = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };
@@ -225,6 +234,7 @@ describe('PowerBITileEmbedComponent', () => {
       const config = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };
@@ -249,6 +259,7 @@ describe('PowerBITileEmbedComponent', () => {
       const config = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };
@@ -256,6 +267,7 @@ describe('PowerBITileEmbedComponent', () => {
       const newConfig = {
         type: 'tile',
         id: 'fakeId',
+        dashboardId: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',
       };

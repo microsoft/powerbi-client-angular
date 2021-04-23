@@ -35,7 +35,7 @@ export class PowerBIDashboardEmbedComponent
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI dashboard entity (Required)
   @Input()
-  embedConfig!: IDashboardEmbedConfiguration | IEmbedConfiguration;
+  embedConfig!: IDashboardEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('dashboardContainer')

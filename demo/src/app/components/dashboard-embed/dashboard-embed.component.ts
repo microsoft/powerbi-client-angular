@@ -28,9 +28,9 @@ export class DashboardEmbedComponent implements OnInit {
     accessToken: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedDashboard() {
     // API Endpoint to get the dashboard embed config

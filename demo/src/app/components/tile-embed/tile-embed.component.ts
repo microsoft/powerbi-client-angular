@@ -27,9 +27,9 @@ export class TileEmbedComponent implements OnInit {
     dashboardId: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedTile() {
     // API Endpoint to get the Tile embed config

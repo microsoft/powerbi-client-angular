@@ -35,7 +35,7 @@ export class PowerBIReportEmbedComponent
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI report entity (Required)
   @Input()
-  embedConfig!: IReportEmbedConfiguration | IEmbedConfiguration;
+  embedConfig!: IReportEmbedConfiguration;
 
   // Phased embedding flag (Optional)
   @Input()

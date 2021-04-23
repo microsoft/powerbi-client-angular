@@ -35,7 +35,7 @@ export class PowerBITileEmbedComponent
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI tile entity (Required)
   @Input()
-  embedConfig!: ITileEmbedConfiguration | IEmbedConfiguration;
+  embedConfig!: ITileEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('tileContainer')
