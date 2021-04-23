@@ -19,13 +19,13 @@ describe('PowerBIReportEmbedComponent', () => {
   beforeEach(() => {
     spyOn(console, 'error');
 
-    // Reset all methods in PowerBI Service spy object
+    // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();
     });
   });
 
-  afterEach(() => {});
+  afterEach(() => { });
 
   describe('basic tests', () => {
     it('is an Angular component', () => {
@@ -106,7 +106,7 @@ describe('PowerBIReportEmbedComponent', () => {
     });
   });
 
-  describe('Interaction with PowerBI Service', () => {
+  describe('Interaction with Power BI service', () => {
     it('embeds report when accessToken provided', () => {
       // Arrange
       const config = {

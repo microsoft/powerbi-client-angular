@@ -41,7 +41,7 @@ export class PowerBIDashboardEmbedComponent
   @ViewChild('dashboardContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
 
-  // PowerBI service
+  // Power BI service
   private powerbi!: service.Service;
 
   // Embedded entity

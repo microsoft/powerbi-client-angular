@@ -45,7 +45,7 @@ export class PowerBIReportEmbedComponent
   @ViewChild('reportContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
 
-  // PowerBI service
+  // Power BI service
   private powerbi!: service.Service;
 
   // Embedded entity
