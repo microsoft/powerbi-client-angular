@@ -193,7 +193,7 @@ describe('PowerBIReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when report's embedUrl is updated in new input data", () => {
+    it('embeds when report\'s embedUrl is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'report',

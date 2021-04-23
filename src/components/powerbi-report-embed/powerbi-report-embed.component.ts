@@ -67,7 +67,6 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnInit(): void {
-    console.log('ngoninit');
     if (this.service) {
       this.powerbi = this.service;
     } else {
@@ -80,7 +79,6 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges');
     const prevEmbedConfig = changes.embedConfig
       .previousValue as IReportEmbedConfiguration;
 
@@ -89,7 +87,6 @@ export class PowerBIReportEmbedComponent
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
     // Check if container exists on the UI
     if (this.containerRef.nativeElement) {
       // Decide to embed, load or bootstrap
