@@ -39,7 +39,7 @@ export class PowerBIReportEmbedComponent
 
   // Phased embedding flag (Optional)
   @Input()
-  phasedEmbedding?: boolean;
+  phasedEmbedding?: boolean = false;
 
   // Ref to the HTML div container element
   @ViewChild('reportContainer')

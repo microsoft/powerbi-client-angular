@@ -17,7 +17,7 @@ export class ReportEmbedComponent implements OnInit {
     'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  reportClass = 'report-style-class';
+  reportClass = 'report-style';
 
   // Flag which specify the type of embedding
   phasedEmbeddingFlag = false;
@@ -32,9 +32,9 @@ export class ReportEmbedComponent implements OnInit {
     settings: undefined,
   };
 
-  constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async embedReport() {
     // API Endpoint to get the report embed config

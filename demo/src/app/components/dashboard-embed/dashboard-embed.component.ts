@@ -17,7 +17,7 @@ export class DashboardEmbedComponent implements OnInit {
     'The dashboard is bootstrapped. Click the Embed Dashboard button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  dashboardClass = 'dashboard-style-class';
+  dashboardClass = 'dashboard-style';
 
   // Pass the basic embed configurations to the wrapper to bootstrap the dashboard on first load
   // Values for properties like embedUrl and accessToken click of button
@@ -28,9 +28,9 @@ export class DashboardEmbedComponent implements OnInit {
     accessToken: undefined,
   };
 
-  constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async embedDashboard() {
     // API Endpoint to get the dashboard embed config

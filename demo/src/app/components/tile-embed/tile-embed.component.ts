@@ -17,7 +17,7 @@ export class TileEmbedComponent implements OnInit {
     'The tile is bootstrapped. Click the Embed Tile button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  tileClass = 'tile-style-class';
+  tileClass = 'tile-style';
 
   // Pass the basic embed configurations to the wrapper to bootstrap the tile on first load
   // Values for properties like embedUrl and accessToken click of button
@@ -27,9 +27,9 @@ export class TileEmbedComponent implements OnInit {
     dashboardId: undefined,
   };
 
-  constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async embedTile() {
     // API Endpoint to get the Tile embed config

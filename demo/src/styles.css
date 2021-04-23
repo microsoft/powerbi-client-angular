@@ -5,17 +5,17 @@ Licensed under the MIT License. */
   margin-top: 20px;
 }
 
-.report-style-class {
+.report-style {
   height: 60vh;
   width: 90%;
 }
 
-.dashboard-style-class {
+.dashboard-style {
   height: 60vh;
   width: 90%;
 }
 
-.tile-style-class {
+.tile-style {
   height: 60vh;
   width: 90%;
 }
