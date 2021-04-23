@@ -1,5 +1,5 @@
-/* Copyright (c) Microsoft Corporation.
-Licensed under the MIT License. */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 import { Component, OnInit } from '@angular/core';
 import { IReportEmbedConfiguration, models } from 'powerbi-client';
@@ -16,13 +16,13 @@ export class ReportEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage = 'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
-  // CSS Class to be passed to the library
+  // CSS Class to be passed to the wrapper
   reportClass = 'report-style-class';
 
   // Flag which specify the type of embedding
   phasedEmbeddingFlag = false;
 
-  // Pass the basic embed configurations to the library to bootstrap the report on first load
+  // Pass the basic embed configurations to the wrapper to bootstrap the report on first load
   // Values for properties like embedUrl, accessToken and settings will be set on click of button
   reportConfig: IReportEmbedConfiguration = {
     type: 'report',

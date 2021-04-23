@@ -1,5 +1,5 @@
-/* Copyright (c) Microsoft Corporation.
-Licensed under the MIT License. */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

@@ -78,8 +78,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
-    else {
-    }
   }
 
   ngOnDestroy(): void {
@@ -126,8 +124,8 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
     }
 
     // Embed or load in the following scenarios
-    //		1. AccessToken was not provided in previous properties (E.g. Dashboard was bootstrapped earlier)
-    //		2. Embed URL is updated (E.g. New dashboard is to be embedded)
+    //    1. Access Token was not provided in previous properties (E.g. Dashboard was bootstrapped earlier)
+    //    2. Embed URL is updated (E.g. New dashboard is to be embedded)
     if (this.containerRef.nativeElement && (!prevEmbedConfig.accessToken || this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)) {
       this.embedEntity();
     }

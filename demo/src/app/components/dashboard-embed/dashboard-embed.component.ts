@@ -1,5 +1,5 @@
-/* Copyright (c) Microsoft Corporation.
-Licensed under the MIT License. */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 import { Component, OnInit } from '@angular/core';
 import { IDashboardEmbedConfiguration, models } from 'powerbi-client';
@@ -16,10 +16,10 @@ export class DashboardEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage = 'The dashboard is bootstrapped. Click the Embed Dashboard button to set the access token.';
 
-  // CSS Class to be passed to the library
+  // CSS Class to be passed to the wrapper
   dashboardClass = 'dashboard-style-class';
 
-  // Pass the basic embed configurations to the library to bootstrap the dashboard on first load
+  // Pass the basic embed configurations to the wrapper to bootstrap the dashboard on first load
   // Values for properties like embedUrl and accessToken click of button
   dashboardConfig: IDashboardEmbedConfiguration = {
     type: 'dashboard',

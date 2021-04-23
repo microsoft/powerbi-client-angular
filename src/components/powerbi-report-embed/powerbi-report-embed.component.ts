@@ -82,8 +82,6 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
-    else {
-    }
   }
 
   ngOnDestroy(): void {
@@ -137,8 +135,8 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     }
 
     // Embed or load in the following scenarios
-    //		1. AccessToken was not provided in previous properties (E.g. Report was bootstrapped earlier)
-    //		2. Embed URL is updated (E.g. New report is to be embedded)
+    //    1. Access Token was not provided in previous properties (E.g. Report was bootstrapped earlier)
+    //    2. Embed URL is updated (E.g. New report is to be embedded)
     if (this.containerRef.nativeElement && (!prevEmbedConfig.accessToken || this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)) {
       this.embedEntity();
     }
