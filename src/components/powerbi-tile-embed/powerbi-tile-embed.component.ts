@@ -75,8 +75,7 @@ export class PowerBITileEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as ITileEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateAccessToken function
     this.embedOrUpdateAccessToken(prevEmbedConfig);
@@ -115,10 +114,7 @@ export class PowerBITileEmbedComponent
       return;
     }
 
-    this.embed = this.powerbi.embed(
-      this.containerRef.nativeElement,
-      this.embedConfig
-    );
+    this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
   }
 
   /**

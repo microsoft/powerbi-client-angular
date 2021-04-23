@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  Input,
-} from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, Input } from '@angular/core';
 import { service } from 'powerbi-client';
 
 @Component({

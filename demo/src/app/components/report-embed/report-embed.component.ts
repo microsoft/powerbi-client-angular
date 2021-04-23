@@ -43,9 +43,7 @@ export class ReportEmbedComponent implements OnInit {
 
     // Get the embed config from the service and set the reportConfigResponse
     try {
-      reportConfigResponse = await this.httpService
-        .getEmbedConfig(reportUrl)
-        .toPromise();
+      reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error) {
       console.error(
         `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`

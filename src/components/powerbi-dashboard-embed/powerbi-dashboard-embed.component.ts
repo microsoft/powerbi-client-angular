@@ -115,10 +115,7 @@ export class PowerBIDashboardEmbedComponent
       return;
     }
 
-    this.embed = this.powerbi.embed(
-      this.containerRef.nativeElement,
-      this.embedConfig
-    );
+    this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
   }
 
   /**
@@ -128,9 +125,7 @@ export class PowerBIDashboardEmbedComponent
    * @param prevEmbedConfig EmbedConfig
    * @returns void
    */
-  private embedOrUpdateAccessToken(
-    prevEmbedConfig: IDashboardEmbedConfiguration
-  ) {
+  private embedOrUpdateAccessToken(prevEmbedConfig: IDashboardEmbedConfiguration) {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

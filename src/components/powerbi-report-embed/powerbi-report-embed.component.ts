@@ -121,15 +121,9 @@ export class PowerBIReportEmbedComponent
 
     // Load when phasedEmbedding flag is true, embed otherwise
     if (this.phasedEmbedding) {
-      this.embed = this.powerbi.load(
-        this.containerRef.nativeElement,
-        this.embedConfig
-      );
+      this.embed = this.powerbi.load(this.containerRef.nativeElement, this.embedConfig);
     } else {
-      this.embed = this.powerbi.embed(
-        this.containerRef.nativeElement,
-        this.embedConfig
-      );
+      this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
     }
   }
 

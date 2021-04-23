@@ -16,14 +16,10 @@ import { TileEmbedComponent } from './components/tile-embed/tile-embed.component
     AppComponent,
     DashboardEmbedComponent,
     ReportEmbedComponent,
-    TileEmbedComponent
+    TileEmbedComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    PowerBIEmbedModule,
-  ],
+  imports: [BrowserModule, HttpClientModule, PowerBIEmbedModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

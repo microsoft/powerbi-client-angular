@@ -77,8 +77,7 @@ describe('PowerBIReportEmbedComponent', () => {
       // Act
       component.embedConfig = config;
       fixture.detectChanges();
-      const iframeCount = fixture.debugElement.queryAll(By.css('iframe'))
-        .length;
+      const iframeCount = fixture.debugElement.queryAll(By.css('iframe')).length;
 
       // Assert
       expect(iframeCount).toBe(1);
@@ -98,9 +97,8 @@ describe('PowerBIReportEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(
-        By.css('div')
-      )[0].nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
+        .nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
