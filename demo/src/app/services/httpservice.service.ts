@@ -6,15 +6,14 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigResponse, TileConfigResponse } from '../../interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 /**
  * Service to make HTTP calls
  */
 export class HttpService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   /**
    * @returns embed configuration
@@ -29,5 +28,4 @@ export class HttpService {
   getTileEmbedConfig(endpoint: string) {
     return this.httpClient.get<TileConfigResponse>(endpoint);
   }
-
 }

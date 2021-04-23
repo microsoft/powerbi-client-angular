@@ -12,39 +12,33 @@ describe('PowerBIReportEmbedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PowerBIReportEmbedComponent]
-    })
-      .compileComponents();
+      declarations: [PowerBIReportEmbedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-
     spyOn(console, 'error');
 
     // Reset all methods in PowerBI Service spy object
-    mockedMethods.forEach(mockedMethod => {
+    mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();
     });
   });
 
-  afterEach(() => {
-  });
+  afterEach(() => {});
 
   describe('basic tests', () => {
-
     it('is an Angular component', () => {
-
       // Assert
       expect(PowerBIReportEmbedComponent).toBeTruthy();
     });
 
     it('should create', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'report'
+        type: 'report',
       };
 
       // Act
@@ -56,12 +50,11 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('renders exactly one div', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'report'
+        type: 'report',
       };
 
       // Act
@@ -74,39 +67,40 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('renders exactly one iframe', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'report'
+        type: 'report',
       };
 
       // Act
       component.embedConfig = config;
       fixture.detectChanges();
-      const iframeCount = fixture.debugElement.queryAll(By.css('iframe')).length;
+      const iframeCount = fixture.debugElement.queryAll(By.css('iframe'))
+        .length;
 
       // Assert
       expect(iframeCount).toBe(1);
     });
 
     it('sets the CSS classes', () => {
-
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'report'
+        type: 'report',
       };
 
       // Act
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(
+        By.css('div')
+      )[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -115,15 +109,13 @@ describe('PowerBIReportEmbedComponent', () => {
   });
 
   describe('Interaction with PowerBI Service', () => {
-
     it('embeds report when accessToken provided', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -139,12 +131,11 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('bootstraps report when accessToken is not provided', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'report',
-        embedUrl: 'fakeUrl'
+        embedUrl: 'fakeUrl',
       };
 
       // Act
@@ -160,20 +151,19 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('first bootstraps, then embeds when accessToken is available', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: undefined
+        accessToken: undefined,
       };
 
       const newConfig = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -205,14 +195,13 @@ describe('PowerBIReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when report\'s embedUrl is updated in new input data', () => {
-
+    it("embeds when report's embedUrl is updated in new input data", () => {
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
@@ -236,13 +225,12 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('loads the report when phasedEmbedding input is true', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -262,13 +250,12 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('embeds the report when phasedEmbedding input is false', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -288,13 +275,12 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('embeds the report when phasedEmbedding input is not provided', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -313,13 +299,12 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('powerbi.reset called when component un-mounts', () => {
-
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -338,7 +323,6 @@ describe('PowerBIReportEmbedComponent', () => {
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
-
       // Arrange
       const config = {
         type: 'report',

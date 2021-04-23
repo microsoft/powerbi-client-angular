@@ -7,9 +7,16 @@ import { PowerBIDashboardEmbedComponent } from './components/powerbi-dashboard-e
 import { PowerBITileEmbedComponent } from './components/powerbi-tile-embed/powerbi-tile-embed.component';
 
 @NgModule({
-  declarations: [PowerBIReportEmbedComponent, PowerBIDashboardEmbedComponent, PowerBITileEmbedComponent],
-  imports: [
+  declarations: [
+    PowerBIReportEmbedComponent,
+    PowerBIDashboardEmbedComponent,
+    PowerBITileEmbedComponent,
   ],
-  exports: [PowerBIReportEmbedComponent, PowerBIDashboardEmbedComponent, PowerBITileEmbedComponent]
+  imports: [],
+  exports: [
+    PowerBIReportEmbedComponent,
+    PowerBIDashboardEmbedComponent,
+    PowerBITileEmbedComponent,
+  ],
 })
-export class PowerBIEmbedModule { }
+export class PowerBIEmbedModule {}

@@ -6,13 +6,13 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  Input
+  Input,
 } from '@angular/core';
 import { service } from 'powerbi-client';
 
 @Component({
   selector: 'powerbi-embed',
-  template: ''
+  template: '',
 })
 
 /**
@@ -20,7 +20,6 @@ import { service } from 'powerbi-client';
  *
  */
 export class PowerBIEmbedComponent implements OnInit, OnChanges {
-
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)
   @Input()
@@ -30,9 +29,7 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
   @Input()
   service?: service.Service;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 }

@@ -10,9 +10,8 @@ describe('PowerBIEmbedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PowerBIEmbedComponent ]
-    })
-    .compileComponents();
+      declarations: [PowerBIEmbedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

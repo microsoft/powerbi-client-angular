@@ -9,12 +9,12 @@ import { TileConfigResponse } from 'src/interfaces';
 @Component({
   selector: 'tile-embed',
   templateUrl: './tile-embed.component.html',
-  styleUrls: ['./tile-embed.component.css']
+  styleUrls: ['./tile-embed.component.css'],
 })
 export class TileEmbedComponent implements OnInit {
-
   // Overall status message of embedding
-  displayMessage = 'The tile is bootstrapped. Click the Embed Tile button to set the access token.';
+  displayMessage =
+    'The tile is bootstrapped. Click the Embed Tile button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   tileClass = 'tile-style-class';
@@ -24,27 +24,29 @@ export class TileEmbedComponent implements OnInit {
   tileConfig: ITileEmbedConfiguration = {
     type: 'tile',
     tokenType: models.TokenType.Embed,
-    dashboardId: undefined
+    dashboardId: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async embedTile() {
-
     // API Endpoint to get the Tile embed config
-    const tileUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Tiles/SampleTile';
+    const tileUrl =
+      'https://playgroundbe-bck-1.azurewebsites.net/Tiles/SampleTile';
 
     let tileConfigResponse: TileConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse
     try {
-      tileConfigResponse = await this.httpService.getTileEmbedConfig(tileUrl).toPromise();
-    }
-    catch (error) {
-      console.error(`Failed to fetch config for tile. Status: ${error.statusText} Status Code: ${error.status}`);
+      tileConfigResponse = await this.httpService
+        .getTileEmbedConfig(tileUrl)
+        .toPromise();
+    } catch (error) {
+      console.error(
+        `Failed to fetch config for tile. Status: ${error.statusText} Status Code: ${error.status}`
+      );
       return;
     }
 
@@ -54,9 +56,10 @@ export class TileEmbedComponent implements OnInit {
       id: tileConfigResponse.Id,
       dashboardId: tileConfigResponse.DashboardId,
       embedUrl: tileConfigResponse.EmbedUrl,
-      accessToken: tileConfigResponse.EmbedToken.Token
+      accessToken: tileConfigResponse.EmbedToken.Token,
     };
 
-    this.displayMessage = 'The access token is successfully set. Loading the Power BI tile.';
+    this.displayMessage =
+      'The access token is successfully set. Loading the Power BI tile.';
   }
 }

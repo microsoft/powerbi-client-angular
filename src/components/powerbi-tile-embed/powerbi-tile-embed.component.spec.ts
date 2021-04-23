@@ -12,37 +12,31 @@ describe('PowerBITileEmbedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PowerBITileEmbedComponent]
-    })
-      .compileComponents();
+      declarations: [PowerBITileEmbedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-
     // Reset all methods in PowerBI Service spy object
-    mockedMethods.forEach(mockedMethod => {
+    mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();
     });
   });
 
-  afterEach(() => {
-  });
+  afterEach(() => {});
 
   describe('basic tests', () => {
-
     it('is an Angular component', () => {
-
       // Assert
       expect(PowerBITileEmbedComponent).toBeTruthy();
     });
 
     it('should create', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBITileEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'tile'
+        type: 'tile',
       };
 
       // Act
@@ -54,12 +48,11 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('renders exactly one div', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBITileEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'tile'
+        type: 'tile',
       };
 
       // Act
@@ -72,39 +65,40 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('renders exactly one iframe', () => {
-
       // Arrange
       fixture = TestBed.createComponent(PowerBITileEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'tile'
+        type: 'tile',
       };
 
       // Act
       component.embedConfig = config;
       fixture.detectChanges();
-      const iframeCount = fixture.debugElement.queryAll(By.css('iframe')).length;
+      const iframeCount = fixture.debugElement.queryAll(By.css('iframe'))
+        .length;
 
       // Assert
       expect(iframeCount).toBe(1);
     });
 
     it('sets the CSS classes', () => {
-
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
       fixture = TestBed.createComponent(PowerBITileEmbedComponent);
       component = fixture.componentInstance;
       const config = {
-        type: 'tile'
+        type: 'tile',
       };
 
       // Act
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(
+        By.css('div')
+      )[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -113,15 +107,13 @@ describe('PowerBITileEmbedComponent', () => {
   });
 
   describe('Interaction with PowerBI Service', () => {
-
     it('embeds tile when accessToken provided', () => {
-
       // Arrange
       const config = {
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -137,12 +129,11 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('bootstraps tile when accessToken is not provided', () => {
-
       // Arrange
       const config = {
         type: 'tile',
         id: 'tile',
-        embedUrl: 'fakeUrl'
+        embedUrl: 'fakeUrl',
       };
 
       // Act
@@ -158,20 +149,19 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('first bootstraps, then embeds when accessToken is available', () => {
-
       // Arrange
       const config = {
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: undefined
+        accessToken: undefined,
       };
 
       const newConfig = {
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -203,14 +193,13 @@ describe('PowerBITileEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when tile\'s embedUrl is updated in new input data', () => {
-
+    it("embeds when tile's embedUrl is updated in new input data", () => {
       // Arrange
       const config = {
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       fixture = TestBed.createComponent(PowerBITileEmbedComponent);
@@ -234,13 +223,12 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('powerbi.reset called when component un-mounts', () => {
-
       // Arrange
       const config = {
         type: 'tile',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
+        accessToken: 'fakeToken',
       };
 
       // Act
@@ -259,7 +247,6 @@ describe('PowerBITileEmbedComponent', () => {
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
-
       // Arrange
       const config = {
         type: 'tile',
