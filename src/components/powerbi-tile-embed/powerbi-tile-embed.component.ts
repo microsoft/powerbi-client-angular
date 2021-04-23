@@ -77,8 +77,8 @@ export class PowerBITileEmbedComponent
   ngOnChanges(changes: SimpleChanges): void {
     const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateAccessToken function
-    this.embedOrUpdateAccessToken(prevEmbedConfig);
+    // Input from parent get updated, thus call embedOrUpdateTile function
+    this.embedOrUpdateTile(prevEmbedConfig);
   }
 
   ngAfterViewInit(): void {
@@ -124,7 +124,7 @@ export class PowerBITileEmbedComponent
    * @param prevEmbedConfig EmbedConfig
    * @returns void
    */
-  private embedOrUpdateAccessToken(prevEmbedConfig: ITileEmbedConfiguration) {
+  private embedOrUpdateTile(prevEmbedConfig: ITileEmbedConfiguration) {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

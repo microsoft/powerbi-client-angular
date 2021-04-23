@@ -82,8 +82,8 @@ export class PowerBIReportEmbedComponent
     const prevEmbedConfig = changes.embedConfig
       .previousValue as IReportEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateAccessToken function
-    this.embedOrUpdateAccessToken(prevEmbedConfig);
+    // Input from parent get updated, thus call embedOrUpdateReport function
+    this.embedOrUpdateReport(prevEmbedConfig);
   }
 
   ngAfterViewInit(): void {
@@ -134,7 +134,7 @@ export class PowerBIReportEmbedComponent
    * @param prevEmbedConfig EmbedConfig
    * @returns void
    */
-  private embedOrUpdateAccessToken(prevEmbedConfig: IReportEmbedConfiguration) {
+  private embedOrUpdateReport(prevEmbedConfig: IReportEmbedConfiguration) {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
@@ -155,18 +155,6 @@ export class PowerBIReportEmbedComponent
         this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)
     ) {
       this.embedEntity();
-    }
-
-    // Set new access token,
-    // when access token is updated but embed Url is same
-    else if (
-      this.embedConfig.accessToken !== prevEmbedConfig.accessToken &&
-      this.embedConfig.embedUrl === prevEmbedConfig.embedUrl &&
-      this.embed
-    ) {
-      this.embed.setAccessToken(this.embedConfig.accessToken).catch((error) => {
-        console.error(`setAccessToken error: ${error}`);
-      });
     }
   }
 }

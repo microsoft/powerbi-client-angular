@@ -78,8 +78,8 @@ export class PowerBIDashboardEmbedComponent
     const prevEmbedConfig = changes.embedConfig
       .previousValue as IDashboardEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateAccessToken function
-    this.embedOrUpdateAccessToken(prevEmbedConfig);
+    // Input from parent get updated, thus call embedOrUpdateDashboard function
+    this.embedOrUpdateDashboard(prevEmbedConfig);
   }
 
   ngAfterViewInit(): void {
@@ -125,7 +125,7 @@ export class PowerBIDashboardEmbedComponent
    * @param prevEmbedConfig EmbedConfig
    * @returns void
    */
-  private embedOrUpdateAccessToken(prevEmbedConfig: IDashboardEmbedConfiguration) {
+  private embedOrUpdateDashboard(prevEmbedConfig: IDashboardEmbedConfiguration) {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
@@ -146,18 +146,6 @@ export class PowerBIDashboardEmbedComponent
         this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)
     ) {
       this.embedEntity();
-    }
-
-    // Set new access token,
-    // when access token is updated but embed Url is same
-    else if (
-      this.embedConfig.accessToken !== prevEmbedConfig.accessToken &&
-      this.embedConfig.embedUrl === prevEmbedConfig.embedUrl &&
-      this.embed
-    ) {
-      this.embed.setAccessToken(this.embedConfig.accessToken).catch((error) => {
-        console.error(`setAccessToken error: ${error}`);
-      });
     }
   }
 }

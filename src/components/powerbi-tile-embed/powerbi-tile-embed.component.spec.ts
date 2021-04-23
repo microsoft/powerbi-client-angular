@@ -191,7 +191,7 @@ describe('PowerBITileEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when tile's embedUrl is updated in new input data", () => {
+    it('embeds when tile\'s embedUrl is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'tile',
