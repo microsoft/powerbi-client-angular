@@ -67,6 +67,7 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnInit(): void {
+    console.log('ngoninit');
     if (this.service) {
       this.powerbi = this.service;
     } else {
@@ -79,6 +80,7 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges');
     const prevEmbedConfig = changes.embedConfig
       .previousValue as IReportEmbedConfiguration;
 
@@ -87,6 +89,7 @@ export class PowerBIReportEmbedComponent
   }
 
   ngAfterViewInit(): void {
+    console.log('ngAfterViewInit');
     // Check if container exists on the UI
     if (this.containerRef.nativeElement) {
       // Decide to embed, load or bootstrap
@@ -146,13 +149,11 @@ export class PowerBIReportEmbedComponent
       return;
     }
 
-    // Embed or load in the following scenarios
-    //    1. Access Token was not provided in previous properties (E.g. Report was bootstrapped earlier)
-    //    2. Embed URL is updated (E.g. New report is to be embedded)
+    // Embed or load in the following scenario
+    // Embed URL is updated (E.g. New report is to be embedded)
     if (
       this.containerRef.nativeElement &&
-      (!prevEmbedConfig.accessToken ||
-        this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl)
+      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
       this.embedEntity();
     }
