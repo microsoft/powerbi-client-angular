@@ -11,7 +11,6 @@
     "build-run": "ng build && cd demo && ng serve",
     "npm-pack": "cd dist/powerbi-embed && npm pack",
     "package": "ng build && npm run npm-pack",
-    "prettier": "prettier --write \"**/*{.ts,.html,.css}\"",
     "e2e": "ng e2e"
   },
   "repository": {
