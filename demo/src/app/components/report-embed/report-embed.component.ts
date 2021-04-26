@@ -17,7 +17,7 @@ export class ReportEmbedComponent implements OnInit {
     'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  reportClass = 'report-style';
+  reportClass = 'report-container';
 
   // Flag which specify the type of embedding
   phasedEmbeddingFlag = false;
@@ -60,7 +60,6 @@ export class ReportEmbedComponent implements OnInit {
     };
 
     // Update the display message
-    this.displayMessage =
-      'The access token is successfully set. Loading the Power BI report.';
+    this.displayMessage = 'Access token is successfully set. Loading Power BI report.';
   }
 }

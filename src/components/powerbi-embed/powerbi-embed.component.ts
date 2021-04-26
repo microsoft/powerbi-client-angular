@@ -23,7 +23,7 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
   @Input()
   service?: service.Service;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void { }
 }

@@ -16,7 +16,6 @@ import {
   Embed,
   factories,
   IDashboardEmbedConfiguration,
-  IEmbedConfiguration,
   service,
 } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
@@ -85,7 +84,7 @@ export class PowerBIDashboardEmbedComponent
   ngAfterViewInit(): void {
     // Check if container exists on the UI
     if (this.containerRef.nativeElement) {
-      // Decide to embed, load or bootstrap
+      // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedEntity();
       } else {

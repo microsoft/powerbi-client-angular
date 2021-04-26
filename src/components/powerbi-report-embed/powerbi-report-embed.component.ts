@@ -16,7 +16,6 @@ import {
   Embed,
   factories,
   IReportEmbedConfiguration,
-  IEmbedConfiguration,
   service,
 } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
