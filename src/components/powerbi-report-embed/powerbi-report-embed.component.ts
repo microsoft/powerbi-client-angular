@@ -127,10 +127,10 @@ export class PowerBIReportEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity or _update the accessToken_ in the embedded entity
+   * When component updates, choose to _embed_ or _load_ the powerbi entity
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
-   * @param prevEmbedConfig EmbedConfig
+   * @param prevEmbedConfig IReportEmbedConfiguration
    * @returns void
    */
   private embedOrUpdateReport(prevEmbedConfig: IReportEmbedConfiguration) {
@@ -139,7 +139,7 @@ export class PowerBIReportEmbedComponent
       return;
     }
 
-    // Check if the function is being called the first time
+    // Check if the function is being called for the first time
     // prevEmbedConfig will not be available
     if (!prevEmbedConfig) {
       return;

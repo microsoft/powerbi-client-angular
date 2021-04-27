@@ -113,10 +113,10 @@ export class PowerBIDashboardEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity or _update the accessToken_ in the embedded entity
+   * When component updates, choose to _embed_ the powerbi entity
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
-   * @param prevEmbedConfig EmbedConfig
+   * @param prevEmbedConfig IDashboardEmbedConfiguration
    * @returns void
    */
   private embedOrUpdateDashboard(prevEmbedConfig: IDashboardEmbedConfiguration) {
@@ -125,7 +125,7 @@ export class PowerBIDashboardEmbedComponent
       return;
     }
 
-    // Check if the function is being called the first time
+    // Check if the function is being called for the first time
     // prevEmbedConfig will not be available
     if (!prevEmbedConfig) {
       return;
