@@ -213,7 +213,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when paginated report's embedUrl is updated in new input data", () => {
+    it('embeds when embedUrl of paginated report is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'report',

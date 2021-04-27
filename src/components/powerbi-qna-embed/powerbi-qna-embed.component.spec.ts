@@ -201,7 +201,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when qna visual's embedUrl is updated in new input data", () => {
+    it('embeds when embedUrl of qna visual is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'qna',

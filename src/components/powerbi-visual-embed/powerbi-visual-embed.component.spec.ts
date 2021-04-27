@@ -202,7 +202,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when visual's embedUrl is updated in new input data", () => {
+    it('embeds when embedUrl of visual is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'visual',

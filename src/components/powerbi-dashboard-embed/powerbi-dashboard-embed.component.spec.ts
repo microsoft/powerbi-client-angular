@@ -191,7 +191,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it("embeds when dashboard's embedUrl is updated in new input data", () => {
+    it('embeds when embedUrl of dashboard is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'dashboard',
