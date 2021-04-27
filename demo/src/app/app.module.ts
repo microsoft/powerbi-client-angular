@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { DashboardEmbedComponent } from './components/dashboard-embed/dashboard-embed.component';
 import { ReportEmbedComponent } from './components/report-embed/report-embed.component';
 import { TileEmbedComponent } from './components/tile-embed/tile-embed.component';
+import { PaginatedReportEmbedComponent } from './components/paginated-report-embed/paginated-report-embed.component';
 import { VisualEmbedComponent } from './components/visual-embed/visual-embed.component';
 import { QnaEmbedComponent } from './components/qna-embed/qna-embed.component';
 
@@ -19,6 +20,7 @@ import { QnaEmbedComponent } from './components/qna-embed/qna-embed.component';
     DashboardEmbedComponent,
     ReportEmbedComponent,
     TileEmbedComponent,
+    PaginatedReportEmbedComponent,
     VisualEmbedComponent,
     QnaEmbedComponent,
   ],
