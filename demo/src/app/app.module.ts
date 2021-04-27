@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { DashboardEmbedComponent } from './components/dashboard-embed/dashboard-embed.component';
 import { ReportEmbedComponent } from './components/report-embed/report-embed.component';
 import { TileEmbedComponent } from './components/tile-embed/tile-embed.component';
+import { QnaEmbedComponent } from './components/qna-embed/qna-embed.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TileEmbedComponent } from './components/tile-embed/tile-embed.component
     DashboardEmbedComponent,
     ReportEmbedComponent,
     TileEmbedComponent,
+    QnaEmbedComponent,
   ],
   imports: [BrowserModule, HttpClientModule, PowerBIEmbedModule],
   providers: [],
