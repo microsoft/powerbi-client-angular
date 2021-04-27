@@ -191,7 +191,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when dashboard\'s embedUrl is updated in new input data', () => {
+    it("embeds when dashboard's embedUrl is updated in new input data", () => {
       // Arrange
       const config = {
         type: 'dashboard',
@@ -220,7 +220,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('powerbi.reset called when component un-mounts', () => {
+    it('powerbi.reset called when component unmounts', () => {
       // Arrange
       const config = {
         type: 'dashboard',
