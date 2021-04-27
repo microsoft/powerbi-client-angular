@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { PowerBIReportEmbedComponent } from './components/powerbi-report-embed/powerbi-report-embed.component';
 import { PowerBIDashboardEmbedComponent } from './components/powerbi-dashboard-embed/powerbi-dashboard-embed.component';
 import { PowerBITileEmbedComponent } from './components/powerbi-tile-embed/powerbi-tile-embed.component';
+import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/powerbi-visual-embed.component';
 import { PowerBIQnaEmbedComponent } from './components/powerbi-qna-embed/powerbi-qna-embed.component';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { PowerBIQnaEmbedComponent } from './components/powerbi-qna-embed/powerbi
     PowerBIReportEmbedComponent,
     PowerBIDashboardEmbedComponent,
     PowerBITileEmbedComponent,
+    PowerBIVisualEmbedComponent,
     PowerBIQnaEmbedComponent,
   ],
   imports: [],
@@ -19,6 +21,7 @@ import { PowerBIQnaEmbedComponent } from './components/powerbi-qna-embed/powerbi
     PowerBIReportEmbedComponent,
     PowerBIDashboardEmbedComponent,
     PowerBITileEmbedComponent,
+    PowerBIVisualEmbedComponent,
     PowerBIQnaEmbedComponent
   ],
 })

@@ -14,7 +14,7 @@ import { TileConfigResponse } from 'src/interfaces';
 export class TileEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage =
-    'The tile is bootstrapped. Click the Embed Tile button to set the access token.';
+    'The tile is bootstrapped. Click Embed Tile button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   tileClass = 'tile-container';
@@ -27,9 +27,9 @@ export class TileEmbedComponent implements OnInit {
     dashboardId: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedTile() {
     // API Endpoint to get the Tile embed config
