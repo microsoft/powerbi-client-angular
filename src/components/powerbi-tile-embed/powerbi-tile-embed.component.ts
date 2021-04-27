@@ -12,12 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {
-  Embed,
-  factories,
-  ITileEmbedConfiguration,
-  service,
-} from 'powerbi-client';
+import { Embed, factories, ITileEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
@@ -135,7 +130,7 @@ export class PowerBITileEmbedComponent
       return;
     }
 
-    // Embed or load in the following scenario
+    // Embed in the following scenario
     // Embed URL is updated (E.g. New tile is to be embedded)
     if (
       this.containerRef.nativeElement &&

@@ -14,7 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 export class ReportEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage =
-    'The report is bootstrapped. Click the Embed Report button to set the access token.';
+    'The report is bootstrapped. Click Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   reportClass = 'report-container';
@@ -32,9 +32,9 @@ export class ReportEmbedComponent implements OnInit {
     settings: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedReport() {
     // API Endpoint to get the report embed config

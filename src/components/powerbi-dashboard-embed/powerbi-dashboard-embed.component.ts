@@ -12,12 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {
-  Embed,
-  factories,
-  IDashboardEmbedConfiguration,
-  service,
-} from 'powerbi-client';
+import { Embed, factories, IDashboardEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
@@ -136,7 +131,7 @@ export class PowerBIDashboardEmbedComponent
       return;
     }
 
-    // Embed or load in the following scenario
+    // Embed in the following scenario
     // Embed URL is updated (E.g. New dashboard is to be embedded)
     if (
       this.containerRef.nativeElement &&

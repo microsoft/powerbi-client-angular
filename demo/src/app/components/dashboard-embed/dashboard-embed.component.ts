@@ -14,7 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 export class DashboardEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage =
-    'The dashboard is bootstrapped. Click the Embed Dashboard button to set the access token.';
+    'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   dashboardClass = 'dashboard-container';
@@ -28,9 +28,9 @@ export class DashboardEmbedComponent implements OnInit {
     accessToken: undefined,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedDashboard() {
     // API Endpoint to get the dashboard embed config
