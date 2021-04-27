@@ -12,12 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {
-  Embed,
-  factories,
-  IReportEmbedConfiguration,
-  service,
-} from 'powerbi-client';
+import { Embed, factories, IReportEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
@@ -108,7 +103,7 @@ export class PowerBIReportEmbedComponent
   }
 
   /**
-   * Embed the PowerBI Entity(Load for phased embedding)
+   * Embed or load the PowerBI Entity based on phasedEmbedding flag
    *
    * @returns void
    */

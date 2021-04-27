@@ -27,9 +27,9 @@ export class VisualEmbedComponent implements OnInit {
     tokenType: models.TokenType.Embed,
   };
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async embedVisual() {
     // API Endpoint to get the Visual embed config

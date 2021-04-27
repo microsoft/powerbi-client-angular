@@ -14,7 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 export class QnaEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage =
-    'The Q&A visual is bootstrapped. Click Embed Q&A visual button to set the access token.';
+    'The Q&A visual is bootstrapped. Click Embed Q&A Visual button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   qnaClass = 'qna-container';

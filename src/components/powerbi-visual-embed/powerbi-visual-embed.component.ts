@@ -12,12 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {
-  Embed,
-  factories,
-  IVisualEmbedConfiguration,
-  service,
-} from 'powerbi-client';
+import { Embed, factories, IVisualEmbedConfiguration, service } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
@@ -74,7 +69,8 @@ export class PowerBIVisualEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig
+      .previousValue as IVisualEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateVisual function
     this.embedOrUpdateVisual(prevEmbedConfig);

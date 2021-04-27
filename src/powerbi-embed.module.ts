@@ -25,7 +25,7 @@ import { PowerBIQnaEmbedComponent } from './components/powerbi-qna-embed/powerbi
     PowerBITileEmbedComponent,
     PowerBIPaginatedReportEmbedComponent,
     PowerBIVisualEmbedComponent,
-    PowerBIQnaEmbedComponent
+    PowerBIQnaEmbedComponent,
   ],
 })
-export class PowerBIEmbedModule { }
+export class PowerBIEmbedModule {}
