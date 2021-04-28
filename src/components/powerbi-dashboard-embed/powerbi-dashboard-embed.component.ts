@@ -35,9 +35,6 @@ export class PowerBIDashboardEmbedComponent
   @ViewChild('dashboardContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
 
-  // Power BI service
-  private powerbi!: service.Service;
-
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
   private _embed?: Embed;
@@ -57,15 +54,8 @@ export class PowerBIDashboardEmbedComponent
   }
 
   ngOnInit(): void {
-    if (this.service) {
-      this.powerbi = this.service;
-    } else {
-      this.powerbi = new service.Service(
-        factories.hpmFactory,
-        factories.wpmpFactory,
-        factories.routerFactory
-      );
-    }
+    // Initialize PowerBI service instance variable from parent
+    super.ngOnInit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

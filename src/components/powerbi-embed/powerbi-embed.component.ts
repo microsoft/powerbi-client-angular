@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component, OnChanges, OnInit, SimpleChanges, Input } from '@angular/core';
-import { service } from 'powerbi-client';
+import { factories, service } from 'powerbi-client';
 
 @Component({
   selector: 'powerbi-embed',
@@ -23,7 +23,21 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
   @Input()
   service?: service.Service;
 
-  ngOnInit(): void { }
+  // Power BI service
+  powerbi!: service.Service;
+
+  ngOnInit(): void {
+    // Initialize powerbi variable for child component
+    if (this.service) {
+      this.powerbi = this.service;
+    } else {
+      this.powerbi = new service.Service(
+        factories.hpmFactory,
+        factories.wpmpFactory,
+        factories.routerFactory
+      );
+    }
+   }
 
   ngOnChanges(changes: SimpleChanges): void { }
 }
