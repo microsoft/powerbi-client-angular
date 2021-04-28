@@ -2,7 +2,15 @@
 // Licensed under the MIT License.
 
 import { Component, OnChanges, OnInit, SimpleChanges, Input } from '@angular/core';
-import { factories, service } from 'powerbi-client';
+import { Embed, factories, service } from 'powerbi-client';
+
+/**
+ * Type for event handler function of embedded entity
+ */
+ export type EventHandler = (
+  event?: service.ICustomEvent<any>,
+  embeddedEntity?: Embed
+) => void | null;
 
 @Component({
   selector: 'powerbi-embed',
