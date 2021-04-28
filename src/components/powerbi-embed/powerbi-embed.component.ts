@@ -7,7 +7,7 @@ import { Embed, factories, service } from 'powerbi-client';
 /**
  * Type for event handler function of embedded entity
  */
- export type EventHandler = (
+export type EventHandler = (
   event?: service.ICustomEvent<any>,
   embeddedEntity?: Embed
 ) => void | null;
@@ -31,6 +31,9 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
   @Input()
   service?: service.Service;
 
+  @Input()
+  eventHandlers?: Map<string, EventHandler | null>;
+
   // Power BI service
   powerbi!: service.Service;
 
@@ -45,7 +48,7 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
         factories.routerFactory
       );
     }
-   }
+  }
 
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {}
 }
