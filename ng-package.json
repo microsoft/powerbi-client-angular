@@ -6,5 +6,10 @@
     "umdModuleIds": {
       "powerbi-client": "powerbi-client"
     }
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "powerbi-client",
+    "prettier",
+    "tslib"
+  ]
 }
