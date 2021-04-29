@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { factories, service } from 'powerbi-client';
 
 /**
@@ -11,7 +11,7 @@ import { factories, service } from 'powerbi-client';
   selector: 'powerbi-embed',
   template: '',
 })
-export class PowerBIEmbedComponent implements OnInit, OnChanges {
+export class PowerBIEmbedComponent implements OnInit {
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)
   @Input() cssClassName?: string;
@@ -30,6 +30,4 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
       this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
     }
   }
-
-  ngOnChanges(changes: SimpleChanges): void {}
 }
