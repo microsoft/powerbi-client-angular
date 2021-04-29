@@ -27,8 +27,7 @@ export class PowerBIPaginatedReportEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Paginated report (Required)
-  @Input()
-  embedConfig!: IEmbedConfiguration;
+  @Input() embedConfig!: IEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('paginatedReportContainer')

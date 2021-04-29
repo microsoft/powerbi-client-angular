@@ -12,7 +12,7 @@ import { reportUrl } from '../../constants';
   templateUrl: './report-embed.component.html',
   styleUrls: ['./report-embed.component.css'],
 })
-export class ReportEmbedComponent implements OnInit {
+export class ReportEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
 
@@ -33,8 +33,6 @@ export class ReportEmbedComponent implements OnInit {
   };
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   async embedReport() {
     let reportConfigResponse: ConfigResponse;

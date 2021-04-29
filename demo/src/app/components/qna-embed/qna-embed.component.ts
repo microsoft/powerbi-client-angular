@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IQnaEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
-import { qnaUrl, datasetUrl } from '../../constants';
+import { datasetUrl, qnaUrl } from '../../constants';
 
 @Component({
   selector: 'qna-embed',
   templateUrl: './qna-embed.component.html',
   styleUrls: ['./qna-embed.component.css'],
 })
-export class QnaEmbedComponent implements OnInit {
+export class QnaEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The Q&A visual is bootstrapped. Click Embed Q&A Visual button to set the access token.';
 
@@ -28,8 +28,6 @@ export class QnaEmbedComponent implements OnInit {
   };
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   async embedQna() {
     let qnaConfigResponse: ConfigResponse;

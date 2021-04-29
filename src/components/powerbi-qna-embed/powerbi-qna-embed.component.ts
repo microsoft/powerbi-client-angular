@@ -28,8 +28,7 @@ export class PowerBIQnaEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Qna visual (Required)
-  @Input()
-  embedConfig!: IQnaEmbedConfiguration;
+  @Input() embedConfig!: IQnaEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('qnaContainer')

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IDashboardEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
@@ -12,7 +12,7 @@ import { dashboardUrl } from '../../constants';
   templateUrl: './dashboard-embed.component.html',
   styleUrls: ['./dashboard-embed.component.css'],
 })
-export class DashboardEmbedComponent implements OnInit {
+export class DashboardEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
 
@@ -29,8 +29,6 @@ export class DashboardEmbedComponent implements OnInit {
   };
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   async embedDashboard() {
     let dashboardConfigResponse: ConfigResponse;

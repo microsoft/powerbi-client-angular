@@ -28,12 +28,10 @@ export class PowerBIReportEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Report (Required)
-  @Input()
-  embedConfig!: IReportEmbedConfiguration;
+  @Input() embedConfig!: IReportEmbedConfiguration;
 
   // Phased embedding flag (Optional)
-  @Input()
-  phasedEmbedding?: boolean = false;
+  @Input() phasedEmbedding?: boolean = false;
 
   // Ref to the HTML div container element
   @ViewChild('reportContainer')

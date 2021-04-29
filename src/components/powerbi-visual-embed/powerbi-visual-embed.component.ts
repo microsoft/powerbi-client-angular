@@ -28,8 +28,7 @@ export class PowerBIVisualEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Visual (Required)
-  @Input()
-  embedConfig!: IVisualEmbedConfiguration;
+  @Input() embedConfig!: IVisualEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('visualContainer')

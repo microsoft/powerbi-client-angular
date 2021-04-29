@@ -12,7 +12,7 @@ import { tileUrl } from '../../constants';
   templateUrl: './tile-embed.component.html',
   styleUrls: ['./tile-embed.component.css'],
 })
-export class TileEmbedComponent implements OnInit {
+export class TileEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The tile is bootstrapped. Click Embed Tile button to set the access token.';
 
@@ -28,8 +28,6 @@ export class TileEmbedComponent implements OnInit {
   };
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   async embedTile() {
     let tileConfigResponse: ConfigResponse;

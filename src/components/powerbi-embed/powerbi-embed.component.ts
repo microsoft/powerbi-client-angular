@@ -16,12 +16,10 @@ import { factories, service } from 'powerbi-client';
 export class PowerBIEmbedComponent implements OnInit, OnChanges {
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)
-  @Input()
-  cssClassName?: string;
+  @Input() cssClassName?: string;
 
   // Provide a custom implementation of Power BI service (Optional)
-  @Input()
-  service?: service.Service;
+  @Input() service?: service.Service;
 
   // Power BI service
   powerbi!: service.Service;

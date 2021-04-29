@@ -12,7 +12,7 @@ import { reportUrl } from '../../constants';
   templateUrl: './visual-embed.component.html',
   styleUrls: ['./visual-embed.component.css'],
 })
-export class VisualEmbedComponent implements OnInit {
+export class VisualEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The visual is bootstrapped. Click Embed Visual button to set the access token.';
 
@@ -28,8 +28,6 @@ export class VisualEmbedComponent implements OnInit {
   };
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   async embedVisual() {
     let visualConfigResponse: ConfigResponse;

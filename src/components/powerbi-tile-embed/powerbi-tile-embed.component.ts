@@ -28,8 +28,7 @@ export class PowerBITileEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Tile (Required)
-  @Input()
-  embedConfig!: ITileEmbedConfiguration;
+  @Input() embedConfig!: ITileEmbedConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('tileContainer')
