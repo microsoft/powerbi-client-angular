@@ -8,18 +8,6 @@ import { EventHandler } from '../components/powerbi-embed/powerbi-embed.componen
  *
  * @param map Map of event and corresponding handler method
  *
- * For example:
- * Input:
- * ```
- *  Map([
-		['loaded', null],
-		['rendered', () => { console.log('Rendered'); }]
-	]);
- * ```
- * Output:
- * ```
- * `[["loaded",""],["rendered","() => { console.log('Rendered'); }"]]`
- * ```
  */
 export const stringifyMap = (
   map: Map<string, EventHandler | null> | undefined
@@ -32,7 +20,7 @@ export const stringifyMap = (
   // Get entries of map as array
   const mapEntries = Array.from(map);
 
-  // Return JSON strin
+  // Return JSON string
   return JSON.stringify(
     mapEntries.map((mapEntry) =>
       // Convert event handler method to a string containing its source code for comparison
