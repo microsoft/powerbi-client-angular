@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { Embed, factories, IEmbedConfiguration, service } from 'powerbi-client';
+import { Embed, IEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 @Component({
