@@ -31,13 +31,9 @@ export class PowerBIEmbedComponent implements OnInit, OnChanges {
     if (this.service) {
       this.powerbi = this.service;
     } else {
-      this.powerbi = new service.Service(
-        factories.hpmFactory,
-        factories.wpmpFactory,
-        factories.routerFactory
-      );
+      this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
     }
-   }
+  }
 
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {}
 }

@@ -30,10 +30,6 @@ export class PowerBIPaginatedReportEmbedComponent
   @Input()
   embedConfig!: IEmbedConfiguration;
 
-  // Phased embedding flag (Optional)
-  @Input()
-  phasedEmbedding?: boolean = false;
-
   // Ref to the HTML div container element
   @ViewChild('paginatedReportContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
@@ -71,7 +67,7 @@ export class PowerBIPaginatedReportEmbedComponent
   ngAfterViewInit(): void {
     // Check if container exists on the UI
     if (this.containerRef.nativeElement) {
-      // Decide to embed or load
+      // Decide to embed
       this.embedPaginatedReport();
     }
   }
@@ -84,7 +80,7 @@ export class PowerBIPaginatedReportEmbedComponent
   }
 
   /**
-   * Embed or load the PowerBI Paginated report based on phasedEmbedding flag
+   * Embed the PowerBI Paginated report
    *
    * @returns void
    */
@@ -94,16 +90,12 @@ export class PowerBIPaginatedReportEmbedComponent
       return;
     }
 
-    // Load when phasedEmbedding flag is true, embed otherwise
-    if (this.phasedEmbedding) {
-      this.embed = this.powerbi.load(this.containerRef.nativeElement, this.embedConfig);
-    } else {
-      this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-    }
+    // Embed paginated report
+    this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
   }
 
   /**
-   * When component updates, choose to _embed_ or _load_ the powerbi paginated report
+   * When component updates, choose to _embed_ the powerbi paginated report
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IEmbedConfiguration
@@ -121,12 +113,9 @@ export class PowerBIPaginatedReportEmbedComponent
       return;
     }
 
-    // Embed or load in the following scenario
+    // Embed in the following scenario
     // Embed URL is updated (E.g. New paginated report is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedPaginatedReport();
     }
   }

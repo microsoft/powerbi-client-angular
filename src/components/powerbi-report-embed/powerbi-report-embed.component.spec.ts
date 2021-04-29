@@ -97,8 +97,7 @@ describe('PowerBIReportEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
-        .nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);

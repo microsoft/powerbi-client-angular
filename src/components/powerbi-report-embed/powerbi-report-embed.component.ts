@@ -63,8 +63,7 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as IReportEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateReport function
     this.embedOrUpdateReport(prevEmbedConfig);
@@ -77,10 +76,7 @@ export class PowerBIReportEmbedComponent
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedReport();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
   }
@@ -132,10 +128,7 @@ export class PowerBIReportEmbedComponent
 
     // Embed or load in the following scenario
     // Embed URL is updated (E.g. New report is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedReport();
     }
   }

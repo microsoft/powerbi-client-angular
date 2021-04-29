@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { IDashboardEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
+import { dashboardUrl } from '../../constants';
 
 @Component({
   selector: 'dashboard-embed',
@@ -13,8 +14,7 @@ import { ConfigResponse } from 'src/interfaces';
 })
 export class DashboardEmbedComponent implements OnInit {
   // Overall status message of embedding
-  displayMessage =
-    'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
+  displayMessage = 'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   dashboardClass = 'dashboard-container';
@@ -33,21 +33,13 @@ export class DashboardEmbedComponent implements OnInit {
   ngOnInit(): void {}
 
   async embedDashboard() {
-    // API Endpoint to get the dashboard embed config
-    const dashboardUrl =
-      'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
-
     let dashboardConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the dashboardConfigResponse
     try {
-      dashboardConfigResponse = await this.httpService
-        .getEmbedConfig(dashboardUrl)
-        .toPromise();
+      dashboardConfigResponse = await this.httpService.getEmbedConfig(dashboardUrl).toPromise();
     } catch (error) {
-      console.error(
-        `Failed to fetch config for dashboard. Status: ${error.statusText} Status Code: ${error.status}`
-      );
+      console.error(`Failed to fetch config for dashboard. Status: ${error.statusText} Status Code: ${error.status}`);
       return;
     }
 

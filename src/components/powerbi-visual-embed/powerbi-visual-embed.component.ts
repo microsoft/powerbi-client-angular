@@ -59,8 +59,7 @@ export class PowerBIVisualEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as IVisualEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateVisual function
     this.embedOrUpdateVisual(prevEmbedConfig);
@@ -73,10 +72,7 @@ export class PowerBIVisualEmbedComponent
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedVisual();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
   }
@@ -123,10 +119,7 @@ export class PowerBIVisualEmbedComponent
 
     // Embed in the following scenario
     // Embed URL is updated (E.g. New visual is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedVisual();
     }
   }

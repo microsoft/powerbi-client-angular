@@ -59,8 +59,7 @@ export class PowerBIDashboardEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as IDashboardEmbedConfiguration;
+    const prevEmbedConfig = changes.embedConfig.previousValue as IDashboardEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateDashboard function
     this.embedOrUpdateDashboard(prevEmbedConfig);
@@ -73,10 +72,7 @@ export class PowerBIDashboardEmbedComponent
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedDashboard();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
   }
@@ -123,10 +119,7 @@ export class PowerBIDashboardEmbedComponent
 
     // Embed in the following scenario
     // Embed URL is updated (E.g. New dashboard is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedDashboard();
     }
   }

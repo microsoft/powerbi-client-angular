@@ -108,8 +108,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
-        .nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -136,80 +135,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
       // Assert
       expect(mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
-    });
-
-    it('loads the report when phasedEmbedding input is true', () => {
-      // Arrange
-      const config = {
-        type: 'report',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      component.phasedEmbedding = true;
-      fixture.detectChanges();
-
-      // Assert
-      // service.load() is invoked once
-      expect(mockPowerBIService.load).toHaveBeenCalledTimes(1);
-
-      // service.embed() is not invoked
-      expect(mockPowerBIService.embed).not.toHaveBeenCalled();
-    });
-
-    it('embeds the report when phasedEmbedding input is false', () => {
-      // Arrange
-      const config = {
-        type: 'report',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      component.phasedEmbedding = false;
-      fixture.detectChanges();
-
-      // Assert
-      // service.load() is not invoked
-      expect(mockPowerBIService.load).not.toHaveBeenCalled();
-
-      // service.embed() is invoked once
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
-    });
-
-    it('embeds the report when phasedEmbedding input is not provided', () => {
-      // Arrange
-      const config = {
-        type: 'report',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      fixture.detectChanges();
-
-      // Assert
-      // service.load() is not invoked
-      expect(mockPowerBIService.load).not.toHaveBeenCalled();
-
-      // service.embed() is invoked once
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 

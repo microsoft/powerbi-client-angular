@@ -72,10 +72,7 @@ export class PowerBIQnaEmbedComponent
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
         this.embedQnaVisual();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
   }
@@ -122,10 +119,7 @@ export class PowerBIQnaEmbedComponent
 
     // Embed in the following scenario
     // Embed URL is updated (E.g. New Qna visual is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedQnaVisual();
     }
   }
