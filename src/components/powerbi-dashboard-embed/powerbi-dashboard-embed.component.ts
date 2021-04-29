@@ -27,7 +27,7 @@ export class PowerBIDashboardEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI dashboard entity (Required)
+  // Configuration for embedding the PowerBI Dashboard (Required)
   @Input()
   embedConfig!: IDashboardEmbedConfiguration;
 
@@ -71,7 +71,7 @@ export class PowerBIDashboardEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedDashboard();
       } else {
         this.embed = this.powerbi.bootstrap(
           this.containerRef.nativeElement,
@@ -89,11 +89,11 @@ export class PowerBIDashboardEmbedComponent
   }
 
   /**
-   * Embed the PowerBI Entity
+   * Embed the PowerBI Dashboard
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedDashboard(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -103,7 +103,7 @@ export class PowerBIDashboardEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity
+   * When component updates, choose to _embed_ the powerbi dashboard
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IDashboardEmbedConfiguration
@@ -127,7 +127,7 @@ export class PowerBIDashboardEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedDashboard();
     }
   }
 }

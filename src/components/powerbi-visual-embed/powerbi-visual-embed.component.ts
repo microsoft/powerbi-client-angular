@@ -27,7 +27,7 @@ export class PowerBIVisualEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI visual entity (Required)
+  // Configuration for embedding the PowerBI Visual (Required)
   @Input()
   embedConfig!: IVisualEmbedConfiguration;
 
@@ -71,7 +71,7 @@ export class PowerBIVisualEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedVisual();
       } else {
         this.embed = this.powerbi.bootstrap(
           this.containerRef.nativeElement,
@@ -89,11 +89,11 @@ export class PowerBIVisualEmbedComponent
   }
 
   /**
-   * Embed the PowerBI Entity
+   * Embed the PowerBI Visual
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedVisual(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -103,7 +103,7 @@ export class PowerBIVisualEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity
+   * When component updates, choose to _embed_ the powerbi visual
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IVisualEmbedConfiguration
@@ -127,7 +127,7 @@ export class PowerBIVisualEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedVisual();
     }
   }
 }

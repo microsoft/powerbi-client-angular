@@ -27,7 +27,7 @@ export class PowerBIQnaEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI Qna visual entity (Required)
+  // Configuration for embedding the PowerBI Qna visual (Required)
   @Input()
   embedConfig!: IQnaEmbedConfiguration;
 
@@ -70,7 +70,7 @@ export class PowerBIQnaEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedQnaVisual();
       } else {
         this.embed = this.powerbi.bootstrap(
           this.containerRef.nativeElement,
@@ -88,11 +88,11 @@ export class PowerBIQnaEmbedComponent
   }
 
   /**
-   * Embed the PowerBI Entity
+   * Embed the PowerBI QnA Visual
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedQnaVisual(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -102,7 +102,7 @@ export class PowerBIQnaEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity
+   * When component updates, choose to _embed_ the powerbi qna visual
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IQnaEmbedConfiguration
@@ -126,7 +126,7 @@ export class PowerBIQnaEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedQnaVisual();
     }
   }
 }

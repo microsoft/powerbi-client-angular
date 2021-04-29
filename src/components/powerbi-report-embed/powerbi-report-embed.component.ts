@@ -27,7 +27,7 @@ export class PowerBIReportEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI report entity (Required)
+  // Configuration for embedding the PowerBI Report (Required)
   @Input()
   embedConfig!: IReportEmbedConfiguration;
 
@@ -75,7 +75,7 @@ export class PowerBIReportEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed, load or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedReport();
       } else {
         this.embed = this.powerbi.bootstrap(
           this.containerRef.nativeElement,
@@ -93,11 +93,11 @@ export class PowerBIReportEmbedComponent
   }
 
   /**
-   * Embed or load the PowerBI Entity based on phasedEmbedding flag
+   * Embed or load the PowerBI Report based on phasedEmbedding flag
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedReport(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -112,7 +112,7 @@ export class PowerBIReportEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ or _load_ the powerbi entity
+   * When component updates, choose to _embed_ or _load_ the powerbi report
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IReportEmbedConfiguration
@@ -136,7 +136,7 @@ export class PowerBIReportEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedReport();
     }
   }
 }

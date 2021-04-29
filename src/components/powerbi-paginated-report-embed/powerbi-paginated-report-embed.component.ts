@@ -26,7 +26,7 @@ export class PowerBIPaginatedReportEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI paginated report entity (Required)
+  // Configuration for embedding the PowerBI Paginated report (Required)
   @Input()
   embedConfig!: IEmbedConfiguration;
 
@@ -72,7 +72,7 @@ export class PowerBIPaginatedReportEmbedComponent
     // Check if container exists on the UI
     if (this.containerRef.nativeElement) {
       // Decide to embed or load
-      this.embedEntity();
+      this.embedPaginatedReport();
     }
   }
 
@@ -84,11 +84,11 @@ export class PowerBIPaginatedReportEmbedComponent
   }
 
   /**
-   * Embed or load the PowerBI Entity based on phasedEmbedding flag
+   * Embed or load the PowerBI Paginated report based on phasedEmbedding flag
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedPaginatedReport(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -103,7 +103,7 @@ export class PowerBIPaginatedReportEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ or _load_ the powerbi entity
+   * When component updates, choose to _embed_ or _load_ the powerbi paginated report
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IEmbedConfiguration
@@ -127,7 +127,7 @@ export class PowerBIPaginatedReportEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedPaginatedReport();
     }
   }
 }

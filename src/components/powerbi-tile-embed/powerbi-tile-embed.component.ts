@@ -27,7 +27,7 @@ export class PowerBITileEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI tile entity (Required)
+  // Configuration for embedding the PowerBI Tile (Required)
   @Input()
   embedConfig!: ITileEmbedConfiguration;
 
@@ -70,7 +70,7 @@ export class PowerBITileEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedTile();
       } else {
         this.embed = this.powerbi.bootstrap(
           this.containerRef.nativeElement,
@@ -88,11 +88,11 @@ export class PowerBITileEmbedComponent
   }
 
   /**
-   * Embed the PowerBI Entity
+   * Embed the PowerBI Tile
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedTile(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -102,7 +102,7 @@ export class PowerBITileEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity
+   * When component updates, choose to _embed_ the powerbi tile
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig ITileEmbedConfiguration
@@ -126,7 +126,7 @@ export class PowerBITileEmbedComponent
       this.containerRef.nativeElement &&
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
-      this.embedEntity();
+      this.embedTile();
     }
   }
 }
