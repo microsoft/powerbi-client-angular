@@ -4,7 +4,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ITileEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
-import { TileConfigResponse } from 'src/interfaces';
+import { ConfigResponse } from 'src/interfaces';
 import { tileUrl } from '../../constants';
 
 @Component({
@@ -32,11 +32,11 @@ export class TileEmbedComponent implements OnInit {
   ngOnInit(): void {}
 
   async embedTile() {
-    let tileConfigResponse: TileConfigResponse;
+    let tileConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse
     try {
-      tileConfigResponse = await this.httpService.getTileEmbedConfig(tileUrl).toPromise();
+      tileConfigResponse = await this.httpService.getEmbedConfig(tileUrl).toPromise();
     } catch (error) {
       console.error(`Failed to fetch config for tile. Status: ${error.statusText} Status Code: ${error.status}`);
       return;

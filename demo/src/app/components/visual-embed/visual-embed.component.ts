@@ -36,7 +36,7 @@ export class VisualEmbedComponent implements OnInit {
 
     // Get the embed config from the service and set the tileConfigResponse
     try {
-      visualConfigResponse = await this.httpService.getTileEmbedConfig(reportUrl).toPromise();
+      visualConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error) {
       console.error(`Failed to fetch config for visual. Status: ${error.statusText} Status Code: ${error.status}`);
       return;
