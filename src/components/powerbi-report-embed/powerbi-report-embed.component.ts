@@ -15,14 +15,13 @@ import {
 import { Embed, IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Report component to embed the report, extends the Base Component
+ */
 @Component({
   selector: 'powerbi-report[embedConfig]',
   template: '<div class={{cssClassName}} #reportContainer></div>',
 })
-
-/**
- * Report component to embed the report, extends the Base Component
- */
 export class PowerBIReportEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

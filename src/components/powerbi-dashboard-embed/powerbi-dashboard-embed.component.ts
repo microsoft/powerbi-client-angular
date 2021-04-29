@@ -15,14 +15,13 @@ import {
 import { Embed, IDashboardEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Dashboard component to embed the dashboard, extends the Base component
+ */
 @Component({
   selector: 'powerbi-dashboard[embedConfig]',
   template: '<div class={{cssClassName}} #dashboardContainer></div>',
 })
-
-/**
- * Dashboard component to embed the dashboard, extends the Base component
- */
 export class PowerBIDashboardEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

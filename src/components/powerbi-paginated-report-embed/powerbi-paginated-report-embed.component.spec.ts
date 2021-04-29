@@ -4,7 +4,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { mockedMethods, mockPowerBIService } from 'src/services/mockService';
-
 import { PowerBIPaginatedReportEmbedComponent } from './powerbi-paginated-report-embed.component';
 
 describe('PowerBIPaginatedReportEmbedComponent', () => {
@@ -23,8 +22,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       mockPowerBIService[mockedMethod].calls.reset();
     });
   });
-
-  afterEach(() => {});
 
   describe('basic tests', () => {
     it('is an Angular component', () => {

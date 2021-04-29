@@ -25,8 +25,6 @@ describe('PowerBIReportEmbedComponent', () => {
     });
   });
 
-  afterEach(() => {});
-
   describe('basic tests', () => {
     it('is an Angular component', () => {
       // Assert

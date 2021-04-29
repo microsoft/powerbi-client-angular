@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, OnChanges, OnInit, SimpleChanges, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { factories, service } from 'powerbi-client';
 
+/**
+ * Base component to hold common properties for all the Power BI entities
+ */
 @Component({
   selector: 'powerbi-embed',
   template: '',
 })
-
-/**
- * Base component to hold common properties for all the Power BI entities
- *
- */
 export class PowerBIEmbedComponent implements OnInit, OnChanges {
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)

@@ -15,14 +15,13 @@ import {
 import { Embed, IQnaEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Qna component to embed the Qna visual, extends Base component
+ */
 @Component({
   selector: 'powerbi-qna[embedConfig]',
   template: '<div class={{cssClassName}} #qnaContainer></div>',
 })
-
-/**
- * Qna component to embed the Qna visual, extends Base component
- */
 export class PowerBIQnaEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

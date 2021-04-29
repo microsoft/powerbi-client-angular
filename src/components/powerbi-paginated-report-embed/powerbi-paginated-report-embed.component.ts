@@ -15,13 +15,13 @@ import {
 import { Embed, IEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Paginated report component to embed the entity, extends the Base component
+ */
 @Component({
   selector: 'powerbi-paginated-report[embedConfig]',
   template: '<div class={{cssClassName}} #paginatedReportContainer></div>',
 })
-/**
- * Paginated report component to embed the entity, extends the Base component
- */
 export class PowerBIPaginatedReportEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

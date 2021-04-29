@@ -15,14 +15,13 @@ import {
 import { Embed, IVisualEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Visual component to embed the visual, extends Base component
+ */
 @Component({
   selector: 'powerbi-visual[embedConfig]',
   template: '<div class={{cssClassName}} #visualContainer></div>',
 })
-
-/**
- * Visual component to embed the visual, extends Base component
- */
 export class PowerBIVisualEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

@@ -15,14 +15,13 @@ import {
 import { Embed, ITileEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
+/**
+ * Tile component to embed the tile, extends Base component
+ */
 @Component({
   selector: 'powerbi-tile[embedConfig]',
   template: '<div class={{cssClassName}} #tileContainer></div>',
 })
-
-/**
- * Tile component to embed the tile, extends Base component
- */
 export class PowerBITileEmbedComponent
   extends PowerBIEmbedComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
