@@ -18,11 +18,11 @@ import { VisualEmbedComponent } from './components/visual-embed/visual-embed.com
   declarations: [
     AppComponent,
     DashboardEmbedComponent,
+    PaginatedReportEmbedComponent,
+    QnaEmbedComponent,
     ReportEmbedComponent,
     TileEmbedComponent,
-    PaginatedReportEmbedComponent,
     VisualEmbedComponent,
-    QnaEmbedComponent,
   ],
   imports: [BrowserModule, HttpClientModule, PowerBIEmbedModule],
   providers: [],

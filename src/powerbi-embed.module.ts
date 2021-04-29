@@ -11,21 +11,21 @@ import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/p
 
 @NgModule({
   declarations: [
-    PowerBIReportEmbedComponent,
     PowerBIDashboardEmbedComponent,
-    PowerBITileEmbedComponent,
     PowerBIPaginatedReportEmbedComponent,
-    PowerBIVisualEmbedComponent,
     PowerBIQnaEmbedComponent,
+    PowerBIReportEmbedComponent,
+    PowerBITileEmbedComponent,
+    PowerBIVisualEmbedComponent,
   ],
   imports: [],
   exports: [
-    PowerBIReportEmbedComponent,
     PowerBIDashboardEmbedComponent,
-    PowerBITileEmbedComponent,
     PowerBIPaginatedReportEmbedComponent,
-    PowerBIVisualEmbedComponent,
     PowerBIQnaEmbedComponent,
+    PowerBIReportEmbedComponent,
+    PowerBITileEmbedComponent,
+    PowerBIVisualEmbedComponent,
   ],
 })
 export class PowerBIEmbedModule {}
