@@ -3,7 +3,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { mockedMethods, mockPowerBIService } from 'src/services/mockService';
+import { MockEmbed } from '../../tests/mockembed';
 import { PowerBIDashboardEmbedComponent } from './powerbi-dashboard-embed.component';
 
 describe('PowerBIDashboardEmbedComponent', () => {
@@ -14,11 +14,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
-
-    // Reset all methods in Power BI service spy object
-    mockedMethods.forEach((mockedMethod) => {
-      mockPowerBIService[mockedMethod].calls.reset();
-    });
   });
 
   describe('basic tests', () => {
@@ -101,6 +96,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
   describe('Interaction with Power BI service', () => {
     it('embeds dashboard when accessToken provided', () => {
+      const mockEmbed = new MockEmbed();
       // Arrange
       const config = {
         type: 'dashboard',
@@ -113,16 +109,17 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
+      expect(mockEmbed.mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
     it('bootstraps dashboard when accessToken is not provided', () => {
       // Arrange
+      const mockEmbed = new MockEmbed();
       const config = {
         type: 'dashboard',
         id: 'dashboard',
@@ -133,16 +130,17 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Asset
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(0);
-      expect(mockPowerBIService.bootstrap).toHaveBeenCalledTimes(1);
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(0);
+      expect(mockEmbed.mockPowerBIService.bootstrap).toHaveBeenCalledTimes(1);
     });
 
     it('first bootstraps, then embeds when accessToken is available', () => {
       // Arrange
+      const mockEmbed = new MockEmbed();
       const config = {
         type: 'dashboard',
         id: 'fakeId',
@@ -162,32 +160,33 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(0);
-      expect(mockPowerBIService.bootstrap).toHaveBeenCalledTimes(1);
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(0);
+      expect(mockEmbed.mockPowerBIService.bootstrap).toHaveBeenCalledTimes(1);
 
       // Reset for next Act
-      mockPowerBIService.embed.calls.reset();
-      mockPowerBIService.bootstrap.calls.reset();
+      mockEmbed.mockPowerBIService.embed.calls.reset();
+      mockEmbed.mockPowerBIService.bootstrap.calls.reset();
 
       // Act
       // With accessToken (embed)
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = newConfig;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
+      expect(mockEmbed.mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
     it('embeds when embedUrl of dashboard is updated in new input data', () => {
       // Arrange
+      const mockEmbed = new MockEmbed();
       const config = {
         type: 'dashboard',
         id: 'fakeId',
@@ -198,7 +197,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Embed URL of different dashboard
@@ -208,15 +207,16 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalled();
     });
 
     it('powerbi.reset called when component unmounts', () => {
       // Arrange
+      const mockEmbed = new MockEmbed();
       const config = {
         type: 'dashboard',
         id: 'fakeId',
@@ -228,7 +228,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Un-mount the component
@@ -236,11 +236,12 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
+      expect(mockEmbed.mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
       // Arrange
+      const mockEmbed = new MockEmbed();
       const config = {
         type: 'dashboard',
         id: 'fakeId',
@@ -259,21 +260,21 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
       component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
-      mockPowerBIService.embed.calls.reset();
+      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(1);
+      mockEmbed.mockPowerBIService.embed.calls.reset();
 
       // Act
       // With accessToken (embed)
       component.embedConfig = newConfig;
-      component.service = mockPowerBIService;
+      component.service = mockEmbed.mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.embed).not.toHaveBeenCalled();
+      expect(mockEmbed.mockPowerBIService.embed).not.toHaveBeenCalled();
     });
   });
 });
