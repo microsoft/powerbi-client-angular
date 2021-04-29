@@ -10,13 +10,11 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
   let component: PowerBIPaginatedReportEmbedComponent;
   let fixture: ComponentFixture<PowerBIPaginatedReportEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIPaginatedReportEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();

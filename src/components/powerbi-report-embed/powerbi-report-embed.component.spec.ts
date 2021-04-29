@@ -10,14 +10,10 @@ describe('PowerBIReportEmbedComponent', () => {
   let component: PowerBIReportEmbedComponent;
   let fixture: ComponentFixture<PowerBIReportEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIReportEmbedComponent],
     }).compileComponents();
-  });
-
-  beforeEach(() => {
-    spyOn(console, 'error');
 
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {

@@ -10,13 +10,11 @@ describe('PowerBIDashboardEmbedComponent', () => {
   let component: PowerBIDashboardEmbedComponent;
   let fixture: ComponentFixture<PowerBIDashboardEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();

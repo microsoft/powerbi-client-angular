@@ -10,13 +10,11 @@ describe('PowerBIVisualEmbedComponent', () => {
   let component: PowerBIVisualEmbedComponent;
   let fixture: ComponentFixture<PowerBIVisualEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIVisualEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();

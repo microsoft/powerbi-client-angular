@@ -10,13 +10,11 @@ describe('PowerBITileEmbedComponent', () => {
   let component: PowerBITileEmbedComponent;
   let fixture: ComponentFixture<PowerBITileEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBITileEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
       mockPowerBIService[mockedMethod].calls.reset();

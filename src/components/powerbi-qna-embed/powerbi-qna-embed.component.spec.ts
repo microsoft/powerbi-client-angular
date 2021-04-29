@@ -10,14 +10,10 @@ describe('PowerBIQnaEmbedComponent', () => {
   let component: PowerBIQnaEmbedComponent;
   let fixture: ComponentFixture<PowerBIQnaEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIQnaEmbedComponent],
     }).compileComponents();
-  });
-
-  beforeEach(() => {
-    spyOn(console, 'error');
 
     // Reset all methods in Power BI service spy object
     mockedMethods.forEach((mockedMethod) => {
