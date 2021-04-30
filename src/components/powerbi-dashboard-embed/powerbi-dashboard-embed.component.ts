@@ -12,8 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { Dashboard } from 'dashboard';
-import { Embed, factories, IDashboardEmbedConfiguration, service } from 'powerbi-client';
+import { Embed, factories, IDashboardEmbedConfiguration, service, Dashboard } from 'powerbi-client';
 import { stringifyMap } from '../../utils/utils';
 import {
   EventHandler,
@@ -68,8 +67,7 @@ export class PowerBIDashboardEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as IDashboardEmbedConfiguration;
+    const prevEmbedConfig = changes?.embedConfig?.previousValue as IDashboardEmbedConfiguration;
 
     // Input from parent get updated, thus call embedOrUpdateDashboard function
     this.embedOrUpdateDashboard(prevEmbedConfig);
@@ -167,6 +165,7 @@ export class PowerBIDashboardEmbedComponent
 
     // Append entity specific events
     allowedEvents = [...allowedEvents, ...Dashboard.allowedEvents];
+    console.log(allowedEvents);
 
     // Holds list of events which are not allowed
     const invalidEvents: Array<string> = [];
@@ -184,6 +183,7 @@ export class PowerBIDashboardEmbedComponent
           embed.on(eventName, (event: service.ICustomEvent<any>): void => {
             eventHandlerMethod(event, this.embed);
           });
+          console.log(`event set: ${eventName}`);
         }
       } else {
         // Add this event name to the list of invalid events
@@ -195,5 +195,5 @@ export class PowerBIDashboardEmbedComponent
     if (invalidEvents.length) {
       console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
     }
-  }
+  } 
 }

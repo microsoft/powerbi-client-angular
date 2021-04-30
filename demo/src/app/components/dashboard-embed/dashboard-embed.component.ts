@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component, OnInit } from '@angular/core';
-import { IDashboardEmbedConfiguration, models } from 'powerbi-client';
+import { IDashboardEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 
@@ -28,11 +28,59 @@ export class DashboardEmbedComponent implements OnInit {
     accessToken: undefined,
   };
 
-  constructor(public httpService: HttpService) {}
+  // Map of event handlers to be applied to the embedding report
+  eventHandlersMap = new Map([
+    [
+      'loaded',
+      () => {
+        this.displayMessage = 'Dashboard has loaded';
+        console.log('Dashboard has loaded');
+      },
+    ],
+    [
+      'rendered',
+      () => {
+        console.log('Dashoard has rendered');
 
-  ngOnInit(): void {}
+        // Update display message
+        this.displayMessage = 'The dashboard is rendered';
+        this.displayMessage = 'The dashboard is rendered';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    [
+      'errorEvent',
+      () => {
+        this.displayMessage = 'Test error';
+        console.log('Test error');
+      },
+    ],
+    [
+      'visualClicked',
+      () => {
+        this.displayMessage = 'Visual Clicked';
+        console.log('visual clicked');
+      },
+    ],
+  ]);
 
-  async embedDashboard() {
+  constructor(public httpService: HttpService) { }
+
+  ngOnInit(): void { }
+
+  /**
+   * Embeds the dashboard
+   *
+   * @returns Promise<void>
+   */
+  async embedDashboard(): Promise<void> {
     // API Endpoint to get the dashboard embed config
     const dashboardUrl =
       'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
@@ -60,5 +108,21 @@ export class DashboardEmbedComponent implements OnInit {
     };
 
     this.displayMessage = 'Access token is successfully set. Loading Power BI dashboard.';
+  }
+
+  /**
+   * Update event handlers for the Report object
+   * Set event handler to null if event needs to be removed
+   */
+  updateEvents() {
+    this.eventHandlersMap = new Map([
+      ['visualClicked', null],
+      [
+        'dataSelected',
+        () => {
+          console.log('Data selected');
+        },
+      ],
+    ]);
   }
 }
