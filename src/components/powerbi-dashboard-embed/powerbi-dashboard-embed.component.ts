@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, IDashboardEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
@@ -12,7 +12,7 @@ import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component'
   selector: 'powerbi-dashboard[embedConfig]',
   template: '<div class={{cssClassName}} #dashboardContainer></div>',
 })
-export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Dashboard (Required)
   @Input() embedConfig!: IDashboardEmbedConfiguration;
@@ -61,13 +61,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
       } else {
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
-    }
-  }
-
-  ngOnDestroy(): void {
-    // Clean up
-    if (this.containerRef.nativeElement) {
-      this.powerbi.reset(this.containerRef.nativeElement);
     }
   }
 
