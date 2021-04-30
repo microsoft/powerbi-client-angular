@@ -18,6 +18,9 @@
     "url": ""
   },
   "license": "MIT",
+  "peerDependencies": {
+    "rxjs": "~6.6.0"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.6",
     "@angular-eslint/builder": "2.1.0",
@@ -48,12 +51,12 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^11.0.0",
+    "typescript": "~4.1.5"
+  },
+  "dependencies": {
     "powerbi-client": "2.17.2",
     "prettier": "^2.2.1",
-    "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "typescript": "~4.1.5",
     "zone.js": "~0.11.3"
-  },
-  "dependencies": {}
+  }
 }

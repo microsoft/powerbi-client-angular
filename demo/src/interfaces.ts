@@ -8,9 +8,5 @@ export interface ConfigResponse {
   EmbedToken: {
     Token: string;
   };
-}
-
-// Handles the embed config response for Report and Dashboard embedding
-export interface TileConfigResponse extends ConfigResponse {
-  DashboardId: string;
+  DashboardId?: string;
 }

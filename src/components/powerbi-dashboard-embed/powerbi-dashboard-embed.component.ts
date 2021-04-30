@@ -1,44 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { Embed, factories, IDashboardEmbedConfiguration, service, Dashboard } from 'powerbi-client';
-import { stringifyMap } from '../../utils/utils';
-import {
-  EventHandler,
-  PowerBIEmbedComponent,
-} from '../powerbi-embed/powerbi-embed.component';
-
-
-@Component({
-  selector: 'powerbi-dashboard[embedConfig]',
-  template: '<div class={{cssClassName}} #dashboardContainer></div>',
-})
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { stringifyMap } from 'dist/powerbi-embed/utils/utils';
+import { Dashboard, Embed, IDashboardEmbedConfiguration, service } from 'powerbi-client';
+import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
  * Dashboard component to embed the dashboard, extends the Base component
  */
-export class PowerBIDashboardEmbedComponent
-  extends PowerBIEmbedComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+@Component({
+  selector: 'powerbi-dashboard[embedConfig]',
+  template: '<div class={{cssClassName}} #dashboardContainer></div>',
+})
+export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI dashboard entity (Required)
-  @Input()
-  embedConfig!: IDashboardEmbedConfiguration;
+  // Configuration for embedding the PowerBI Dashboard (Required)
+  @Input() embedConfig!: IDashboardEmbedConfiguration;
 
   // Ref to the HTML div container element
-  @ViewChild('dashboardContainer')
-  private containerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('dashboardContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
   // JSON stringify of prev event handler map
   private prevEventHandlerMapString = '';
@@ -67,10 +48,12 @@ export class PowerBIDashboardEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes?.embedConfig?.previousValue as IDashboardEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IDashboardEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateDashboard function
-    this.embedOrUpdateDashboard(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      this.embedOrUpdateDashboard(prevEmbedConfig);
+    }
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
@@ -83,12 +66,9 @@ export class PowerBIDashboardEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedDashboard();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
 
@@ -98,19 +78,12 @@ export class PowerBIDashboardEmbedComponent
     }
   }
 
-  ngOnDestroy(): void {
-    // Clean up
-    if (this.containerRef.nativeElement) {
-      this.powerbi.reset(this.containerRef.nativeElement);
-    }
-  }
-
   /**
-   * Embed the PowerBI Entity
+   * Embed the PowerBI Dashboard
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedDashboard(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -120,7 +93,7 @@ export class PowerBIDashboardEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ the powerbi entity
+   * When component updates, choose to _embed_ the powerbi dashboard
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IDashboardEmbedConfiguration
@@ -140,11 +113,8 @@ export class PowerBIDashboardEmbedComponent
 
     // Embed in the following scenario
     // Embed URL is updated (E.g. New dashboard is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
-      this.embedEntity();
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
+      this.embedDashboard();
     }
   }
 
@@ -195,5 +165,5 @@ export class PowerBIDashboardEmbedComponent
     if (invalidEvents.length) {
       console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
     }
-  } 
+  }
 }
