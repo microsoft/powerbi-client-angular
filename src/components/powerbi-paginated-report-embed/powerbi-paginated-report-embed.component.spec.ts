@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MockEmbed } from '../../tests/mockembed';
 import { PowerBIPaginatedReportEmbedComponent } from './powerbi-paginated-report-embed.component';
+
+const mockedMethods = ['embed', 'reset'];
+const mockPowerBIService = jasmine.createSpyObj('mockService', mockedMethods);
 
 describe('PowerBIPaginatedReportEmbedComponent', () => {
   let component: PowerBIPaginatedReportEmbedComponent;
@@ -14,6 +17,9 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PowerBIPaginatedReportEmbedComponent],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
+    component = fixture.componentInstance;
   });
 
   describe('basic tests', () => {
@@ -24,8 +30,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
     it('should create', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'dashboard',
         id: 'fakeId',
@@ -43,8 +47,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
     it('renders exactly one div', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -63,8 +65,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
     it('renders exactly one iframe', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -85,8 +85,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -107,9 +105,15 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
   });
 
   describe('Interaction with Power BI service', () => {
+    afterEach(() => {
+      // Reset all methods in Power BI service spy object
+      mockedMethods.forEach((mockedMethod) => {
+        mockPowerBIService[mockedMethod].calls.reset();
+      });
+    });
+
     it('embeds paginated report when accessToken provided', () => {
       // Arrange
-      const mockEmbed = new MockEmbed();
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -118,20 +122,16 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockEmbed.mockPowerBIService;
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockEmbed.mockPowerBIService.bootstrap).toHaveBeenCalledTimes(0);
-      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(1);
+      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
     it('embeds when embedUrl of paginated report is updated in new input data', () => {
       // Arrange
-      const mockEmbed = new MockEmbed();
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -139,29 +139,25 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
         accessToken: 'fakeToken',
       };
 
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
+      // Act
       component.embedConfig = config;
-      component.service = mockEmbed.mockPowerBIService;
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Embed URL of different paginated report
       config.embedUrl = 'newFakeUrl';
 
       // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockEmbed.mockPowerBIService;
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalled();
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
     it('powerbi.reset called when component unmounts', () => {
       // Arrange
-      const mockEmbed = new MockEmbed();
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -170,10 +166,8 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockEmbed.mockPowerBIService;
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Un-mount the component
@@ -181,12 +175,11 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(mockEmbed.mockPowerBIService.reset).toHaveBeenCalledTimes(1);
+      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
       // Arrange
-      const mockEmbed = new MockEmbed();
       const config = {
         type: 'report',
         id: 'fakeId',
@@ -202,24 +195,25 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
-      component.service = mockEmbed.mockPowerBIService;
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockEmbed.mockPowerBIService.embed).toHaveBeenCalledTimes(1);
-      mockEmbed.mockPowerBIService.embed.calls.reset();
+      expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
+      mockPowerBIService.embed.calls.reset();
 
       // Act
       // With accessToken (embed)
       component.embedConfig = newConfig;
-      component.service = mockEmbed.mockPowerBIService;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
+      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
-      expect(mockEmbed.mockPowerBIService.embed).not.toHaveBeenCalled();
+      expect(mockPowerBIService.embed).not.toHaveBeenCalled();
     });
   });
 });

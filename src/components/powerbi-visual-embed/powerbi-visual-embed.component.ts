@@ -44,10 +44,12 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateVisual function
-    this.embedOrUpdateVisual(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      this.embedOrUpdateVisual(prevEmbedConfig);
+    }
   }
 
   ngAfterViewInit(): void {

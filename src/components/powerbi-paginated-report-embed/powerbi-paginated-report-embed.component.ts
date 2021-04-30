@@ -44,10 +44,12 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdatedPaginatedReport function
-    this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
+    }
   }
 
   ngAfterViewInit(): void {

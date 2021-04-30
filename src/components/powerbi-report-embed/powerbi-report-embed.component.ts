@@ -47,10 +47,12 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateReport function
-    this.embedOrUpdateReport(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateReport function
+      this.embedOrUpdateReport(prevEmbedConfig);
+    }
   }
 
   ngAfterViewInit(): void {

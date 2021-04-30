@@ -44,10 +44,12 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig.previousValue as IDashboardEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IDashboardEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateDashboard function
-    this.embedOrUpdateDashboard(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      this.embedOrUpdateDashboard(prevEmbedConfig);
+    }
   }
 
   ngAfterViewInit(): void {
