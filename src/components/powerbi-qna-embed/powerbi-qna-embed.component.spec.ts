@@ -1,42 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { mockedMethods, mockPowerBIService } from 'src/services/mockService';
 import { PowerBIQnaEmbedComponent } from './powerbi-qna-embed.component';
 
 describe('PowerBIQnaEmbedComponent', () => {
   let component: PowerBIQnaEmbedComponent;
   let fixture: ComponentFixture<PowerBIQnaEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIQnaEmbedComponent],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
+    component = fixture.componentInstance;
   });
-
-  beforeEach(() => {
-    spyOn(console, 'error');
-
-    // Reset all methods in Power BI service spy object
-    mockedMethods.forEach((mockedMethod) => {
-      mockPowerBIService[mockedMethod].calls.reset();
-    });
-  });
-
-  afterEach(() => {});
 
   describe('basic tests', () => {
-    it('is an Angular component', () => {
-      // Assert
-      expect(PowerBIQnaEmbedComponent).toBeTruthy();
-    });
-
     it('should create', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'qna',
         datasetIds: [],
@@ -52,8 +37,6 @@ describe('PowerBIQnaEmbedComponent', () => {
 
     it('renders exactly one div', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'qna',
         datasetIds: [],
@@ -70,8 +53,6 @@ describe('PowerBIQnaEmbedComponent', () => {
 
     it('renders exactly one iframe', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'qna',
         datasetIds: [],
@@ -90,8 +71,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'qna',
         datasetIds: [],
@@ -101,8 +80,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
-        .nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -111,6 +89,16 @@ describe('PowerBIQnaEmbedComponent', () => {
   });
 
   describe('Interaction with Power BI service', () => {
+    let mockPowerBIService: any;
+
+    beforeEach(() => {
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
+    });
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
     it('embeds qna visual when accessToken provided', () => {
       // Arrange
       const config = {
@@ -122,8 +110,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -143,8 +129,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -158,10 +142,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       // Arrange
       const config = {
         type: 'qna',
-        id: 'fakeId',
         datasetIds: [],
-        embedUrl: 'fakeUrl',
-        accessToken: undefined,
       };
 
       const newConfig = {
@@ -174,8 +155,6 @@ describe('PowerBIQnaEmbedComponent', () => {
 
       // Act
       // Without accessToken (bootstrap)
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -190,9 +169,10 @@ describe('PowerBIQnaEmbedComponent', () => {
 
       // Act
       // With accessToken (embed)
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
@@ -211,8 +191,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         accessToken: 'fakeToken',
       };
 
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
+      // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -221,39 +200,12 @@ describe('PowerBIQnaEmbedComponent', () => {
       config.embedUrl = 'newFakeUrl';
 
       // Act
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
-    });
-
-    it('powerbi.reset called when component unmounts', () => {
-      // Arrange
-      const config = {
-        type: 'qna',
-        id: 'fakeId',
-        datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      fixture.detectChanges();
-
-      // Un-mount the component
-      fixture.destroy();
-      fixture.detectChanges();
-
-      // Assert
-      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
@@ -275,8 +227,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -288,6 +238,9 @@ describe('PowerBIQnaEmbedComponent', () => {
       // Act
       // With accessToken (embed)
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 

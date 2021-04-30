@@ -1,43 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { Embed, factories, IReportEmbedConfiguration, service } from 'powerbi-client';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Embed, IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
-
-@Component({
-  selector: 'powerbi-report[embedConfig]',
-  template: '<div class={{cssClassName}} #reportContainer></div>',
-})
 
 /**
  * Report component to embed the report, extends the Base Component
  */
-export class PowerBIReportEmbedComponent
-  extends PowerBIEmbedComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+@Component({
+  selector: 'powerbi-report[embedConfig]',
+  template: '<div class={{cssClassName}} #reportContainer></div>',
+})
+export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI report entity (Required)
-  @Input()
-  embedConfig!: IReportEmbedConfiguration;
+  // Configuration for embedding the PowerBI Report (Required)
+  @Input() embedConfig!: IReportEmbedConfiguration;
 
   // Phased embedding flag (Optional)
-  @Input()
-  phasedEmbedding?: boolean = false;
+  @Input() phasedEmbedding?: boolean = false;
 
   // Ref to the HTML div container element
-  @ViewChild('reportContainer')
-  private containerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('reportContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
@@ -63,11 +47,12 @@ export class PowerBIReportEmbedComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const prevEmbedConfig = changes.embedConfig
-      .previousValue as IReportEmbedConfiguration;
+    if (changes.embedConfig) {
+      const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
 
-    // Input from parent get updated, thus call embedOrUpdateReport function
-    this.embedOrUpdateReport(prevEmbedConfig);
+      // Input from parent get updated, thus call embedOrUpdateReport function
+      this.embedOrUpdateReport(prevEmbedConfig);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -75,29 +60,19 @@ export class PowerBIReportEmbedComponent
     if (this.containerRef.nativeElement) {
       // Decide to embed, load or bootstrap
       if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedEntity();
+        this.embedReport();
       } else {
-        this.embed = this.powerbi.bootstrap(
-          this.containerRef.nativeElement,
-          this.embedConfig
-        );
+        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
     }
   }
 
-  ngOnDestroy(): void {
-    // Clean up
-    if (this.containerRef.nativeElement) {
-      this.powerbi.reset(this.containerRef.nativeElement);
-    }
-  }
-
   /**
-   * Embed or load the PowerBI Entity based on phasedEmbedding flag
+   * Embed or load the PowerBI Report based on phasedEmbedding flag
    *
    * @returns void
    */
-  private embedEntity(): void {
+  private embedReport(): void {
     // Check if the HTML container is rendered and available
     if (!this.containerRef.nativeElement) {
       return;
@@ -112,7 +87,7 @@ export class PowerBIReportEmbedComponent
   }
 
   /**
-   * When component updates, choose to _embed_ or _load_ the powerbi entity
+   * When component updates, choose to _embed_ or _load_ the powerbi report
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
    * @param prevEmbedConfig IReportEmbedConfiguration
@@ -132,11 +107,8 @@ export class PowerBIReportEmbedComponent
 
     // Embed or load in the following scenario
     // Embed URL is updated (E.g. New report is to be embedded)
-    if (
-      this.containerRef.nativeElement &&
-      this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
-    ) {
-      this.embedEntity();
+    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
+      this.embedReport();
     }
   }
 }

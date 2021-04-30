@@ -1,41 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { mockedMethods, mockPowerBIService } from 'src/services/mockService';
-
 import { PowerBIVisualEmbedComponent } from './powerbi-visual-embed.component';
 
 describe('PowerBIVisualEmbedComponent', () => {
   let component: PowerBIVisualEmbedComponent;
   let fixture: ComponentFixture<PowerBIVisualEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIVisualEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
-    // Reset all methods in Power BI service spy object
-    mockedMethods.forEach((mockedMethod) => {
-      mockPowerBIService[mockedMethod].calls.reset();
-    });
+    fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
+    component = fixture.componentInstance;
   });
-
-  afterEach(() => {});
 
   describe('basic tests', () => {
-    it('is an Angular component', () => {
-      // Assert
-      expect(PowerBIVisualEmbedComponent).toBeTruthy();
-    });
-
     it('should create', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'visual',
         visualName: '',
@@ -51,8 +37,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
     it('renders exactly one div', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'visual',
         visualName: '',
@@ -69,8 +53,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
     it('renders exactly one iframe', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'visual',
         visualName: '',
@@ -89,8 +71,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'visual',
         visualName: '',
@@ -100,8 +80,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
-        .nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -110,6 +89,16 @@ describe('PowerBIVisualEmbedComponent', () => {
   });
 
   describe('Interaction with Power BI service', () => {
+    let mockPowerBIService: any;
+
+    beforeEach(() => {
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
+    });
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
     it('embeds visual when accessToken provided', () => {
       // Arrange
       const config = {
@@ -122,8 +111,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -143,8 +130,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -158,10 +143,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Arrange
       const config = {
         type: 'visual',
-        id: 'fakeId',
         visualName: '',
-        embedUrl: 'fakeUrl',
-        accessToken: undefined,
       };
 
       const newConfig = {
@@ -175,8 +157,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
       // Act
       // Without accessToken (bootstrap)
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -191,9 +171,10 @@ describe('PowerBIVisualEmbedComponent', () => {
 
       // Act
       // With accessToken (embed)
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
@@ -213,8 +194,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         accessToken: 'fakeToken',
       };
 
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
+      // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -223,40 +203,12 @@ describe('PowerBIVisualEmbedComponent', () => {
       config.embedUrl = 'newFakeUrl';
 
       // Act
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
-    });
-
-    it('powerbi.reset called when component unmounts', () => {
-      // Arrange
-      const config = {
-        type: 'visual',
-        id: 'fakeId',
-        visualName: 'fakeVisual',
-        pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      fixture.detectChanges();
-
-      // Un-mount the component
-      fixture.destroy();
-      fixture.detectChanges();
-
-      // Assert
-      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
@@ -280,8 +232,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -293,6 +243,9 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Act
       // With accessToken (embed)
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 

@@ -1,40 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { mockedMethods, mockPowerBIService } from 'src/services/mockService';
 import { PowerBIDashboardEmbedComponent } from './powerbi-dashboard-embed.component';
 
 describe('PowerBIDashboardEmbedComponent', () => {
   let component: PowerBIDashboardEmbedComponent;
   let fixture: ComponentFixture<PowerBIDashboardEmbedComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
-    // Reset all methods in Power BI service spy object
-    mockedMethods.forEach((mockedMethod) => {
-      mockPowerBIService[mockedMethod].calls.reset();
-    });
+    fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
+    component = fixture.componentInstance;
   });
-
-  afterEach(() => {});
 
   describe('basic tests', () => {
-    it('is an Angular component', () => {
-      // Assert
-      expect(PowerBIDashboardEmbedComponent).toBeTruthy();
-    });
-
     it('should create', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'dashboard',
       };
@@ -49,8 +36,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('renders exactly one div', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'dashboard',
       };
@@ -66,8 +51,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('renders exactly one iframe', () => {
       // Arrange
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'dashboard',
       };
@@ -85,8 +68,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Arrange
       const inputCssClasses = 'test-class another-test-class';
 
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       const config = {
         type: 'dashboard',
       };
@@ -95,8 +76,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.embedConfig = config;
       component.cssClassName = inputCssClasses;
       fixture.detectChanges();
-      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0]
-        .nativeElement;
+      const divElement: HTMLElement = fixture.debugElement.queryAll(By.css('div'))[0].nativeElement;
 
       // Assert
       expect(divElement.classList).toContain(inputCssClasses.split(' ')[0]);
@@ -105,6 +85,16 @@ describe('PowerBIDashboardEmbedComponent', () => {
   });
 
   describe('Interaction with Power BI service', () => {
+    let mockPowerBIService: any;
+
+    beforeEach(() => {
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
+    });
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
     it('embeds dashboard when accessToken provided', () => {
       // Arrange
       const config = {
@@ -115,8 +105,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -135,8 +123,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -150,9 +136,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Arrange
       const config = {
         type: 'dashboard',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: undefined,
       };
 
       const newConfig = {
@@ -164,8 +147,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
       // Act
       // Without accessToken (bootstrap)
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -180,9 +161,10 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
       // Act
       // With accessToken (embed)
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
@@ -200,8 +182,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
         accessToken: 'fakeToken',
       };
 
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
+      // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -210,38 +191,12 @@ describe('PowerBIDashboardEmbedComponent', () => {
       config.embedUrl = 'newFakeUrl';
 
       // Act
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
-    });
-
-    it('powerbi.reset called when component unmounts', () => {
-      // Arrange
-      const config = {
-        type: 'dashboard',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      fixture.detectChanges();
-
-      // Un-mount the component
-      fixture.destroy();
-      fixture.detectChanges();
-
-      // Assert
-      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
@@ -261,8 +216,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       };
 
       // Act
-      fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
-      component = fixture.componentInstance;
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
@@ -274,6 +227,9 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       // With accessToken (embed)
       component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       component.service = mockPowerBIService;
       fixture.detectChanges();
 

@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ITileEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
-import { TileConfigResponse } from 'src/interfaces';
+import { ConfigResponse } from 'src/interfaces';
+import { tileUrl } from '../../constants';
 
 @Component({
   selector: 'tile-embed',
   templateUrl: './tile-embed.component.html',
   styleUrls: ['./tile-embed.component.css'],
 })
-export class TileEmbedComponent implements OnInit {
+export class TileEmbedComponent {
   // Overall status message of embedding
-  displayMessage =
-    'The tile is bootstrapped. Click Embed Tile button to set the access token.';
+  displayMessage = 'The tile is bootstrapped. Click Embed Tile button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   tileClass = 'tile-container';
@@ -29,21 +29,14 @@ export class TileEmbedComponent implements OnInit {
 
   constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void {}
-
   async embedTile() {
-    // API Endpoint to get the Tile embed config
-    const tileUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Tiles/SampleTile';
-
-    let tileConfigResponse: TileConfigResponse;
+    let tileConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse
     try {
-      tileConfigResponse = await this.httpService.getTileEmbedConfig(tileUrl).toPromise();
+      tileConfigResponse = await this.httpService.getEmbedConfig(tileUrl).toPromise();
     } catch (error) {
-      console.error(
-        `Failed to fetch config for tile. Status: ${error.statusText} Status Code: ${error.status}`
-      );
+      console.error(`Failed to fetch config for tile. Status: ${error.statusText} Status Code: ${error.status}`);
       return;
     }
 

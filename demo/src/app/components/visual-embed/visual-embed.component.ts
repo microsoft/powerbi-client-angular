@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IVisualEmbedConfiguration, models } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
+import { reportUrl } from '../../constants';
 
 @Component({
   selector: 'visual-embed',
   templateUrl: './visual-embed.component.html',
   styleUrls: ['./visual-embed.component.css'],
 })
-export class VisualEmbedComponent implements OnInit {
+export class VisualEmbedComponent {
   // Overall status message of embedding
-  displayMessage =
-    'The visual is bootstrapped. Click Embed Visual button to set the access token.';
+  displayMessage = 'The visual is bootstrapped. Click Embed Visual button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   visualClass = 'visual-container';
@@ -29,23 +29,14 @@ export class VisualEmbedComponent implements OnInit {
 
   constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void {}
-
   async embedVisual() {
-    // API Endpoint to get the Visual embed config
-    const reportUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Reports/SampleReport';
-
     let visualConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse
     try {
-      visualConfigResponse = await this.httpService
-        .getTileEmbedConfig(reportUrl)
-        .toPromise();
+      visualConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error) {
-      console.error(
-        `Failed to fetch config for visual. Status: ${error.statusText} Status Code: ${error.status}`
-      );
+      console.error(`Failed to fetch config for visual. Status: ${error.statusText} Status Code: ${error.status}`);
       return;
     }
 

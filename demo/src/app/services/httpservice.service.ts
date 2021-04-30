@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ConfigResponse, TileConfigResponse } from '../../interfaces';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ConfigResponse } from '../../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +19,7 @@ export class HttpService {
   /**
    * @returns embed configuration
    */
-  getEmbedConfig(endpoint: string) {
+  getEmbedConfig(endpoint: string): Observable<ConfigResponse> {
     return this.httpClient.get<ConfigResponse>(endpoint);
-  }
-
-  /**
-   * @returns Tile embed configuration
-   */
-  getTileEmbedConfig(endpoint: string) {
-    return this.httpClient.get<TileConfigResponse>(endpoint);
   }
 }
