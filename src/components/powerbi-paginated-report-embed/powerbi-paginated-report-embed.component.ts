@@ -1,17 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, IEmbedConfiguration } from 'powerbi-client';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
@@ -22,16 +12,13 @@ import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component'
   selector: 'powerbi-paginated-report[embedConfig]',
   template: '<div class={{cssClassName}} #paginatedReportContainer></div>',
 })
-export class PowerBIPaginatedReportEmbedComponent
-  extends PowerBIEmbedComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Paginated report (Required)
   @Input() embedConfig!: IEmbedConfiguration;
 
   // Ref to the HTML div container element
-  @ViewChild('paginatedReportContainer')
-  private containerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('paginatedReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter

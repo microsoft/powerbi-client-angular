@@ -36,9 +36,7 @@ export class PaginatedReportEmbedComponent implements OnInit {
     try {
       paginatedReportConfigResponse = await this.httpService.getEmbedConfig(paginatedReportUrl).toPromise();
     } catch (error) {
-      console.error(
-        `Failed to fetch config for paginated report. Status: ${error.statusText} Status Code: ${error.status}`
-      );
+      console.error(`Failed to fetch config for paginated report. Status: ${error.statusText} Status Code: ${error.status}`);
       return;
     }
 
