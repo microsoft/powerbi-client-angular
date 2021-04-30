@@ -39,10 +39,9 @@ export class DashboardEmbedComponent {
     [
       'rendered',
       () => {
-        console.log('Dashoard has rendered');
+        console.log('Dashoard is rendered');
 
         // Update display message
-        this.displayMessage = 'The dashboard is rendered';
         this.displayMessage = 'The dashboard is rendered';
       },
     ],
@@ -64,7 +63,7 @@ export class DashboardEmbedComponent {
     [
       'visualClicked',
       () => {
-        this.displayMessage = 'Visual Clicked';
+        this.displayMessage = 'visual Clicked';
         console.log('visual clicked');
       },
     ],

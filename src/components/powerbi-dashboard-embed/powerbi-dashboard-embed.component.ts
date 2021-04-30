@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { stringifyMap } from 'dist/powerbi-embed/utils/utils';
+import { stringifyMap } from '../../utils/utils';
 import { Dashboard, Embed, IDashboardEmbedConfiguration, service } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
@@ -118,6 +118,13 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
     }
   }
 
+  /**
+   * Sets all event handlers from the input on the embedded entity
+   *
+   * @param embed Embedded object
+   * @param eventHandlerMap Array of event handlers to be set on embedded entity
+   * @returns void
+   */
   private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
     // Get string representation of eventHandlerMap
     const eventHandlerMapString = stringifyMap(this.eventHandlers);
