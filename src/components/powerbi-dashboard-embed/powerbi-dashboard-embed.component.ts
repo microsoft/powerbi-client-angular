@@ -12,8 +12,14 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { Dashboard } from 'dashboard';
 import { Embed, factories, IDashboardEmbedConfiguration, service } from 'powerbi-client';
-import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { stringifyMap } from '../../utils/utils';
+import {
+  EventHandler,
+  PowerBIEmbedComponent,
+} from '../powerbi-embed/powerbi-embed.component';
+
 
 @Component({
   selector: 'powerbi-dashboard[embedConfig]',
@@ -34,6 +40,9 @@ export class PowerBIDashboardEmbedComponent
   // Ref to the HTML div container element
   @ViewChild('dashboardContainer')
   private containerRef!: ElementRef<HTMLDivElement>;
+
+  // JSON stringify of prev event handler map
+  private prevEventHandlerMapString = '';
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
@@ -64,6 +73,11 @@ export class PowerBIDashboardEmbedComponent
 
     // Input from parent get updated, thus call embedOrUpdateDashboard function
     this.embedOrUpdateDashboard(prevEmbedConfig);
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      this.setEventHandlers(this.embed, this.eventHandlers);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -78,6 +92,11 @@ export class PowerBIDashboardEmbedComponent
           this.embedConfig
         );
       }
+    }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      this.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
@@ -128,6 +147,53 @@ export class PowerBIDashboardEmbedComponent
       this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl
     ) {
       this.embedEntity();
+    }
+  }
+
+  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
+    // Get string representation of eventHandlerMap
+    const eventHandlerMapString = stringifyMap(this.eventHandlers);
+
+    // Check if event handler map changed
+    if (this.prevEventHandlerMapString === eventHandlerMapString) {
+      return;
+    }
+
+    // Update prev string representation of event handler map
+    this.prevEventHandlerMapString = eventHandlerMapString;
+
+    // List of allowed events
+    let allowedEvents = Embed.allowedEvents;
+
+    // Append entity specific events
+    allowedEvents = [...allowedEvents, ...Dashboard.allowedEvents];
+
+    // Holds list of events which are not allowed
+    const invalidEvents: Array<string> = [];
+
+    // Apply all provided event handlers
+    eventHandlerMap.forEach((eventHandlerMethod, eventName) => {
+      // Check if this event is allowed
+      if (allowedEvents.includes(eventName)) {
+        // Removes event handler for this event
+        embed.off(eventName);
+
+        // Event handler is effectively removed for this event when eventHandlerMethod is null
+        if (eventHandlerMethod) {
+          // Set single event handler
+          embed.on(eventName, (event: service.ICustomEvent<any>): void => {
+            eventHandlerMethod(event, this.embed);
+          });
+        }
+      } else {
+        // Add this event name to the list of invalid events
+        invalidEvents.push(eventName);
+      }
+    });
+
+    // Handle invalid events
+    if (invalidEvents.length) {
+      console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
     }
   }
 }
