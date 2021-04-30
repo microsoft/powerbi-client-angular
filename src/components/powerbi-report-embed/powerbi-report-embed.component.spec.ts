@@ -88,7 +88,7 @@ describe('PowerBIReportEmbedComponent', () => {
     let mockPowerBIService: any;
 
     beforeEach(() => {
-      mockPowerBIService = jasmine.createSpyObj('mockService', ['load', 'embed', 'bootstrap', 'reset']);
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['load', 'embed', 'bootstrap']);
     });
 
     afterEach(() => {
