@@ -125,7 +125,10 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
    * @param eventHandlerMap Array of event handlers to be set on embedded entity
    * @returns void
    */
-  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
+   private setEventHandlers(
+    embed: Embed,
+    eventHandlerMap: Map<string, EventHandler | null>
+  ): void {
     // Get string representation of eventHandlerMap
     const eventHandlerMapString = stringifyMap(this.eventHandlers);
 
@@ -142,7 +145,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
 
     // Append entity specific events
     allowedEvents = [...allowedEvents, ...Dashboard.allowedEvents];
-    console.log(allowedEvents);
 
     // Holds list of events which are not allowed
     const invalidEvents: Array<string> = [];
@@ -160,7 +162,6 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
           embed.on(eventName, (event: service.ICustomEvent<any>): void => {
             eventHandlerMethod(event, this.embed);
           });
-          console.log(`event set: ${eventName}`);
         }
       } else {
         // Add this event name to the list of invalid events
