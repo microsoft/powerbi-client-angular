@@ -6,9 +6,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PowerBIPaginatedReportEmbedComponent } from './powerbi-paginated-report-embed.component';
 
-const mockedMethods = ['embed', 'reset'];
-const mockPowerBIService = jasmine.createSpyObj('mockService', mockedMethods);
-
 describe('PowerBIPaginatedReportEmbedComponent', () => {
   let component: PowerBIPaginatedReportEmbedComponent;
   let fixture: ComponentFixture<PowerBIPaginatedReportEmbedComponent>;
@@ -23,11 +20,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
   });
 
   describe('basic tests', () => {
-    it('is an Angular component', () => {
-      // Assert
-      expect(PowerBIPaginatedReportEmbedComponent).toBeTruthy();
-    });
-
     it('should create', () => {
       // Arrange
       const config = {
@@ -105,11 +97,14 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
   });
 
   describe('Interaction with Power BI service', () => {
+    let mockPowerBIService: any;
+
+    beforeEach(() => {
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'reset']);
+    });
+
     afterEach(() => {
-      // Reset all methods in Power BI service spy object
-      mockedMethods.forEach((mockedMethod) => {
-        mockPowerBIService[mockedMethod].calls.reset();
-      });
+      fixture.destroy();
     });
 
     it('embeds paginated report when accessToken provided', () => {
@@ -154,28 +149,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
-    });
-
-    it('powerbi.reset called when component unmounts', () => {
-      // Arrange
-      const config = {
-        type: 'report',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
-      };
-
-      // Act
-      component.embedConfig = config;
-      component.service = mockPowerBIService;
-      fixture.detectChanges();
-
-      // Un-mount the component
-      fixture.destroy();
-      fixture.detectChanges();
-
-      // Assert
-      expect(mockPowerBIService.reset).toHaveBeenCalledTimes(1);
     });
 
     it('does not embed again when accessToken and embedUrl are same', () => {
