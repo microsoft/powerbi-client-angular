@@ -42,6 +42,10 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
     super();
   }
 
+  public getDashboard(): Dashboard {
+    return this.embed as Dashboard;
+  }
+
   ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
@@ -125,10 +129,7 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
    * @param eventHandlerMap Array of event handlers to be set on embedded entity
    * @returns void
    */
-   private setEventHandlers(
-    embed: Embed,
-    eventHandlerMap: Map<string, EventHandler | null>
-  ): void {
+  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
     // Get string representation of eventHandlerMap
     const eventHandlerMapString = stringifyMap(this.eventHandlers);
 

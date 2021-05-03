@@ -2,8 +2,6 @@
 Licensed under the MIT License. -->
 
 <button class="embed-btn" (click)="embedDashboard()">Embed Dashboard</button>
-<button (click)="updateEvents()">Update Events</button>
 <div>{{ displayMessage }}</div>
 
-<powerbi-dashboard [embedConfig]="dashboardConfig" [cssClassName]="dashboardClass" [eventHandlers]="eventHandlersMap">
-</powerbi-dashboard>
+<powerbi-dashboard [embedConfig]="dashboardConfig" [cssClassName]="dashboardClass" [eventHandlers]="eventHandlersMap"> </powerbi-dashboard>

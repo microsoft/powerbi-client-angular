@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -11,7 +12,7 @@ import { ConfigResponse } from 'src/interfaces';
   templateUrl: './dashboard-embed.component.html',
   styleUrls: ['./dashboard-embed.component.css'],
 })
-export class DashboardEmbedComponent {
+export class DashboardEmbedComponent implements OnInit {
   // Overall status message of embedding
   displayMessage = 'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
 
@@ -27,22 +28,17 @@ export class DashboardEmbedComponent {
     accessToken: undefined,
   };
 
-  // Map of event handlers to be applied to the embedding report
+  // Map of event handlers to be applied to the embedding dashboard
+  // Can provide more events from here
+  // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/dashboard.ts#L30
   eventHandlersMap = new Map([
     [
       'loaded',
       () => {
-        this.displayMessage = 'Dashboard has loaded';
         console.log('Dashboard has loaded');
-      },
-    ],
-    [
-      'rendered',
-      () => {
-        console.log('Dashoard is rendered');
 
         // Update display message
-        this.displayMessage = 'The dashboard is rendered';
+        this.displayMessage = 'Dashboard has loaded';
       },
     ],
     [
@@ -53,25 +49,12 @@ export class DashboardEmbedComponent {
         }
       },
     ],
-    [
-      'errorEvent',
-      () => {
-        this.displayMessage = 'Test error';
-        console.log('Test error');
-      },
-    ],
-    [
-      'visualClicked',
-      () => {
-        this.displayMessage = 'visual Clicked';
-        console.log('visual clicked');
-      },
-    ],
+    ['tileClicked', (event) => console.log(event)],
   ]);
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   /**
    * Embeds the dashboard
@@ -80,8 +63,7 @@ export class DashboardEmbedComponent {
    */
   async embedDashboard(): Promise<void> {
     // API Endpoint to get the dashboard embed config
-    const dashboardUrl =
-      'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
+    const dashboardUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
 
     let dashboardConfigResponse: ConfigResponse;
 
@@ -102,21 +84,5 @@ export class DashboardEmbedComponent {
     };
 
     this.displayMessage = 'Access token is successfully set. Loading Power BI dashboard.';
-  }
-
-  /**
-   * Update event handlers for the Report object
-   * Set event handler to null if event needs to be removed
-   */
-  updateEvents() {
-    this.eventHandlersMap = new Map([
-      ['visualClicked', null],
-      [
-        'dataSelected',
-        () => {
-          console.log('Data selected');
-        },
-      ],
-    ]);
   }
 }
