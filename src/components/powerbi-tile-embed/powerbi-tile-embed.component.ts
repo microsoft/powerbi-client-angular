@@ -54,6 +54,11 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
       // Input from parent get updated, thus call embedOrUpdateDashboard function
       this.embedOrUpdateTile(prevEmbedConfig);
     }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      this.setEventHandlers(this.embed, this.eventHandlers);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -65,6 +70,11 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
       } else {
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
+    }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      this.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
