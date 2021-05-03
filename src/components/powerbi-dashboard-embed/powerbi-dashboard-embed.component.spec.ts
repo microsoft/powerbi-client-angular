@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { not } from '@angular/compiler/src/output/output_ast';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -246,6 +245,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
         accessToken: 'fakeToken',
       };
 
+      // Arrange
       component.embedConfig = config;
       fixture.detectChanges();
     });
@@ -290,7 +290,8 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testDashboard.on).toHaveBeenCalledTimes(0);
+      // Since, null is provided in all the event handlers on method is never called
+      expect(testDashboard.on).not.toHaveBeenCalled();
       expect(testDashboard.off).toHaveBeenCalledTimes(testEventHandlers.size);
     });
 
@@ -332,7 +333,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(testDashboard.off).not.toHaveBeenCalled();
     });
 
-    it('does not console error for supported events for embed object', () => {
+    it('does not consoles error for supported events for embed object', () => {
       // Arrange
       spyOn(console, 'error');
       const testEventHandlers = new Map([
@@ -352,7 +353,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('console error for invalid events', () => {
+    it('consoles error for invalid events', () => {
       // Arrange
       spyOn(console, 'error');
       const testEventHandlers = new Map([['invalidEvent01', () => console.log('invalid event 01')]]);
