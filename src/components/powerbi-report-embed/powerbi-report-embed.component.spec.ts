@@ -19,6 +19,10 @@ describe('PowerBIReportEmbedComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   describe('basic tests', () => {
     it('should create', () => {
       // Arrange
@@ -89,10 +93,6 @@ describe('PowerBIReportEmbedComponent', () => {
 
     beforeEach(() => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['load', 'embed', 'bootstrap']);
-    });
-
-    afterEach(() => {
-      fixture.destroy();
     });
 
     it('embeds report when accessToken provided', () => {

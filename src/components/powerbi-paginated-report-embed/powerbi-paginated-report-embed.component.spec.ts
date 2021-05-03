@@ -19,6 +19,10 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   describe('basic tests', () => {
     it('should create', () => {
       // Arrange
@@ -101,10 +105,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
     beforeEach(() => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed']);
-    });
-
-    afterEach(() => {
-      fixture.destroy();
     });
 
     it('embeds paginated report when accessToken provided', () => {

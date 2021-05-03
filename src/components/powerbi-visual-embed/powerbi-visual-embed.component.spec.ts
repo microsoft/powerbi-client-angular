@@ -19,6 +19,10 @@ describe('PowerBIVisualEmbedComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   describe('basic tests', () => {
     it('should create', () => {
       // Arrange
@@ -93,10 +97,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
     beforeEach(() => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
-    });
-
-    afterEach(() => {
-      fixture.destroy();
     });
 
     it('embeds visual when accessToken provided', () => {

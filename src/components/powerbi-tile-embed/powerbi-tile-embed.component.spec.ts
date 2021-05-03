@@ -19,6 +19,10 @@ describe('PowerBITileEmbedComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   describe('basic tests', () => {
     it('should create', () => {
       // Arrange
@@ -93,10 +97,6 @@ describe('PowerBITileEmbedComponent', () => {
 
     beforeEach(() => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
-    });
-
-    afterEach(() => {
-      fixture.destroy();
     });
 
     it('embeds tile when accessToken provided', () => {

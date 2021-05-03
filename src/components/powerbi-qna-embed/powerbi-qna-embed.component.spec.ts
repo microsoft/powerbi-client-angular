@@ -19,6 +19,10 @@ describe('PowerBIQnaEmbedComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   describe('basic tests', () => {
     it('should create', () => {
       // Arrange
@@ -93,10 +97,6 @@ describe('PowerBIQnaEmbedComponent', () => {
 
     beforeEach(() => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
-    });
-
-    afterEach(() => {
-      fixture.destroy();
     });
 
     it('embeds qna visual when accessToken provided', () => {
