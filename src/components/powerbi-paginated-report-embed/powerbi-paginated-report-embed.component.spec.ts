@@ -15,6 +15,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       declarations: [PowerBIPaginatedReportEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -144,7 +145,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -182,7 +182,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

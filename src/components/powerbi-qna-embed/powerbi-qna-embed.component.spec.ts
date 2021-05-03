@@ -15,6 +15,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       declarations: [PowerBIQnaEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIQnaEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -173,7 +174,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -201,7 +201,6 @@ describe('PowerBIQnaEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -241,7 +240,6 @@ describe('PowerBIQnaEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

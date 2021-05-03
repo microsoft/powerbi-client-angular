@@ -15,6 +15,7 @@ describe('PowerBITileEmbedComponent', () => {
       declarations: [PowerBITileEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBITileEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -173,7 +174,6 @@ describe('PowerBITileEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -201,7 +201,6 @@ describe('PowerBITileEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -241,7 +240,6 @@ describe('PowerBITileEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

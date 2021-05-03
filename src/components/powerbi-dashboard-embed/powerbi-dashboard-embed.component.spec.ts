@@ -15,6 +15,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       declarations: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -165,7 +166,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -192,7 +192,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -230,7 +229,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

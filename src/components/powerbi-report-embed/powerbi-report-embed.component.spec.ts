@@ -15,6 +15,7 @@ describe('PowerBIReportEmbedComponent', () => {
       declarations: [PowerBIReportEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIReportEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -165,7 +166,6 @@ describe('PowerBIReportEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -192,7 +192,6 @@ describe('PowerBIReportEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -298,7 +297,6 @@ describe('PowerBIReportEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

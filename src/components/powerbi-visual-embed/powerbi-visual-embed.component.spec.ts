@@ -15,6 +15,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       declarations: [PowerBIVisualEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
     component = fixture.componentInstance;
   });
@@ -175,7 +176,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -204,7 +204,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -246,7 +245,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
