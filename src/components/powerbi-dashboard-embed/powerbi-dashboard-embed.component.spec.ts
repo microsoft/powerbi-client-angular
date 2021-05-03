@@ -15,8 +15,13 @@ describe('PowerBIDashboardEmbedComponent', () => {
       declarations: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIDashboardEmbedComponent);
     component = fixture.componentInstance;
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   describe('basic tests', () => {
@@ -91,10 +96,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
     });
 
-    afterEach(() => {
-      fixture.destroy();
-    });
-
     it('embeds dashboard when accessToken provided', () => {
       // Arrange
       const config = {
@@ -165,7 +166,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -192,7 +192,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -230,7 +229,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
