@@ -15,8 +15,13 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       declarations: [PowerBIPaginatedReportEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIPaginatedReportEmbedComponent);
     component = fixture.componentInstance;
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   describe('basic tests', () => {
@@ -103,10 +108,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed']);
     });
 
-    afterEach(() => {
-      fixture.destroy();
-    });
-
     it('embeds paginated report when accessToken provided', () => {
       // Arrange
       const config = {
@@ -144,7 +145,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -182,7 +182,6 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert

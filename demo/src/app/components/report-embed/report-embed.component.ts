@@ -34,7 +34,7 @@ export class ReportEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
-  async embedReport() {
+  async embedReport(): Promise<void> {
     let reportConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the reportConfigResponse
