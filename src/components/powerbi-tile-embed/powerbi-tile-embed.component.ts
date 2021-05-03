@@ -85,7 +85,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
    * @param prevEmbedConfig ITileEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdateTile(prevEmbedConfig: ITileEmbedConfiguration) {
+  private embedOrUpdateTile(prevEmbedConfig: ITileEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

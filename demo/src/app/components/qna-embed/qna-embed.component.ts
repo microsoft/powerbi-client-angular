@@ -29,7 +29,7 @@ export class QnaEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
-  async embedQna() {
+  async embedQna(): Promise<void> {
     let qnaConfigResponse: ConfigResponse;
     let datasetConfigResponse: ConfigResponse;
 

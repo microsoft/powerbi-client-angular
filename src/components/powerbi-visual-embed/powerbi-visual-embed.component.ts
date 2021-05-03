@@ -85,7 +85,7 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
    * @param prevEmbedConfig IVisualEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdateVisual(prevEmbedConfig: IVisualEmbedConfiguration) {
+  private embedOrUpdateVisual(prevEmbedConfig: IVisualEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

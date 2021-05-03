@@ -82,7 +82,7 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
    * @param prevEmbedConfig IEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdatedPaginatedReport(prevEmbedConfig: IEmbedConfiguration) {
+  private embedOrUpdatedPaginatedReport(prevEmbedConfig: IEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

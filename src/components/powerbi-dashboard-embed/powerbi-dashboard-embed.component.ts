@@ -85,7 +85,7 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
    * @param prevEmbedConfig IDashboardEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdateDashboard(prevEmbedConfig: IDashboardEmbedConfiguration) {
+  private embedOrUpdateDashboard(prevEmbedConfig: IDashboardEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

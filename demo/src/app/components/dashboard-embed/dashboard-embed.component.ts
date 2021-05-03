@@ -30,7 +30,7 @@ export class DashboardEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
-  async embedDashboard() {
+  async embedDashboard(): Promise<void> {
     let dashboardConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the dashboardConfigResponse

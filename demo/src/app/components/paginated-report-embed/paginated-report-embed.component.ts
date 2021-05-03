@@ -25,11 +25,11 @@ export class PaginatedReportEmbedComponent implements OnInit {
 
   constructor(public httpService: HttpService) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     await this.embedPaginatedReport();
   }
 
-  async embedPaginatedReport() {
+  async embedPaginatedReport(): Promise<void> {
     let paginatedReportConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the paginatedReportConfigResponse

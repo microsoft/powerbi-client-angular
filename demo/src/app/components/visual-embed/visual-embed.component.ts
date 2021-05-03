@@ -29,7 +29,7 @@ export class VisualEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
-  async embedVisual() {
+  async embedVisual(): Promise<void> {
     let visualConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse
