@@ -1,4 +1,3 @@
-import { Dashboard } from 'powerbi-client';
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 

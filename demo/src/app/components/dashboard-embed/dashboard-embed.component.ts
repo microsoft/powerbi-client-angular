@@ -1,4 +1,3 @@
-import { OnInit } from '@angular/core';
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -12,7 +11,7 @@ import { ConfigResponse } from 'src/interfaces';
   templateUrl: './dashboard-embed.component.html',
   styleUrls: ['./dashboard-embed.component.css'],
 })
-export class DashboardEmbedComponent implements OnInit {
+export class DashboardEmbedComponent {
   // Overall status message of embedding
   displayMessage = 'The dashboard is bootstrapped. Click Embed Dashboard button to set the access token.';
 
@@ -28,8 +27,12 @@ export class DashboardEmbedComponent implements OnInit {
     accessToken: undefined,
   };
 
-  // Map of event handlers to be applied to the embedding dashboard
-  // Can provide more events from here
+  /**
+   * Map of event handlers to be applied to the embedding report
+   */
+  // Update event handlers for the report by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
   // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/dashboard.ts#L30
   eventHandlersMap = new Map([
     [
@@ -53,8 +56,6 @@ export class DashboardEmbedComponent implements OnInit {
   ]);
 
   constructor(public httpService: HttpService) {}
-
-  ngOnInit(): void {}
 
   /**
    * Embeds the dashboard

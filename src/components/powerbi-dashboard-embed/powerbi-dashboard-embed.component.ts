@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { stringifyMap } from '../../utils/utils';
 import { Dashboard, Embed, IDashboardEmbedConfiguration, service } from 'powerbi-client';
+import { stringifyMap } from '../../utils/utils';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
