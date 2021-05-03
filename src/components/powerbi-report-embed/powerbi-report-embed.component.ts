@@ -93,7 +93,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
    * @param prevEmbedConfig IReportEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdateReport(prevEmbedConfig: IReportEmbedConfiguration) {
+  private embedOrUpdateReport(prevEmbedConfig: IReportEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

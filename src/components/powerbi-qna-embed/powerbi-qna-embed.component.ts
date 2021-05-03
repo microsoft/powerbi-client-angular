@@ -85,7 +85,7 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
    * @param prevEmbedConfig IQnaEmbedConfiguration
    * @returns void
    */
-  private embedOrUpdateQna(prevEmbedConfig: IQnaEmbedConfiguration) {
+  private embedOrUpdateQna(prevEmbedConfig: IQnaEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
