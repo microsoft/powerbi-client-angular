@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { not } from '@angular/compiler/src/output/output_ast';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -236,7 +237,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
     });
   });
 
-  describe('Dashboard events', () => {
+  describe('Tests for setting event handlers', () => {
     beforeEach(() => {
       const config = {
         type: 'dashboard',
@@ -249,7 +250,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
     });
 
-    it('sets and resets event handlers', () => {
+    it('clears previous event handlers and sets new event handlers', () => {
       // Arrange
       const testDashboard = component.getDashboard();
       spyOn(testDashboard, 'on');
@@ -262,7 +263,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, false),
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
       fixture.detectChanges();
 
@@ -284,7 +285,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, false),
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
       fixture.detectChanges();
 
@@ -307,7 +308,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, false),
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
       fixture.detectChanges();
 
@@ -327,8 +328,8 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testDashboard.on).toHaveBeenCalledTimes(0);
-      expect(testDashboard.off).toHaveBeenCalledTimes(0);
+      expect(testDashboard.on).not.toHaveBeenCalled();
+      expect(testDashboard.off).not.toHaveBeenCalled();
     });
 
     it('does not console error for supported events for embed object', () => {
@@ -343,32 +344,29 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, false),
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
       fixture.detectChanges();
 
       // Assert
-      expect(console.error).toHaveBeenCalledTimes(0);
+      expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('console log for invalid events', () => {
+    it('console error for invalid events', () => {
       // Arrange
       spyOn(console, 'error');
-      const testEventHandlers = new Map([
-        ['invalidEvent01', () => console.log('invalid event 01')],
-        ['invalidEvent02', () => console.log('invalid event 02')],
-        ['invalidEvent03', null],
-      ]);
+      const testEventHandlers = new Map([['invalidEvent01', () => console.log('invalid event 01')]]);
+      const expectedError = 'Following events are invalid: invalidEvent01';
 
       // Act
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, false),
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
       fixture.detectChanges();
 
       // Assert
-      expect(console.error).toHaveBeenCalledTimes(1);
+      expect(console.error).toHaveBeenCalledWith(expectedError);
     });
   });
 });
