@@ -4,4 +4,4 @@ Licensed under the MIT License. -->
 <button class="embed-btn" (click)="embedQna()">Embed Q&A Visual</button>
 <div>{{ displayMessage }}</div>
 
-<powerbi-qna [embedConfig]="qnaConfig" [cssClassName]="qnaClass"> </powerbi-qna>
+<powerbi-qna [embedConfig]="qnaConfig" [cssClassName]="qnaClass" [eventHandlers]="eventHandlersMap"> </powerbi-qna>

@@ -24,7 +24,7 @@ describe('PowerBIQnaEmbedComponent', () => {
     fixture.destroy();
   });
 
-  describe('basic tests', () => {
+  describe('Basic tests', () => {
     it('should create', () => {
       // Arrange
       const config = {
@@ -244,6 +244,161 @@ describe('PowerBIQnaEmbedComponent', () => {
 
       // Assert
       expect(mockPowerBIService.embed).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Tests for setting event handlers', () => {
+    beforeEach(() => {
+      const config = {
+        type: 'qna',
+        id: 'fakeId',
+        datasetIds: ['fakeId'],
+        embedUrl: 'fakeUrl',
+        accessToken: 'fakeToken',
+      };
+
+      // Arrange
+      component.embedConfig = config;
+      fixture.detectChanges();
+    });
+
+    it('clears previous event handlers and sets new event handlers', () => {
+      // Arrange
+      const testEventHandlers = new Map([
+        ['visualRendered', () => { }],
+        ['error', () => { }],
+        ['loaded', () => { }],
+      ]);
+
+      // Act
+      // Initialize testQna
+      const testQna = component.getQna();
+
+      spyOn(testQna, 'on');
+      spyOn(testQna, 'off');
+
+      component.eventHandlers = testEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testQna.on).toHaveBeenCalledTimes(testEventHandlers.size);
+      expect(testQna.off).toHaveBeenCalledTimes(testEventHandlers.size);
+    });
+
+    it('reset event handlers in case of null provided', () => {
+      // Arrange
+      const testEventHandlers = new Map([
+        ['visualRendered', null],
+        ['error', null],
+        ['loaded', null],
+      ]);
+
+      // Act
+      // Initialize testQna
+      const testQna = component.getQna();
+
+      spyOn(testQna, 'on');
+      spyOn(testQna, 'off');
+
+      component.eventHandlers = testEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      // Since, null is provided in all the event handlers, 'on' method is never called
+      expect(testQna.on).not.toHaveBeenCalled();
+      expect(testQna.off).toHaveBeenCalledTimes(testEventHandlers.size);
+    });
+
+    it('does not set same map again', () => {
+      // Arrange
+      const testEventHandlers = new Map([
+        ['visualRendered', () => { }],
+        ['error', () => { }],
+        ['loaded', () => { }],
+      ]);
+      const newEventHandlers = testEventHandlers;
+
+      // Act
+      // Initialize testQna
+      const testQna = component.getQna();
+
+      const spyForOn = spyOn(testQna, 'on');
+      const spyForOff = spyOn(testQna, 'off');
+
+      component.eventHandlers = testEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testQna.on).toHaveBeenCalledTimes(testEventHandlers.size);
+      expect(testQna.off).toHaveBeenCalledTimes(testEventHandlers.size);
+
+      // Reset for next Act
+      spyForOn.calls.reset();
+      spyForOff.calls.reset();
+
+      // Act
+      component.eventHandlers = newEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(testEventHandlers, component.eventHandlers, false),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testQna.on).not.toHaveBeenCalled();
+      expect(testQna.off).not.toHaveBeenCalled();
+    });
+
+    it('does not consoles error for supported events for embed object', () => {
+      // Arrange
+      const testEventHandlers = new Map([
+        ['visualRendered', () => { }],
+        ['error', () => { }],
+        ['loaded', () => { }],
+      ]);
+
+      // Act
+      spyOn(console, 'error');
+
+      component.eventHandlers = testEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(console.error).not.toHaveBeenCalled();
+    });
+
+    it('consoles error for invalid events', () => {
+      // Arrange
+      const invalidEvent1 = 'invalidEvent1';
+      const invalidEvent2 = 'invalidEvent2';
+      const testEventHandlers = new Map([
+        [invalidEvent1, () => { }],
+        [invalidEvent2, () => { }],
+      ]);
+      const expectedError = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
+
+      // Act
+      spyOn(console, 'error');
+
+      component.eventHandlers = testEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(console.error).toHaveBeenCalledWith(expectedError);
     });
   });
 });
