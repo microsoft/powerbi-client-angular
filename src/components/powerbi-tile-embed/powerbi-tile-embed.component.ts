@@ -18,6 +18,9 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   // Configuration for embedding the PowerBI Tile (Required)
   @Input() embedConfig!: ITileEmbedConfiguration;
 
+  // Map of pair of event name and its handler method to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
+
   // Ref to the HTML div container element
   @ViewChild('tileContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
@@ -138,7 +141,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     if (this.prevEventHandlerMapString === eventHandlerMapString) {
       return;
     }
-    
+
     // Update prev string representation of event handler map
     this.prevEventHandlerMapString = eventHandlerMapString;
 

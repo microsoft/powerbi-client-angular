@@ -24,9 +24,6 @@ export class PowerBIEmbedComponent implements OnInit {
   // Provide a custom implementation of Power BI service (Optional)
   @Input() service?: service.Service;
 
-  // Map of pair of event name and its handler method to be triggered on the event (Optional)
-  @Input() eventHandlers?: Map<string, EventHandler | null>;
-
   // Power BI service
   powerbi!: service.Service;
 
