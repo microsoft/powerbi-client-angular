@@ -10,7 +10,6 @@ import { reportUrl } from '../../constants';
 @Component({
   selector: 'report-embed',
   templateUrl: './report-embed.component.html',
-  styleUrls: ['./report-embed.component.css'],
 })
 export class ReportEmbedComponent {
   // Overall status message of embedding

@@ -10,7 +10,6 @@ import { datasetUrl, qnaUrl } from '../../constants';
 @Component({
   selector: 'qna-embed',
   templateUrl: './qna-embed.component.html',
-  styleUrls: ['./qna-embed.component.css'],
 })
 export class QnaEmbedComponent {
   // Overall status message of embedding

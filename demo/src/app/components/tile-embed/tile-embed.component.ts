@@ -10,7 +10,6 @@ import { tileUrl } from '../../constants';
 @Component({
   selector: 'tile-embed',
   templateUrl: './tile-embed.component.html',
-  styleUrls: ['./tile-embed.component.css'],
 })
 export class TileEmbedComponent {
   // Overall status message of embedding

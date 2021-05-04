@@ -10,7 +10,6 @@ import { dashboardUrl } from '../../constants';
 @Component({
   selector: 'dashboard-embed',
   templateUrl: './dashboard-embed.component.html',
-  styleUrls: ['./dashboard-embed.component.css'],
 })
 export class DashboardEmbedComponent {
   // Overall status message of embedding

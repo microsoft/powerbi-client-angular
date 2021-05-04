@@ -10,7 +10,6 @@ import { reportUrl } from '../../constants';
 @Component({
   selector: 'visual-embed',
   templateUrl: './visual-embed.component.html',
-  styleUrls: ['./visual-embed.component.css'],
 })
 export class VisualEmbedComponent {
   // Overall status message of embedding
