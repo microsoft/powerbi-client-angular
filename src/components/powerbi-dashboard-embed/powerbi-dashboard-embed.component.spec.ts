@@ -240,9 +240,6 @@ describe('PowerBIDashboardEmbedComponent', () => {
     beforeEach(() => {
       const config = {
         type: 'dashboard',
-        id: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
       };
 
       // Arrange
@@ -252,15 +249,18 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('clears previous event handlers and sets new event handlers', () => {
       // Arrange
-      const testDashboard = component.getDashboard();
-      spyOn(testDashboard, 'on');
-      spyOn(testDashboard, 'off');
       const testEventHandlers = new Map([
-        ['tileClicked', () => console.log('tile')],
-        ['error', () => console.log('error')],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
       ]);
 
       // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      spyOn(testDashboard, 'on');
+      spyOn(testDashboard, 'off');
+
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -274,15 +274,18 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('reset event handlers in case of null provided', () => {
       // Arrange
-      const testDashboard = component.getDashboard();
-      spyOn(testDashboard, 'on');
-      spyOn(testDashboard, 'off');
       const testEventHandlers = new Map([
         ['tileClicked', null],
         ['error', null],
       ]);
 
       // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      spyOn(testDashboard, 'on');
+      spyOn(testDashboard, 'off');
+
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -290,23 +293,26 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      // Since, null is provided in all the event handlers on method is never called
+      // Since, null is provided in all the event handlers, 'on' method is never called
       expect(testDashboard.on).not.toHaveBeenCalled();
       expect(testDashboard.off).toHaveBeenCalledTimes(testEventHandlers.size);
     });
 
     it('does not set same map again', () => {
       // Arrange
-      const testDashboard = component.getDashboard();
-      const spyForOn = spyOn(testDashboard, 'on');
-      const spyForOff = spyOn(testDashboard, 'off');
       const testEventHandlers = new Map([
-        ['tileClicked', () => console.log('tile')],
-        ['error', () => console.log('error')],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
       ]);
       const newEventHandlers = testEventHandlers;
 
       // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      const spyForOn = spyOn(testDashboard, 'on');
+      const spyForOff = spyOn(testDashboard, 'off');
+
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -335,14 +341,15 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('does not consoles error for supported events for embed object', () => {
       // Arrange
-      spyOn(console, 'error');
       const testEventHandlers = new Map([
-        ['loaded', () => console.log('loaded')],
-        ['tileClicked', () => console.log('tile clicked')],
+        ['loaded', () => {}],
+        ['tileClicked', () => {}],
         ['error', null],
       ]);
 
       // Act
+      spyOn(console, 'error');
+
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -355,11 +362,17 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
     it('consoles error for invalid events', () => {
       // Arrange
-      spyOn(console, 'error');
-      const testEventHandlers = new Map([['invalidEvent01', () => console.log('invalid event 01')]]);
-      const expectedError = 'Following events are invalid: invalidEvent01';
+      const invalidEvent1 = 'invalidEvent1';
+      const invalidEvent2 = 'invalidEvent2';
+      const testEventHandlers = new Map([
+        [invalidEvent1, () => {}],
+        [invalidEvent2, () => {}],
+      ]);
+      const expectedError = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
 
       // Act
+      spyOn(console, 'error');
+
       component.eventHandlers = testEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),

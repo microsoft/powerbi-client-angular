@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { IDashboardEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
+import { dashboardUrl } from '../../constants';
 
 @Component({
   selector: 'dashboard-embed',
@@ -53,6 +54,7 @@ export class DashboardEmbedComponent {
       },
     ],
     ['tileClicked', (event) => console.log(event)],
+    ['errorEvent', () => console.log('Test error')],
   ]);
 
   constructor(public httpService: HttpService) {}
@@ -63,9 +65,6 @@ export class DashboardEmbedComponent {
    * @returns Promise<void>
    */
   async embedDashboard(): Promise<void> {
-    // API Endpoint to get the dashboard embed config
-    const dashboardUrl = 'https://playgroundbe-bck-1.azurewebsites.net/Dashboards/SampleDashboard';
-
     let dashboardConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the dashboardConfigResponse
