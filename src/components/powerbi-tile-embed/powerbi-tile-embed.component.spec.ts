@@ -249,13 +249,10 @@ describe('PowerBITileEmbedComponent', () => {
 
   describe('Tests for setting event handlers', () => {
     beforeEach(() => {
-      const config = {
+      component.embedConfig = {
         type: 'tile',
         dashboardId: 'fakeDashboard',
       };
-
-      // Arrange
-      component.embedConfig = config;
       fixture.detectChanges();
     });
 
@@ -267,6 +264,7 @@ describe('PowerBITileEmbedComponent', () => {
         ['error', () => {}],
       ]);
 
+      // Act
       // Initialize testTile
       const testTile = component.getTile();
 
@@ -289,10 +287,11 @@ describe('PowerBITileEmbedComponent', () => {
       const eventHandlers = new Map([
         ['tileLoaded', null],
         ['tileClicked', null],
-        ['error', null],
+        ['error', () => {}],
       ]);
 
       // Act
+      // Initialize testTile
       const testTile = component.getTile();
 
       spyOn(testTile, 'on');
@@ -306,11 +305,11 @@ describe('PowerBITileEmbedComponent', () => {
 
       // Assert
       expect(testTile.off).toHaveBeenCalledTimes(eventHandlers.size);
-      // Since, null is provided in all the event handlers, 'on' method is never called
-      expect(testTile.on).not.toHaveBeenCalled();
+      // Two events are removed in new event handlers
+      expect(testTile.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
     });
 
-    it('does not console error for valid events of visual', () => {
+    it('does not console error for valid events of tile', () => {
       // Arrange
       const eventHandlers = new Map([
         ['tileLoaded', () => {}],
@@ -330,7 +329,7 @@ describe('PowerBITileEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('console error for invalid events', () => {
+    it('consoles error for invalid events', () => {
       // Arrange
       const invalidEvent1 = 'invalidEvent1';
       const invalidEvent2 = 'invalidEvent2';
@@ -362,15 +361,19 @@ describe('PowerBITileEmbedComponent', () => {
         ['error', () => {}],
       ]);
 
-      const newEventHandlers = eventHandlers;
+      const newEventHandlers = new Map([
+        ['tileLoaded', () => {}],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
+      ]);
 
       // Act
+      // Initialize testTile
       const testTile = component.getTile();
       fixture.detectChanges();
 
       const spyForOn = spyOn(testTile, 'on');
       const spyForOff = spyOn(testTile, 'off');
-
       component.eventHandlers = eventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -393,8 +396,8 @@ describe('PowerBITileEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testTile.on).not.toHaveBeenCalled();
-      expect(testTile.off).not.toHaveBeenCalled();
+      expect(testTile.on).toHaveBeenCalledTimes(0);
+      expect(testTile.off).toHaveBeenCalledTimes(0);
     });
   });
 });
