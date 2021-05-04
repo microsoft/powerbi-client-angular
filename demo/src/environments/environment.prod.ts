@@ -2,5 +2,5 @@
 // Licensed under the MIT License.
 
 export const environment = {
-  production: true
+  production: true,
 };
