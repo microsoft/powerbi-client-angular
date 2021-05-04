@@ -3,7 +3,7 @@
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, ITileEmbedConfiguration, service, Tile } from 'powerbi-client';
-import { stringifyMap } from 'src/utils/utils';
+import { stringifyMap } from '../../utils/utils';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
@@ -42,6 +42,11 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     super();
   }
 
+  // Public method to return embed object to calling function
+  public getTile(): Tile {
+    return this._embed as Tile;
+  }
+
   ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
@@ -51,7 +56,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      // Input from parent get updated, thus call embedOrUpdateTile function
       this.embedOrUpdateTile(prevEmbedConfig);
     }
 
@@ -125,7 +130,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
    * @param eventHandlerMap Array of event handlers to be set on embedded entity
    * @returns void
    */
-   private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
+  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
     // Get string representation of eventHandlerMap
     const eventHandlerMapString = stringifyMap(this.eventHandlers);
     // Check if event handler map changed
