@@ -10,7 +10,6 @@ import { paginatedReportUrl } from '../../constants';
 @Component({
   selector: 'paginated-report-embed',
   templateUrl: './paginated-report-embed.component.html',
-  styleUrls: ['./paginated-report-embed.component.css'],
 })
 export class PaginatedReportEmbedComponent implements OnInit {
   // Overall status message of embedding

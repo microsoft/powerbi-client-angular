@@ -1,7 +1,23 @@
 <!-- Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. -->
 
-<button class="embed-btn" (click)="embedQna()">Embed Q&A Visual</button>
-<div>{{ displayMessage }}</div>
+<div class="header">
+  <div class="title">Power BI Angular Q&A component demo</div>
+</div>
 
 <powerbi-qna [embedConfig]="qnaConfig" [cssClassName]="qnaClass" [eventHandlers]="eventHandlersMap"> </powerbi-qna>
+
+<div class="hr"></div>
+
+<div class="display-message">{{ displayMessage }}</div>
+
+<div class="controls">
+  <button (click)="embedQna()">Embed Q&A Visual</button>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    GitHub: &nbsp;
+    <a href="#"> # </a>
+  </div>
+</div>
