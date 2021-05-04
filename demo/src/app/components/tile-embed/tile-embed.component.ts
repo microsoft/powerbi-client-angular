@@ -58,7 +58,7 @@ export class TileEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
-  async embedTile() {
+  async embedTile(): Promise<void> {
     let tileConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the tileConfigResponse

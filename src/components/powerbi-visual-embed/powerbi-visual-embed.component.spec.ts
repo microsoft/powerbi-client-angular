@@ -15,8 +15,13 @@ describe('PowerBIVisualEmbedComponent', () => {
       declarations: [PowerBIVisualEmbedComponent],
     }).compileComponents();
 
+    // Arrange
     fixture = TestBed.createComponent(PowerBIVisualEmbedComponent);
     component = fixture.componentInstance;
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   describe('basic tests', () => {
@@ -95,10 +100,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
     });
 
-    afterEach(() => {
-      fixture.destroy();
-    });
-
     it('embeds visual when accessToken provided', () => {
       // Arrange
       const config = {
@@ -175,7 +176,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -204,7 +204,6 @@ describe('PowerBIVisualEmbedComponent', () => {
 
       // Act
       component.embedConfig = config;
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
@@ -246,7 +245,6 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
       });
-      component.service = mockPowerBIService;
       fixture.detectChanges();
 
       // Assert
