@@ -339,7 +339,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(testDashboard.off).not.toHaveBeenCalled();
     });
 
-    it('does not consoles error for supported events for embed object', () => {
+    it('does not console error for supported events for embed object', () => {
       // Arrange
       const testEventHandlers = new Map([
         ['loaded', () => {}],
@@ -360,7 +360,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('consoles error for invalid events', () => {
+    it('console error for invalid events', () => {
       // Arrange
       const invalidEvent1 = 'invalidEvent1';
       const invalidEvent2 = 'invalidEvent2';
