@@ -133,24 +133,30 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
     // Get string representation of eventHandlerMap
     const eventHandlerMapString = stringifyMap(this.eventHandlers);
+
     // Check if event handler map changed
     if (this.prevEventHandlerMapString === eventHandlerMapString) {
       return;
     }
     // Update prev string representation of event handler map
     this.prevEventHandlerMapString = eventHandlerMapString;
+
     // List of allowed events
     let allowedEvents = Embed.allowedEvents;
+
     // Append entity specific events
     allowedEvents = [...allowedEvents, ...Tile.allowedEvents];
+
     // Holds list of events which are not allowed
     const invalidEvents: Array<string> = [];
+
     // Apply all provided event handlers
     eventHandlerMap.forEach((eventHandlerMethod, eventName) => {
       // Check if this event is allowed
       if (allowedEvents.includes(eventName)) {
         // Removes event handler for this event
         embed.off(eventName);
+
         // Event handler is effectively removed for this event when eventHandlerMethod is null
         if (eventHandlerMethod) {
           // Set single event handler
@@ -163,6 +169,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
         invalidEvents.push(eventName);
       }
     });
+    
     // Handle invalid events
     if (invalidEvents.length) {
       console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
