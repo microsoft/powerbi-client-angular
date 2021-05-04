@@ -393,8 +393,8 @@ describe('PowerBITileEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testTile.on).toHaveBeenCalledTimes(0);
-      expect(testTile.off).toHaveBeenCalledTimes(0);
+      expect(testTile.on).not.toHaveBeenCalled();
+      expect(testTile.off).not.toHaveBeenCalled();
     });
   });
 });
