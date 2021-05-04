@@ -138,6 +138,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     if (this.prevEventHandlerMapString === eventHandlerMapString) {
       return;
     }
+    
     // Update prev string representation of event handler map
     this.prevEventHandlerMapString = eventHandlerMapString;
 
@@ -169,7 +170,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
         invalidEvents.push(eventName);
       }
     });
-    
+
     // Handle invalid events
     if (invalidEvents.length) {
       console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
