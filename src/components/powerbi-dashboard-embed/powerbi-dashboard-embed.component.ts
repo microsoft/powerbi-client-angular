@@ -18,6 +18,9 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
   // Configuration for embedding the PowerBI Dashboard (Required)
   @Input() embedConfig!: IDashboardEmbedConfiguration;
 
+  // Map of pair of event name and its handler method to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
+
   // Ref to the HTML div container element
   @ViewChild('dashboardContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
