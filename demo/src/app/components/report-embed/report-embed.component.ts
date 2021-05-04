@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { IReportEmbedConfiguration, models } from 'powerbi-client';
+import { IReportEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { reportUrl } from '../../constants';
@@ -30,6 +30,37 @@ export class ReportEmbedComponent {
     accessToken: undefined,
     settings: undefined,
   };
+
+  /**
+   * Map of event handlers to be applied to the embedding report
+   */
+  // Update event handlers for the report by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/report.ts#L55
+  eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+    ['loaded', () => console.log('Report has loaded')],
+    [
+      'rendered',
+      () => {
+        console.log('Report has rendered');
+
+        // Update display message
+        this.displayMessage = 'The report is rendered.';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['errorEvent', () => console.log('Test error')],
+    ['visualClicked', () => console.log('visual clicked')],
+    ['pageChanged', (event) => console.log(event)],
+  ]);
 
   constructor(public httpService: HttpService) {}
 
