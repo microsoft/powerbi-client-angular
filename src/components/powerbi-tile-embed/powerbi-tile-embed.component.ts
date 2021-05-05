@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, ITileEmbedConfiguration, service, Tile } from 'powerbi-client';
-import { stringifyMap } from '../../utils/utils';
+import { Embed, ITileEmbedConfiguration, Tile } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
@@ -27,9 +26,6 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
   private _embed?: Embed;
-
-  // JSON stringify of prev event handler map
-  private prevEventHandlerMapString = '';
 
   // Getter for this._embed
   private get embed(): Embed | undefined {
@@ -59,13 +55,19 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
+      // Check if the function is being called for the first time
+      // prevEmbedConfig will not be available
+      if (!prevEmbedConfig) {
+        return;
+      }
+
       // Input from parent get updated, thus call embedOrUpdateTile function
       this.embedOrUpdateTile(prevEmbedConfig);
     }
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
-      this.setEventHandlers(this.embed, this.eventHandlers);
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
@@ -82,7 +84,7 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
-      this.setEventHandlers(this.embed, this.eventHandlers);
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
@@ -113,70 +115,10 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
       return;
     }
 
-    // Check if the function is being called for the first time
-    // prevEmbedConfig will not be available
-    if (!prevEmbedConfig) {
-      return;
-    }
-
     // Embed in the following scenario
     // Embed URL is updated (E.g. New tile is to be embedded)
     if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedTile();
-    }
-  }
-
-  /**
-   * Sets all event handlers from the input on the embedded entity
-   *
-   * @param embed Embedded object
-   * @param eventHandlerMap Array of event handlers to be set on embedded entity
-   * @returns void
-   */
-  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
-    // Get string representation of eventHandlerMap
-    const eventHandlerMapString = stringifyMap(this.eventHandlers);
-
-    // Check if event handler map changed
-    if (this.prevEventHandlerMapString === eventHandlerMapString) {
-      return;
-    }
-
-    // Update prev string representation of event handler map
-    this.prevEventHandlerMapString = eventHandlerMapString;
-
-    // List of allowed events
-    let allowedEvents = Embed.allowedEvents;
-
-    // Append entity specific events
-    allowedEvents = [...allowedEvents, ...Tile.allowedEvents];
-
-    // Holds list of events which are not allowed
-    const invalidEvents: Array<string> = [];
-
-    // Apply all provided event handlers
-    eventHandlerMap.forEach((eventHandlerMethod, eventName) => {
-      // Check if this event is allowed
-      if (allowedEvents.includes(eventName)) {
-        // Removes event handler for this event
-        embed.off(eventName);
-
-        // Event handler is effectively removed for this event when eventHandlerMethod is null
-        if (eventHandlerMethod) {
-          // Set single event handler
-          embed.on(eventName, (event: service.ICustomEvent<any>): void => {
-            eventHandlerMethod(event, this.embed);
-          });
-        }
-      } else {
-        // Add this event name to the list of invalid events
-        invalidEvents.push(eventName);
-      }
-    });
-
-    // Handle invalid events
-    if (invalidEvents.length) {
-      console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
     }
   }
 }
