@@ -300,7 +300,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const eventHandlers = new Map([
         ['loaded', () => {}],
         ['tileClicked', () => {}],
-        ['error', null],
+        ['error', () => {}],
       ]);
 
       // Act
@@ -315,7 +315,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('console error for invalid events', () => {
+    it('consoles error for invalid events', () => {
       // Arrange
       const invalidEvent1 = 'invalidEvent1';
       const invalidEvent2 = 'invalidEvent2';
@@ -324,6 +324,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
         [invalidEvent1, () => {}],
         [invalidEvent2, () => {}],
       ]);
+
       const expectedErrorMessage = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
 
       // Act
@@ -338,7 +339,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(console.error).toHaveBeenCalledOnceWith(expectedErrorMessage);
     });
 
-    it('does not set same eventHandler map again', () => {
+    it('does not set the same eventHandler map again', () => {
       // Arrange
       const eventHandlers = new Map([
         ['loaded', () => {}],
