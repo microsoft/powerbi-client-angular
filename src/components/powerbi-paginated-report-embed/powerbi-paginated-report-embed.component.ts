@@ -47,7 +47,7 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      // Input from parent get updated, thus call embedOrUpdatedPaginatedReport function
       this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
     }
   }

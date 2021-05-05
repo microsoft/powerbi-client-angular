@@ -55,7 +55,7 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      // Input from parent get updated, thus call embedOrUpdateVisual function
       this.embedOrUpdateVisual(prevEmbedConfig);
     }
 
