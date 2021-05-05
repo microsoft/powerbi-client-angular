@@ -313,7 +313,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       expect(testQnA.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
     });
 
-    it('does not console error for valid events of qnA', () => {
+    it('does not console error for valid events of qna', () => {
       // Arrange
       const eventHandlers = new Map([
         ['loaded', () => {}],
