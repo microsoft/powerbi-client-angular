@@ -56,6 +56,10 @@ export class TileEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds tile from HTTP endpoint
+   * @returns Promise<void>
+   */
   async embedTile(): Promise<void> {
     let tileConfigResponse: ConfigResponse;
 

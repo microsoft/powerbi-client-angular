@@ -58,8 +58,7 @@ export class DashboardEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds the dashboard
-   *
+   * Embeds dashboard from HTTP endpoint
    * @returns Promise<void>
    */
   async embedDashboard(): Promise<void> {

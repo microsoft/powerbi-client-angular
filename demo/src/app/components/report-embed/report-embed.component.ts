@@ -63,6 +63,10 @@ export class ReportEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds report from HTTP endpoint
+   * @returns Promise<void>
+   */
   async embedReport(): Promise<void> {
     let reportConfigResponse: ConfigResponse;
 

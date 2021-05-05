@@ -54,6 +54,10 @@ export class VisualEmbedComponent {
 
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds visual from HTTP endpoint
+   * @returns Promise<void>
+   */
   async embedVisual(): Promise<void> {
     let visualConfigResponse: ConfigResponse;
 

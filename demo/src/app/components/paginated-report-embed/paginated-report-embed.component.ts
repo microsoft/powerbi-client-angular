@@ -28,6 +28,10 @@ export class PaginatedReportEmbedComponent implements OnInit {
     await this.embedPaginatedReport();
   }
 
+  /**
+   * Embeds Paginated report from HTTP endpoint
+   * @returns Promise<void>
+   */
   async embedPaginatedReport(): Promise<void> {
     let paginatedReportConfigResponse: ConfigResponse;
 
