@@ -263,9 +263,9 @@ describe('PowerBIQnaEmbedComponent', () => {
     it('clears previous event handlers and sets new event handlers', () => {
       // Arrange
       const eventHandlers = new Map([
-        ['loaded', () => { }],
-        ['visualRendered', () => { }],
-        ['error', () => { }],
+        ['loaded', () => {}],
+        ['visualRendered', () => {}],
+        ['error', () => {}],
       ]);
 
       // Act
@@ -291,7 +291,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       const eventHandlers = new Map([
         ['loaded', null],
         ['visualRendered', null],
-        ['error', () => { }],
+        ['error', () => {}],
       ]);
 
       // Act
@@ -316,9 +316,9 @@ describe('PowerBIQnaEmbedComponent', () => {
     it('does not console error for valid events of report', () => {
       // Arrange
       const eventHandlers = new Map([
-        ['loaded', () => { }],
-        ['visualRendered', () => { }],
-        ['error', () => { }],
+        ['loaded', () => {}],
+        ['visualRendered', () => {}],
+        ['error', () => {}],
       ]);
 
       // Act
@@ -339,8 +339,8 @@ describe('PowerBIQnaEmbedComponent', () => {
       const invalidEvent2 = 'invalidEvent2';
 
       const eventHandlers = new Map([
-        [invalidEvent1, () => { }],
-        [invalidEvent2, () => { }],
+        [invalidEvent1, () => {}],
+        [invalidEvent2, () => {}],
       ]);
 
       const expectedErrorMessage = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
@@ -360,15 +360,15 @@ describe('PowerBIQnaEmbedComponent', () => {
     it('does not set the same eventHandler map again', () => {
       // Arrange
       const eventHandlers = new Map([
-        ['loaded', () => { }],
-        ['visualRendered', () => { }],
-        ['error', () => { }],
+        ['loaded', () => {}],
+        ['visualRendered', () => {}],
+        ['error', () => {}],
       ]);
 
       const newEventHandlers = new Map([
-        ['loaded', () => { }],
-        ['visualRendered', () => { }],
-        ['error', () => { }],
+        ['loaded', () => {}],
+        ['visualRendered', () => {}],
+        ['error', () => {}],
       ]);
 
       // Act

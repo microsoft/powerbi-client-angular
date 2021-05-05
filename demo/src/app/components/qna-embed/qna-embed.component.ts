@@ -53,7 +53,7 @@ export class QnaEmbedComponent {
     ['errorEvent', () => console.log('Test error')],
   ]);
 
-  constructor(public httpService: HttpService) { }
+  constructor(public httpService: HttpService) {}
 
   async embedQna(): Promise<void> {
     let qnaConfigResponse: ConfigResponse;
