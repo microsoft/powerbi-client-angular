@@ -41,8 +41,8 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     super();
   }
 
-  // Public method to return embed object to calling function
-  public getTile(): Tile {
+  // Returns embed object to calling function
+  getTile(): Tile {
     return this._embed as Tile;
   }
 

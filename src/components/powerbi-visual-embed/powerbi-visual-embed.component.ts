@@ -41,8 +41,8 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
     super();
   }
 
-  // Public method to return embed object to calling function
-  public getVisual(): Visual {
+  // Returns embed object to calling function
+  getVisual(): Visual {
     return this._embed as Visual;
   }
 

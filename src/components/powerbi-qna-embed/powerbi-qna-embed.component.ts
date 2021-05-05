@@ -41,8 +41,8 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
     super();
   }
 
-  // Public method to return embed object to calling function
-  public getQna(): Qna {
+  // Returns embed object to calling function
+  getQna(): Qna {
     return this._embed as Qna;
   }
 

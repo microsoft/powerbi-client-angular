@@ -41,8 +41,8 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
     super();
   }
 
-  // Public method to return embed object to calling function
-  public getDashboard(): Dashboard {
+  // Returns embed object to calling function
+  getDashboard(): Dashboard {
     return this.embed as Dashboard;
   }
 

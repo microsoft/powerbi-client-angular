@@ -44,8 +44,8 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     super();
   }
 
-  // Public method to return embed object to calling function
-  public getReport(): Report {
+  // Returns embed object to calling function
+  getReport(): Report {
     return this._embed as Report;
   }
 
