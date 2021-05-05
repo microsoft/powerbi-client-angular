@@ -57,7 +57,6 @@ export class ReportEmbedComponent {
         }
       },
     ],
-    ['errorEvent', () => console.log('Test error')],
     ['visualClicked', () => console.log('visual clicked')],
     ['pageChanged', (event) => console.log(event)],
   ]);

@@ -50,7 +50,6 @@ export class QnaEmbedComponent {
         }
       },
     ],
-    ['errorEvent', () => console.log('Test error')],
   ]);
 
   constructor(public httpService: HttpService) {}

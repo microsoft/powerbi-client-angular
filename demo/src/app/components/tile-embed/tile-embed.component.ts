@@ -52,7 +52,6 @@ export class TileEmbedComponent {
       },
     ],
     ['tileClicked', (event) => console.log(event)],
-    ['errorEvent', () => console.log('Test error')],
   ]);
 
   constructor(public httpService: HttpService) {}

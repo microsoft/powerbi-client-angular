@@ -50,7 +50,6 @@ export class VisualEmbedComponent {
         }
       },
     ],
-    ['errorEvent', () => console.log('Test error')],
   ]);
 
   constructor(public httpService: HttpService) {}
