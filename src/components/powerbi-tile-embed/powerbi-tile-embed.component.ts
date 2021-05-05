@@ -55,12 +55,6 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
 
-      // Check if the function is being called for the first time
-      // prevEmbedConfig will not be available
-      if (!prevEmbedConfig) {
-        return;
-      }
-
       // Input from parent get updated, thus call embedOrUpdateTile function
       this.embedOrUpdateTile(prevEmbedConfig);
     }
@@ -112,6 +106,12 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   private embedOrUpdateTile(prevEmbedConfig: ITileEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
+      return;
+    }
+
+    // Check if the function is being called for the first time
+    // prevEmbedConfig will not be available
+    if (!prevEmbedConfig) {
       return;
     }
 
