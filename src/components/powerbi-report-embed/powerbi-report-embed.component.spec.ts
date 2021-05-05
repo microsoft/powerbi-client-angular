@@ -433,11 +433,11 @@ describe('PowerBIReportEmbedComponent', () => {
 
       // Act
       // Initialize testReport
-      const testVisual = component.getReport();
+      const testReport = component.getReport();
       fixture.detectChanges();
 
-      const spyForOn = spyOn(testVisual, 'on');
-      const spyForOff = spyOn(testVisual, 'off');
+      const spyForOn = spyOn(testReport, 'on');
+      const spyForOff = spyOn(testReport, 'off');
       component.eventHandlers = eventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
@@ -445,8 +445,8 @@ describe('PowerBIReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testVisual.on).toHaveBeenCalledTimes(eventHandlers.size);
-      expect(testVisual.off).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
 
       // Reset the calls for next act
       spyForOn.calls.reset();
@@ -460,8 +460,8 @@ describe('PowerBIReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testVisual.on).toHaveBeenCalledTimes(0);
-      expect(testVisual.off).toHaveBeenCalledTimes(0);
+      expect(testReport.on).toHaveBeenCalledTimes(0);
+      expect(testReport.off).toHaveBeenCalledTimes(0);
     });
   });
 });
