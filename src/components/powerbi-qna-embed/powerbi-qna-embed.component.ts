@@ -56,7 +56,7 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IQnaEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      // Input from parent get updated, thus call embedOrUpdateQna function
       this.embedOrUpdateQna(prevEmbedConfig);
     }
 

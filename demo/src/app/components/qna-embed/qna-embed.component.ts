@@ -27,8 +27,8 @@ export class QnaEmbedComponent {
   };
 
   /**
-    * Map of event handlers to be applied to the embedding qna
-    */
+   * Map of event handlers to be applied to the embedding qna
+   */
   // Update event handlers for the qna by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
   eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
@@ -39,7 +39,7 @@ export class QnaEmbedComponent {
         console.log('Qna visual has rendered');
 
         // Update display message
-        this.displayMessage = 'The qna visual is rendered';
+        this.displayMessage = 'The qna visual is rendered.';
       },
     ],
     [
