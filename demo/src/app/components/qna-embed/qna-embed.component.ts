@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { IQnaEmbedConfiguration, models } from 'powerbi-client';
+import { IQnaEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { datasetUrl, qnaUrl } from '../../constants';
@@ -25,6 +25,33 @@ export class QnaEmbedComponent {
     datasetIds: [],
     tokenType: models.TokenType.Embed,
   };
+
+  /**
+   * Map of event handlers to be applied to the embedding qna
+   */
+  // Update event handlers for the qna by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+    ['loaded', () => console.log('Qna has loaded')],
+    [
+      'visualRendered',
+      () => {
+        console.log('Qna visual has rendered');
+
+        // Update display message
+        this.displayMessage = 'The qna visual is rendered.';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['errorEvent', () => console.log('Test error')],
+  ]);
 
   constructor(public httpService: HttpService) {}
 
