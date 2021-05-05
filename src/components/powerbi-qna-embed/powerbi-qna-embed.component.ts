@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, IQnaEmbedConfiguration, Qna, service } from 'powerbi-client';
-import { stringifyMap } from '../../utils/utils';
+import { Embed, IQnaEmbedConfiguration, Qna } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
