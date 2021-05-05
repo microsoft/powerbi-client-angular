@@ -24,7 +24,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
     fixture.destroy();
   });
 
-  describe('basic tests', () => {
+  describe('Basic tests', () => {
     it('should create', () => {
       // Arrange
       const config = {
@@ -233,6 +233,157 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
       // Assert
       expect(mockPowerBIService.embed).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Tests for setting event handlers', () => {
+    beforeEach(() => {
+      component.embedConfig = { type: 'dashboard' };
+      fixture.detectChanges();
+    });
+
+    it('clears previous event handlers and sets new event handlers', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      spyOn(testDashboard, 'on');
+      spyOn(testDashboard, 'off');
+
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testDashboard.off).toHaveBeenCalledTimes(eventHandlers.size);
+    });
+
+    it('clears already set event handlers in case of null provided for event handler', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', null],
+        ['tileClicked', null],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      spyOn(testDashboard, 'on');
+      spyOn(testDashboard, 'off');
+
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testDashboard.off).toHaveBeenCalledTimes(eventHandlers.size);
+      // Two events are removed in new event handlers
+      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size -2);
+    });
+
+    it('does not console error for valid events of dashboard', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      spyOn(console, 'error');
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(console.error).not.toHaveBeenCalled();
+    });
+
+    it('consoles error for invalid events', () => {
+      // Arrange
+      const invalidEvent1 = 'invalidEvent1';
+      const invalidEvent2 = 'invalidEvent2';
+
+      const eventHandlers = new Map([
+        [invalidEvent1, () => {}],
+        [invalidEvent2, () => {}],
+      ]);
+
+      const expectedErrorMessage = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
+
+      // Act
+      spyOn(console, 'error');
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(console.error).toHaveBeenCalledOnceWith(expectedErrorMessage);
+    });
+
+    it('does not set the same eventHandler map again', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
+      ]);
+
+      const newEventHandlers = new Map([
+        ['loaded', () => {}],
+        ['tileClicked', () => {}],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+      fixture.detectChanges();
+
+      const spyForOn = spyOn(testDashboard, 'on');
+      const spyForOff = spyOn(testDashboard, 'off');
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testDashboard.off).toHaveBeenCalledTimes(eventHandlers.size);
+
+      // Reset the calls for next Act
+      spyForOn.calls.reset();
+      spyForOff.calls.reset();
+
+      // Act - with new eventHandlers
+      component.eventHandlers = newEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(eventHandlers, component.eventHandlers, false),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testDashboard.on).toHaveBeenCalledTimes(0);
+      expect(testDashboard.off).toHaveBeenCalledTimes(0);
     });
   });
 });

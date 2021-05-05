@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { IDashboardEmbedConfiguration, models } from 'powerbi-client';
+import { IDashboardEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { dashboardUrl } from '../../constants';
@@ -27,8 +27,42 @@ export class DashboardEmbedComponent {
     accessToken: undefined,
   };
 
+  /**
+   * Map of event handlers to be applied to the embedding dashboard
+   */
+  // Update event handlers for the dashboard by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/dashboard.ts#L30
+  eventHandlersMap = new Map([
+    [
+      'loaded',
+      () => {
+        console.log('Dashboard has loaded');
+
+        // Update display message
+        this.displayMessage = 'Dashboard has loaded';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['tileClicked', (event) => console.log(event)],
+    ['errorEvent', () => console.log('Test error')],
+  ]);
+
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds the dashboard
+   *
+   * @returns Promise<void>
+   */
   async embedDashboard(): Promise<void> {
     let dashboardConfigResponse: ConfigResponse;
 
