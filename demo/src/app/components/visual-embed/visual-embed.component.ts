@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { IVisualEmbedConfiguration, models } from 'powerbi-client';
+import { IVisualEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { reportUrl } from '../../constants';
@@ -25,6 +25,33 @@ export class VisualEmbedComponent {
     visualName: '',
     tokenType: models.TokenType.Embed,
   };
+
+  /**
+   * Map of event handlers to be applied to the embedding visual
+   */
+  // Update event handlers for the visual by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  eventHandlersMap = new Map([
+    ['loaded', () => console.log('Visual has loaded')],
+    [
+      'rendered',
+      () => {
+        console.log('Visual has rendered');
+
+        // Update display message
+        this.displayMessage = 'The visual is rendered.';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['errorEvent', () => console.log('Test error')],
+  ]);
 
   constructor(public httpService: HttpService) {}
 
