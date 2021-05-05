@@ -269,11 +269,11 @@ describe('PowerBIQnaEmbedComponent', () => {
       ]);
 
       // Act
-      // Initialize testReport
-      const testReport = component.getQna();
+      // Initialize testQnA
+      const testQnA = component.getQna();
 
-      spyOn(testReport, 'on');
-      spyOn(testReport, 'off');
+      spyOn(testQnA, 'on');
+      spyOn(testQnA, 'off');
 
       component.eventHandlers = eventHandlers;
       component.ngOnChanges({
@@ -282,8 +282,8 @@ describe('PowerBIQnaEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
-      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testQnA.off).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testQnA.on).toHaveBeenCalledTimes(eventHandlers.size);
     });
 
     it('clears already set event handlers in case of null provided for event handler', () => {
@@ -295,11 +295,11 @@ describe('PowerBIQnaEmbedComponent', () => {
       ]);
 
       // Act
-      // Initialize testReport
-      const testReport = component.getQna();
+      // Initialize testQnA
+      const testQnA = component.getQna();
 
-      spyOn(testReport, 'on');
-      spyOn(testReport, 'off');
+      spyOn(testQnA, 'on');
+      spyOn(testQnA, 'off');
 
       component.eventHandlers = eventHandlers;
       component.ngOnChanges({
@@ -308,12 +308,12 @@ describe('PowerBIQnaEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testQnA.off).toHaveBeenCalledTimes(eventHandlers.size);
       // Two events are removed in new event handlers
-      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
+      expect(testQnA.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
     });
 
-    it('does not console error for valid events of report', () => {
+    it('does not console error for valid events of qnA', () => {
       // Arrange
       const eventHandlers = new Map([
         ['loaded', () => {}],
@@ -372,7 +372,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       ]);
 
       // Act
-      // Initialize testReport
+      // Initialize testQnA
       const testVisual = component.getQna();
       fixture.detectChanges();
 
