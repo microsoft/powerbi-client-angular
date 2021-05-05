@@ -56,6 +56,7 @@ export class QnaEmbedComponent {
 
   /**
    * Embeds Qna visual from HTTP endpoint
+   *
    * @returns Promise<void>
    */
   async embedQna(): Promise<void> {

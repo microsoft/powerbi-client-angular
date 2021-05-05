@@ -59,6 +59,7 @@ export class DashboardEmbedComponent {
 
   /**
    * Embeds dashboard from HTTP endpoint
+   *
    * @returns Promise<void>
    */
   async embedDashboard(): Promise<void> {

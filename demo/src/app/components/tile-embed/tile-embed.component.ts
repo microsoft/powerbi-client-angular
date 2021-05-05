@@ -58,6 +58,7 @@ export class TileEmbedComponent {
 
   /**
    * Embeds tile from HTTP endpoint
+   *
    * @returns Promise<void>
    */
   async embedTile(): Promise<void> {

@@ -56,6 +56,7 @@ export class VisualEmbedComponent {
 
   /**
    * Embeds visual from HTTP endpoint
+   *
    * @returns Promise<void>
    */
   async embedVisual(): Promise<void> {
