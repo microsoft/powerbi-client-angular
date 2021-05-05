@@ -329,7 +329,7 @@ describe('PowerBITileEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('console error for invalid events', () => {
+    it('consoles error for invalid events', () => {
       // Arrange
       const invalidEvent1 = 'invalidEvent1';
       const invalidEvent2 = 'invalidEvent2';
