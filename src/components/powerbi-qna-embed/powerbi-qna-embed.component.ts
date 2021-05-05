@@ -18,11 +18,11 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
   // Configuration for embedding the PowerBI Qna visual (Required)
   @Input() embedConfig!: IQnaEmbedConfiguration;
 
+  // Map of pair of event name and its handler method to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
+
   // Ref to the HTML div container element
   @ViewChild('qnaContainer') private containerRef!: ElementRef<HTMLDivElement>;
-
-  // JSON stringify of prev event handler map
-  private prevEventHandlerMapString = '';
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
@@ -62,7 +62,7 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
-      this.setEventHandlers(this.embed, this.eventHandlers);
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
@@ -79,7 +79,7 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
-      this.setEventHandlers(this.embed, this.eventHandlers);
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
@@ -120,60 +120,6 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
     // Embed URL is updated (E.g. New Qna visual is to be embedded)
     if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedQnaVisual();
-    }
-  }
-
-  /**
-   * Sets all event handlers from the input on the embedded entity
-   *
-   * @param embed Embedded object
-   * @param eventHandlerMap Array of event handlers to be set on embedded entity
-   * @returns void
-   */
-  private setEventHandlers(embed: Embed, eventHandlerMap: Map<string, EventHandler | null>): void {
-    // Get string representation of eventHandlerMap
-    const eventHandlerMapString = stringifyMap(this.eventHandlers);
-
-    // Check if event handler map changed
-    if (this.prevEventHandlerMapString === eventHandlerMapString) {
-      return;
-    }
-
-    // Update prev string representation of event handler map
-    this.prevEventHandlerMapString = eventHandlerMapString;
-
-    // List of allowed events
-    let allowedEvents = Embed.allowedEvents;
-
-    // Append entity specific events
-    allowedEvents = [...allowedEvents, ...Qna.allowedEvents];
-
-    // Holds list of events which are not allowed
-    const invalidEvents: Array<string> = [];
-
-    // Apply all provided event handlers
-    eventHandlerMap.forEach((eventHandlerMethod, eventName) => {
-      // Check if this event is allowed
-      if (allowedEvents.includes(eventName)) {
-        // Removes event handler for this event
-        embed.off(eventName);
-
-        // Event handler is effectively removed for this event when eventHandlerMethod is null
-        if (eventHandlerMethod) {
-          // Set single event handler
-          embed.on(eventName, (event: service.ICustomEvent<any>): void => {
-            eventHandlerMethod(event, this.embed);
-          });
-        }
-      } else {
-        // Add this event name to the list of invalid events
-        invalidEvents.push(eventName);
-      }
-    });
-
-    // Handle invalid events
-    if (invalidEvents.length) {
-      console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
     }
   }
 }
