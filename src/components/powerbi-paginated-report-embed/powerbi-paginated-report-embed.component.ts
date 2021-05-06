@@ -47,7 +47,12 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdatedPaginatedReport function
+      // Check if the function is being called for the first time
+      if (!prevEmbedConfig) {
+        return;
+      }
+
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
       this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
     }
   }
@@ -85,12 +90,6 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
   private embedOrUpdatedPaginatedReport(prevEmbedConfig: IEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Check if the function is being called for the first time
-    // prevEmbedConfig will not be available
-    if (!prevEmbedConfig) {
       return;
     }
 

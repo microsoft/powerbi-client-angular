@@ -55,7 +55,12 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IVisualEmbedConfiguration;
 
-      // Input from parent get updated, thus call embedOrUpdateVisual function
+      // Check if the function is being called for the first time
+      if (!prevEmbedConfig) {
+        return;
+      }
+
+      // Input from parent get updated, thus call embedOrUpdateDashboard function
       this.embedOrUpdateVisual(prevEmbedConfig);
     }
 
@@ -106,12 +111,6 @@ export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implement
   private embedOrUpdateVisual(prevEmbedConfig: IVisualEmbedConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Check if the function is being called for the first time
-    // prevEmbedConfig will not be available
-    if (!prevEmbedConfig) {
       return;
     }
 
