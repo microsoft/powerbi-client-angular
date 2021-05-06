@@ -37,7 +37,7 @@ export class ReportEmbedComponent {
   // Update event handlers for the report by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
   // More events can be provided from here
-  // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/report.ts#L55
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
   eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
     ['loaded', () => console.log('Report has loaded')],
     [

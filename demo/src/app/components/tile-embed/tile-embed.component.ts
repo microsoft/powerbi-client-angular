@@ -32,7 +32,7 @@ export class TileEmbedComponent {
   // Update event handlers for the tile by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
   // More events can be provided from here
-  // https://github.com/microsoft/PowerBI-JavaScript/blob/master/src/tile.ts#L19
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#tile-events
   eventHandlersMap = new Map([
     [
       'tileLoaded',

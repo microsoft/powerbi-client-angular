@@ -31,6 +31,8 @@ export class QnaEmbedComponent {
    */
   // Update event handlers for the qna by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#qa-events
   eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
     ['loaded', () => console.log('Qna has loaded')],
     [
