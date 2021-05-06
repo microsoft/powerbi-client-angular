@@ -27,7 +27,7 @@ export class VisualEmbedComponent {
   };
 
   /**
-   * Map of event handlers to be applied to the embedding visual
+   * Map of event handlers to be applied to the embedded visual
    */
   // Update event handlers for the visual by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
@@ -55,7 +55,7 @@ export class VisualEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds visual from HTTP endpoint
+   * Embeds visual
    *
    * @returns Promise<void>
    */

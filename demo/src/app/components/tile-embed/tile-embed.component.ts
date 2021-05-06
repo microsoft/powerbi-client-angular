@@ -27,7 +27,7 @@ export class TileEmbedComponent {
   };
 
   /**
-   * Map of event handlers to be applied to the embedding tile
+   * Map of event handlers to be applied to the embedded tile
    */
   // Update event handlers for the tile by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
@@ -57,7 +57,7 @@ export class TileEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds tile from HTTP endpoint
+   * Embeds tile
    *
    * @returns Promise<void>
    */

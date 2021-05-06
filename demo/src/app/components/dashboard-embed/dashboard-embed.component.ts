@@ -28,7 +28,7 @@ export class DashboardEmbedComponent {
   };
 
   /**
-   * Map of event handlers to be applied to the embedding dashboard
+   * Map of event handlers to be applied to the embedded dashboard
    */
   // Update event handlers for the dashboard by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
@@ -58,7 +58,7 @@ export class DashboardEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds dashboard from HTTP endpoint
+   * Embeds dashboard
    *
    * @returns Promise<void>
    */

@@ -29,7 +29,7 @@ export class PaginatedReportEmbedComponent implements OnInit {
   }
 
   /**
-   * Embeds Paginated report from HTTP endpoint
+   * Embeds Paginated report
    *
    * @returns Promise<void>
    */

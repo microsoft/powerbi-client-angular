@@ -9,9 +9,7 @@ import { EventHandler } from '../components/powerbi-embed/powerbi-embed.componen
  * @param map Map of event and corresponding handler method
  *
  */
-export const stringifyMap = (
-  map: Map<string, EventHandler | null> | undefined
-): string => {
+export const stringifyMap = (map: Map<string, EventHandler | null> | undefined): string => {
   // Return empty string for empty/null map
   if (!map) {
     return '';

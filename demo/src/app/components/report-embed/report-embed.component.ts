@@ -32,7 +32,7 @@ export class ReportEmbedComponent {
   };
 
   /**
-   * Map of event handlers to be applied to the embedding report
+   * Map of event handlers to be applied to the embedded report
    */
   // Update event handlers for the report by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
@@ -64,7 +64,7 @@ export class ReportEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds report from HTTP endpoint
+   * Embeds report
    *
    * @returns Promise<void>
    */

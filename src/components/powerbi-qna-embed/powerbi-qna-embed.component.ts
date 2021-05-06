@@ -17,7 +17,7 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
   // Configuration for embedding the PowerBI Qna visual (Required)
   @Input() embedConfig!: IQnaEmbedConfiguration;
 
-  // Map of pair of event name and its handler method to be triggered on the event (Optional)
+  // Map of event name and handler methods pairs to be triggered on the event (Optional)
   @Input() eventHandlers?: Map<string, EventHandler | null>;
 
   // Ref to the HTML div container element

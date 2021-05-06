@@ -20,7 +20,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
   // Phased embedding flag (Optional)
   @Input() phasedEmbedding?: boolean = false;
 
-  // Map of pair of event name and its handler method to be triggered on the event (Optional)
+  // Map of event name and handler methods pairs to be triggered on the event (Optional)
   @Input() eventHandlers?: Map<string, EventHandler | null>;
 
   // Ref to the HTML div container element

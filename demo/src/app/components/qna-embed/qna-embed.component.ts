@@ -27,7 +27,7 @@ export class QnaEmbedComponent {
   };
 
   /**
-   * Map of event handlers to be applied to the embedding qna
+   * Map of event handlers to be applied to the embedded qna
    */
   // Update event handlers for the qna by redefining the map using this.eventHandlersMap
   // Set event handler to null if event needs to be removed
@@ -55,7 +55,7 @@ export class QnaEmbedComponent {
   constructor(public httpService: HttpService) {}
 
   /**
-   * Embeds Qna visual from HTTP endpoint
+   * Embeds Qna visual
    *
    * @returns Promise<void>
    */
