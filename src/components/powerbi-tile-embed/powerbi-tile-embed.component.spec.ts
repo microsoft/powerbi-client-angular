@@ -329,30 +329,6 @@ describe('PowerBITileEmbedComponent', () => {
       expect(console.error).not.toHaveBeenCalled();
     });
 
-    it('consoles error for invalid events', () => {
-      // Arrange
-      const invalidEvent1 = 'invalidEvent1';
-      const invalidEvent2 = 'invalidEvent2';
-
-      const eventHandlers = new Map([
-        [invalidEvent1, () => {}],
-        [invalidEvent2, () => {}],
-      ]);
-
-      const expectedErrorMessage = `Following events are invalid: ${invalidEvent1},${invalidEvent2}`;
-
-      // Act
-      spyOn(console, 'error');
-      component.eventHandlers = eventHandlers;
-      component.ngOnChanges({
-        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
-      });
-      fixture.detectChanges();
-
-      // Assert
-      expect(console.error).toHaveBeenCalledOnceWith(expectedErrorMessage);
-    });
-
     it('does not set the same eventHandler map again', () => {
       // Arrange
       const eventHandlers = new Map([

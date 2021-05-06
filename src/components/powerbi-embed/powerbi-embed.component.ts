@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Dashboard, Embed, factories, Qna, Report, service, Tile, Visual } from 'powerbi-client';
+import { Embed, factories, service } from 'powerbi-client';
 import { stringifyMap } from '../../utils/utils';
 
 /**
@@ -59,58 +59,18 @@ export class PowerBIEmbedComponent implements OnInit {
     // Update prev string representation of event handler map
     this.prevEventHandlerMapString = eventHandlerMapString;
 
-    // List of allowed events
-    let allowedEvents = Embed.allowedEvents;
-
-    const entityType = embed.embedtype;
-
-    // Append entity specific events
-    switch (entityType) {
-      case Report.type.toLowerCase():
-        allowedEvents = [...allowedEvents, ...Report.allowedEvents];
-        break;
-      case Dashboard.type.toLowerCase():
-        allowedEvents = [...allowedEvents, ...Dashboard.allowedEvents];
-        break;
-      case Tile.type.toLowerCase():
-        allowedEvents = [...allowedEvents, ...Tile.allowedEvents];
-        break;
-      case Qna.type.toLowerCase():
-        allowedEvents = [...allowedEvents, ...Qna.allowedEvents];
-        break;
-      case Visual.type.toLowerCase():
-        allowedEvents = [...allowedEvents, ...Visual.allowedEvents];
-        break;
-      default:
-        console.error(`Invalid embed type ${entityType}`);
-    }
-
-    // Holds list of events which are not allowed
-    const invalidEvents: Array<string> = [];
-
     // Apply all provided event handlers
     eventHandlerMap.forEach((eventHandlerMethod, eventName) => {
-      // Check if this event is allowed
-      if (allowedEvents.includes(eventName)) {
-        // Removes event handler for this event
-        embed.off(eventName);
+      // Removes event handler for this event
+      embed.off(eventName);
 
-        // Event handler is effectively removed for this event when eventHandlerMethod is null
-        if (eventHandlerMethod) {
-          // Set single event handler
-          embed.on(eventName, (event: service.ICustomEvent<any>): void => {
-            eventHandlerMethod(event, embed);
-          });
-        }
-      } else {
-        // Add this event name to the list of invalid events
-        invalidEvents.push(eventName);
+      // Event handler is effectively removed for this event when eventHandlerMethod is null
+      if (eventHandlerMethod) {
+        // Set single event handler
+        embed.on(eventName, (event: service.ICustomEvent<any>): void => {
+          eventHandlerMethod(event, embed);
+        });
       }
     });
-
-    // Handle invalid events
-    if (invalidEvents.length) {
-      console.error(`Following events are invalid: ${invalidEvents.join(',')}`);
-    }
   }
 }
