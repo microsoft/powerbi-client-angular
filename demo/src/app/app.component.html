@@ -2,9 +2,33 @@
 Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. -->
 
-<report-embed></report-embed>
-<dashboard-embed></dashboard-embed>
-<tile-embed></tile-embed>
-<paginated-report-embed></paginated-report-embed>
-<visual-embed></visual-embed>
-<qna-embed></qna-embed>
+<div class="header">
+  <div class="title">Power BI Embedded Angular Component demo</div>
+</div>
+
+<div class="container-class">
+    <div class="component-selector">
+    <label class='note'>Please select one of the option.</label>
+    <select class="form-select" (change)="changeComponent($event)">
+      <option value="">Select component</option>
+      <option value="report">Report</option>
+      <option value="dashboard">Dashboard</option>
+      <option value="tile">Tile</option>
+      <option value="visual">Visual</option>
+      <option value="qna">QnA visual</option>
+      <option value="paginated-report">Paginated Report</option>
+    </select>
+  </div>
+  <div class="component">
+    <div>
+      <ng-template #container> </ng-template>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    GitHub: &nbsp;
+    <a href="#"> # </a>
+  </div>
+</div>

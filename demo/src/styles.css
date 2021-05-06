@@ -6,31 +6,8 @@ body {
   margin: 0;
 }
 
-.header {
-  background: #3476AE 0 0 no-repeat padding-box;
-  border: 1px solid #707070;
-  height: 55px;
-  left: 0;
-  top: 0;
-}
-
-.title {
-  color: #FFF;
-  font: 700 22px/27px Segoe UI;
-  letter-spacing: 0;
-  margin: 13px;
-  margin-left: 36px;
-  opacity: 1;
-  text-align: left;
-}
-
 iframe {
   border: none;
-}
-
-.hr {
-  border: 1px solid #E0E0E0;
-  opacity: 1;
 }
 
 .display-message {
@@ -90,37 +67,37 @@ button:hover {
 }
 
 .report-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
 
 .dashboard-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
 
 .tile-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
 
 .qna-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
 
 .visual-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
 
 .paginated-report-container {
-  height: 69vh;
+  height: 73vh;
   margin: 1% auto;
-  width: 60%;
+  width: 80%;
 }
