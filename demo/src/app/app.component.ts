@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
-import { DashboardEmbedComponent } from './components/dashboard-embed/dashboard-embed.component';
-import { PaginatedReportEmbedComponent } from './components/paginated-report-embed/paginated-report-embed.component';
-import { QnaEmbedComponent } from './components/qna-embed/qna-embed.component';
-import { ReportEmbedComponent } from './components/report-embed/report-embed.component';
-import { TileEmbedComponent } from './components/tile-embed/tile-embed.component';
-import { VisualEmbedComponent } from './components/visual-embed/visual-embed.component';
+import { Component } from '@angular/core';
+import { IReportEmbedConfiguration, models, service } from 'powerbi-client';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { ConfigResponse } from 'src/interfaces';
+import { reportUrl } from './constants';
 
 @Component({
   selector: 'app-root',
@@ -15,33 +13,82 @@ import { VisualEmbedComponent } from './components/visual-embed/visual-embed.com
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
+  // Overall status message of embedding
+  displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
 
-  constructor(private cfr: ComponentFactoryResolver) {}
-  
-  changeComponent(event) {
-    this.container.clear();
-    switch (event.target.value) {
-      case 'report':
-        this.container.createComponent(this.cfr.resolveComponentFactory(ReportEmbedComponent));
-        break;
-      case 'dashboard':
-        this.container.createComponent(this.cfr.resolveComponentFactory(DashboardEmbedComponent));
-        break;
-      case 'tile':
-        this.container.createComponent(this.cfr.resolveComponentFactory(TileEmbedComponent));
-        break;
-      case 'visual':
-        this.container.createComponent(this.cfr.resolveComponentFactory(VisualEmbedComponent));
-        break;
-      case 'qna':
-        this.container.createComponent(this.cfr.resolveComponentFactory(QnaEmbedComponent));
-        break;
-      case 'paginated-report':
-        this.container.createComponent(this.cfr.resolveComponentFactory(PaginatedReportEmbedComponent));
-        break;
-      default:
-        console.log('Select valid component');
+  // CSS Class to be passed to the wrapper
+  reportClass = 'report-container';
+
+  // Flag which specify the type of embedding
+  phasedEmbeddingFlag = false;
+
+  // Pass the basic embed configurations to the wrapper to bootstrap the report on first load
+  // Values for properties like embedUrl, accessToken and settings will be set on click of button
+  reportConfig: IReportEmbedConfiguration = {
+    type: 'report',
+    embedUrl: undefined,
+    tokenType: models.TokenType.Embed,
+    accessToken: undefined,
+    settings: undefined,
+  };
+
+  /**
+   * Map of event handlers to be applied to the embedded report
+   */
+  // Update event handlers for the report by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
+  eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+    ['loaded', () => console.log('Report has loaded')],
+    [
+      'rendered',
+      () => {
+        console.log('Report has rendered');
+
+        // Update display message
+        this.displayMessage = 'The report is rendered.';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['visualClicked', () => console.log('visual clicked')],
+    ['pageChanged', (event) => console.log(event)],
+  ]);
+
+  constructor(public httpService: HttpService) {}
+
+  /**
+   * Embeds report
+   *
+   * @returns Promise<void>
+   */
+  async embedReport(): Promise<void> {
+    let reportConfigResponse: ConfigResponse;
+
+    // Get the embed config from the service and set the reportConfigResponse
+    try {
+      reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
+    } catch (error) {
+      console.error(`Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`);
+      return;
     }
+
+    // Update the reportConfig to embed the PowerBI report
+    this.reportConfig = {
+      ...this.reportConfig,
+      id: reportConfigResponse.Id,
+      embedUrl: reportConfigResponse.EmbedUrl,
+      accessToken: reportConfigResponse.EmbedToken.Token,
+    };
+
+    // Update the display message
+    this.displayMessage = 'Access token is successfully set. Loading Power BI report.';
   }
 }

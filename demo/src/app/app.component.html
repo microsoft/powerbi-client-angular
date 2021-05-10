@@ -1,29 +1,19 @@
-<!--
-Copyright (c) Microsoft Corporation.
+<!-- Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. -->
 
 <div class="header">
   <div class="title">Power BI Embedded Angular Component demo</div>
 </div>
 
-<div class="container-class">
-    <div class="component-selector">
-    <label class='note'>Please select one of the option.</label>
-    <select class="form-select" (change)="changeComponent($event)">
-      <option value="">Select component</option>
-      <option value="report">Report</option>
-      <option value="dashboard">Dashboard</option>
-      <option value="tile">Tile</option>
-      <option value="visual">Visual</option>
-      <option value="qna">QnA visual</option>
-      <option value="paginated-report">Paginated Report</option>
-    </select>
-  </div>
-  <div class="component">
-    <div>
-      <ng-template #container> </ng-template>
-    </div>
-  </div>
+<powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
+</powerbi-report>
+
+<div class="horizontal-rule"></div>
+
+<div class="display-message">{{ displayMessage }}</div>
+
+<div class="controls">
+  <button (click)="embedReport()">Embed Report</button>
 </div>
 
 <div class="footer">
