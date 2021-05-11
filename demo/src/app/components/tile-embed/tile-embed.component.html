@@ -1,0 +1,23 @@
+<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. -->
+
+<div class="header">
+  <div class="title">Power BI Angular Tile component demo</div>
+</div>
+
+<powerbi-tile [embedConfig]="tileConfig" [cssClassName]="tileClass" [eventHandlers]="eventHandlersMap"> </powerbi-tile>
+
+<div class="hr"></div>
+
+<div class="display-message">{{ displayMessage }}</div>
+
+<div class="controls">
+  <button (click)="embedTile()">Embed Tile</button>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    GitHub: &nbsp;
+    <a href="#"> # </a>
+  </div>
+</div>
