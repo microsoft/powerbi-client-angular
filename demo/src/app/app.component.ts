@@ -4,8 +4,16 @@
 import { Component } from '@angular/core';
 import { IReportEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
-import { ConfigResponse } from 'src/interfaces';
 import { reportUrl } from './constants';
+
+// Handles the embed config response for embedding
+export interface ConfigResponse {
+  Id: string;
+  EmbedUrl: string;
+  EmbedToken: {
+    Token: string;
+  };
+}
 
 @Component({
   selector: 'app-root',
