@@ -24,7 +24,7 @@ describe('PowerBIReportEmbedComponent', () => {
     fixture.destroy();
   });
 
-  describe('basic tests', () => {
+  describe('Basic tests', () => {
     it('should create', () => {
       // Arrange
       const config = {
@@ -301,6 +301,143 @@ describe('PowerBIReportEmbedComponent', () => {
 
       // Assert
       expect(mockPowerBIService.embed).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Tests for setting event handlers', () => {
+    beforeEach(() => {
+      component.embedConfig = { type: 'report' };
+      fixture.detectChanges();
+    });
+
+    it('clears previous event handlers and sets new event handlers', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['rendered', () => {}],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testReport
+      const testReport = component.getReport();
+
+      spyOn(testReport, 'on');
+      spyOn(testReport, 'off');
+
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size);
+    });
+
+    it('clears already set event handlers in case of null provided for event handler', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', null],
+        ['rendered', null],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testReport
+      const testReport = component.getReport();
+
+      spyOn(testReport, 'on');
+      spyOn(testReport, 'off');
+
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
+      // Two events are removed in new event handlers
+      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
+    });
+
+    it('does not console error for valid events of report', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['rendered', () => {}],
+        ['error', () => {}],
+        ['filtersApplied', () => {}],
+        ['pageChanged', () => {}],
+        ['commandTriggered', () => {}],
+        ['swipeStart', () => {}],
+        ['swipeEnd', () => {}],
+        ['bookmarkApplied', () => {}],
+        ['dataHyperlinkClicked', () => {}],
+        ['visualRendered', () => {}],
+        ['visualClicked', () => {}],
+        ['selectionChanged', () => {}],
+      ]);
+
+      // Act
+      spyOn(console, 'error');
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(console.error).not.toHaveBeenCalled();
+    });
+
+    it('does not set the same eventHandler map again', () => {
+      // Arrange
+      const eventHandlers = new Map([
+        ['loaded', () => {}],
+        ['rendered', () => {}],
+        ['error', () => {}],
+      ]);
+
+      const newEventHandlers = new Map([
+        ['loaded', () => {}],
+        ['rendered', () => {}],
+        ['error', () => {}],
+      ]);
+
+      // Act
+      // Initialize testReport
+      const testReport = component.getReport();
+      fixture.detectChanges();
+
+      const spyForOn = spyOn(testReport, 'on');
+      const spyForOff = spyOn(testReport, 'off');
+      component.eventHandlers = eventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testReport.on).toHaveBeenCalledTimes(eventHandlers.size);
+      expect(testReport.off).toHaveBeenCalledTimes(eventHandlers.size);
+
+      // Reset the calls for next act
+      spyForOn.calls.reset();
+      spyForOff.calls.reset();
+
+      // Act - with new eventHandlers
+      component.eventHandlers = newEventHandlers;
+      component.ngOnChanges({
+        eventHandlers: new SimpleChange(eventHandlers, newEventHandlers, false),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(testReport.on).toHaveBeenCalledTimes(0);
+      expect(testReport.off).toHaveBeenCalledTimes(0);
     });
   });
 });

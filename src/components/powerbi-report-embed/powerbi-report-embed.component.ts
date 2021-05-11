@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, IReportEmbedConfiguration } from 'powerbi-client';
-import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { Embed, IReportEmbedConfiguration, Report } from 'powerbi-client';
+import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
  * Report component to embed the report, extends the Base Component
@@ -19,6 +19,9 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
 
   // Phased embedding flag (Optional)
   @Input() phasedEmbedding?: boolean = false;
+
+  // Map of event name and handler methods pairs to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
 
   // Ref to the HTML div container element
   @ViewChild('reportContainer') private containerRef!: ElementRef<HTMLDivElement>;
@@ -41,6 +44,11 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
     super();
   }
 
+  // Returns embed object to calling function
+  getReport(): Report {
+    return this._embed as Report;
+  }
+
   ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
@@ -58,6 +66,11 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
       // Input from parent get updated, thus call embedOrUpdateReport function
       this.embedOrUpdateReport(prevEmbedConfig);
     }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -69,6 +82,11 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
       } else {
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
+    }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 

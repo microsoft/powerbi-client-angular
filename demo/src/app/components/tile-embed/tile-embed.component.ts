@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { ITileEmbedConfiguration, models } from 'powerbi-client';
+import { ITileEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { tileUrl } from '../../constants';
@@ -26,8 +26,41 @@ export class TileEmbedComponent {
     dashboardId: undefined,
   };
 
+  /**
+   * Map of event handlers to be applied to the embedded tile
+   */
+  // Update event handlers for the tile by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#tile-events
+  eventHandlersMap = new Map([
+    [
+      'tileLoaded',
+      () => {
+        console.log('Tile has loaded');
+
+        // Update display message
+        this.displayMessage = 'The tile has loaded';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['tileClicked', (event) => console.log(event)],
+  ]);
+
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds tile
+   *
+   * @returns Promise<void>
+   */
   async embedTile(): Promise<void> {
     let tileConfigResponse: ConfigResponse;
 

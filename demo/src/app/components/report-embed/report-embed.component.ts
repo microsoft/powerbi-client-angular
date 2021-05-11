@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Component } from '@angular/core';
-import { IReportEmbedConfiguration, models } from 'powerbi-client';
+import { IReportEmbedConfiguration, models, service } from 'powerbi-client';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { ConfigResponse } from 'src/interfaces';
 import { reportUrl } from '../../constants';
@@ -31,8 +31,43 @@ export class ReportEmbedComponent {
     settings: undefined,
   };
 
+  /**
+   * Map of event handlers to be applied to the embedded report
+   */
+  // Update event handlers for the report by redefining the map using this.eventHandlersMap
+  // Set event handler to null if event needs to be removed
+  // More events can be provided from here
+  // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
+  eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+    ['loaded', () => console.log('Report has loaded')],
+    [
+      'rendered',
+      () => {
+        console.log('Report has rendered');
+
+        // Update display message
+        this.displayMessage = 'The report is rendered.';
+      },
+    ],
+    [
+      'error',
+      (event?: service.ICustomEvent<any>) => {
+        if (event) {
+          console.error(event.detail);
+        }
+      },
+    ],
+    ['visualClicked', () => console.log('visual clicked')],
+    ['pageChanged', (event) => console.log(event)],
+  ]);
+
   constructor(public httpService: HttpService) {}
 
+  /**
+   * Embeds report
+   *
+   * @returns Promise<void>
+   */
   async embedReport(): Promise<void> {
     let reportConfigResponse: ConfigResponse;
 

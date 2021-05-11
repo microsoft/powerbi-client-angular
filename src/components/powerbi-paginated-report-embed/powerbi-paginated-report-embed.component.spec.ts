@@ -24,7 +24,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
     fixture.destroy();
   });
 
-  describe('basic tests', () => {
+  describe('Basic tests', () => {
     it('should create', () => {
       // Arrange
       const config = {

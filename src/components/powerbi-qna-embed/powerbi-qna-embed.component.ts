@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, IQnaEmbedConfiguration } from 'powerbi-client';
-import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { Embed, IQnaEmbedConfiguration, Qna } from 'powerbi-client';
+import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
  * Qna component to embed the Qna visual, extends Base component
@@ -16,6 +16,9 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Qna visual (Required)
   @Input() embedConfig!: IQnaEmbedConfiguration;
+
+  // Map of event name and handler methods pairs to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
 
   // Ref to the HTML div container element
   @ViewChild('qnaContainer') private containerRef!: ElementRef<HTMLDivElement>;
@@ -38,6 +41,11 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
     super();
   }
 
+  // Returns embed object to calling function
+  getQna(): Qna {
+    return this._embed as Qna;
+  }
+
   ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
@@ -55,6 +63,11 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
       // Input from parent get updated, thus call embedOrUpdateDashboard function
       this.embedOrUpdateQna(prevEmbedConfig);
     }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -66,6 +79,11 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
       } else {
         this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
       }
+    }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
