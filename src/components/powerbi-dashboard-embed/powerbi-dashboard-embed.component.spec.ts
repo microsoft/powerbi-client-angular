@@ -374,7 +374,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Arrange
       // Initialize testDashboard
       const testDashboard = component.getDashboard();
-      const expectedTestDashboardId = 'fakeId'
+      const expectedTestDashboardId = 'fakeId';
 
       // Act
       const testDashboardId = testDashboard.getId();
@@ -382,41 +382,14 @@ describe('PowerBIDashboardEmbedComponent', () => {
       //Assert
       expect(testDashboardId).toEqual(expectedTestDashboardId);
     });
-
-    it('sets the iframe to full screen', () => {
-      // Arrange
-      // Initialize testDashboard
-      const testDashboard = component.getDashboard();
-
-      const iframe: HTMLElement = fixture.debugElement.queryAll(By.css('iframe'))[0].nativeElement;
-
-      // Act
-      testDashboard.fullscreen();
-      fixture.detectChanges();
-
-      //Assert
-      expect(document['fullscreenElement']).toEqual(iframe);
-      console.log(iframe);
-    });
-
-    it('exits the iframe from full screen', () => {
-      // Arrange
-      // Initialize testDashboard
-      const testDashboard = component.getDashboard();
-
-      const iframe: HTMLElement = fixture.debugElement.queryAll(By.css('iframe'))[0].nativeElement;
-
-      spyOn(testDashboard, 'exitFullscreen');
-      fixture.detectChanges();
-      testDashboard.fullscreen();
-
-      // Act
-      testDashboard.exitFullscreen();
-      fixture.detectChanges();
-
-      //Assert
-      expect(document['fullscreenElement']).not.toEqual(iframe);
-      console.log(iframe);
-    });
   });
+});
+
+report.getPages().then((pages) => {
+  for (let i = 0; i < pages.length; i++) {
+    if(pages[i].visibility == 0){
+      UserOwnsData.workspaceSelect.append($('<option />').text(pages[i].displayName).val(pages[i].id));
+    }
+    
+  }
 });
