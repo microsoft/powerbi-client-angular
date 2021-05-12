@@ -384,12 +384,3 @@ describe('PowerBIDashboardEmbedComponent', () => {
     });
   });
 });
-
-report.getPages().then((pages) => {
-  for (let i = 0; i < pages.length; i++) {
-    if(pages[i].visibility == 0){
-      UserOwnsData.workspaceSelect.append($('<option />').text(pages[i].displayName).val(pages[i].id));
-    }
-    
-  }
-});
