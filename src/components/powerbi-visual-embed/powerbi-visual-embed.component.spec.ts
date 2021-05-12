@@ -4,6 +4,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { models } from 'powerbi-client';
 import { PowerBIVisualEmbedComponent } from './powerbi-visual-embed.component';
 
 describe('PowerBIVisualEmbedComponent', () => {
@@ -379,6 +380,59 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Assert
       expect(testVisual.on).toHaveBeenCalledTimes(0);
       expect(testVisual.off).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('Tests for visual features', () => {
+    beforeEach(() => {
+      component.embedConfig = { type: 'visual', visualName: 'fakeVisual', id: 'fakeId' };
+      fixture.detectChanges();
+    });
+
+    it('returns id of embedded visual', () => {
+      // Arrange
+      // Initialize testVisual
+      const testVisual = component.getVisual();
+
+      const expectedTestVisualId = 'fakeId';
+
+      // Act
+      const testVisualId = testVisual.getId();
+
+      //Assert
+      expect(testVisualId).toEqual(expectedTestVisualId);
+    });
+
+    it('returns list of filters', () => {
+      // Arrange
+      // Initialize testVisual
+      const testVisual = component.getVisual();
+
+      const testFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
+      testVisual.setFilters(testFilters);
+
+      // Act
+      testVisual.getFilters().then(filters => {
+        // Assert
+        console.log(filters)
+        expect(filters).toEqual(testFilters);
+      });
+    });
+
+    it('sets a filter', () => {
+      // Arrange
+      // Initialize testVisual
+      const testVisual = component.getVisual();
+
+      const testFilters: any[] = [
+        (new models.BasicFilter({ table: "Cars", measure: "Make" }, "In", ["subaru", "honda"])).toJSON(),
+        (new models.AdvancedFilter({ table: "Cars", measure: "Make" }, "And", [{ value: "subaru", operator: "None" }, { value: "honda", operator: "Contains" }])).toJSON()
+      ]
+
+      // Act
+      testVisual.setFilters(testFilters);
+      fixture.detectChanges();
+      expect(testVisual.on).toHaveBeenCalled
     });
   });
 });
