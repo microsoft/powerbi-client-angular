@@ -4,6 +4,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { service } from 'powerbi-client';
 import { PowerBIDashboardEmbedComponent } from './powerbi-dashboard-embed.component';
 
 describe('PowerBIDashboardEmbedComponent', () => {
@@ -292,7 +293,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Assert
       expect(testDashboard.off).toHaveBeenCalledTimes(eventHandlers.size);
       // Two events are removed in new event handlers
-      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size -2);
+      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
     });
 
     it('does not console error for valid events of dashboard', () => {
@@ -360,6 +361,62 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Assert
       expect(testDashboard.on).toHaveBeenCalledTimes(0);
       expect(testDashboard.off).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('Tests for dashboard features', () => {
+    beforeEach(() => {
+      component.embedConfig = { type: 'dashboard', id: 'fakeId' };
+      fixture.detectChanges();
+    });
+
+    it('returns id of embedded dashboard', () => {
+      // Arrange
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+      const expectedTestDashboardId = 'fakeId'
+
+      // Act
+      const testDashboardId = testDashboard.getId();
+
+      //Assert
+      expect(testDashboardId).toEqual(expectedTestDashboardId);
+    });
+
+    it('sets the iframe to full screen', () => {
+      // Arrange
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      const iframe: HTMLElement = fixture.debugElement.queryAll(By.css('iframe'))[0].nativeElement;
+
+      // Act
+      testDashboard.fullscreen();
+      fixture.detectChanges();
+
+      //Assert
+      expect(document['fullscreenElement']).toEqual(iframe);
+      console.log(iframe);
+    });
+
+    it('exits the iframe from full screen', () => {
+      // Arrange
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      const iframe: HTMLElement = fixture.debugElement.queryAll(By.css('iframe'))[0].nativeElement;
+
+      spyOn(testDashboard, 'exitFullscreen');
+      fixture.detectChanges();
+      testDashboard.fullscreen();
+
+      // Act
+      testDashboard.exitFullscreen();
+      fixture.detectChanges();
+
+      //Assert
+      expect(document['fullscreenElement']).not.toEqual(iframe);
+      console.log(iframe);
     });
   });
 });
