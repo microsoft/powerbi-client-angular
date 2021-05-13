@@ -393,7 +393,7 @@ describe('PowerBITileEmbedComponent', () => {
       // Act
       const testTileId = testTile.getId();
 
-      //Assert
+      // Assert
       expect(testTileId).toEqual(expectedTestTileId);
     });
   });
