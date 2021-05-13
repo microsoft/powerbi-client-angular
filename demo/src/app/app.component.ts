@@ -3,7 +3,7 @@
 
 import { Component } from '@angular/core';
 import { IReportEmbedConfiguration, models, service } from 'powerbi-client';
-import { HttpService } from 'src/app/services/httpservice.service';
+import { HttpService } from 'src/app/services/http.service';
 import { reportUrl } from './constants';
 
 // Handles the embed config response for embedding
@@ -84,7 +84,8 @@ export class AppComponent {
     try {
       reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error) {
-      console.error(`Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`);
+      this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
+      console.error(this.displayMessage);
       return;
     }
 
