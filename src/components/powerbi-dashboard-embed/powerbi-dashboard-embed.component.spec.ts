@@ -379,7 +379,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Act
       const testDashboardId = testDashboard.getId();
 
-      //Assert
+      // Assert
       expect(testDashboardId).toEqual(expectedTestDashboardId);
     });
   });
