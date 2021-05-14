@@ -4,7 +4,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { service } from 'powerbi-client';
 import { PowerBIDashboardEmbedComponent } from './powerbi-dashboard-embed.component';
 
 describe('PowerBIDashboardEmbedComponent', () => {
@@ -366,7 +365,10 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
   describe('Tests for dashboard features', () => {
     beforeEach(() => {
-      component.embedConfig = { type: 'dashboard', id: 'fakeId' };
+      component.embedConfig = {
+        type: 'dashboard',
+        id: 'fakeId',
+      };
       fixture.detectChanges();
     });
 
@@ -374,6 +376,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Arrange
       // Initialize testDashboard
       const testDashboard = component.getDashboard();
+
       const expectedTestDashboardId = 'fakeId';
 
       // Act
