@@ -399,8 +399,8 @@ describe('PowerBIVisualEmbedComponent', () => {
 
       component.embedConfig = {
         type: 'visual',
-        visualName: 'fakeVisual',
         id: 'fakeId',
+        visualName: 'fakeVisual',
         filters: fakeFilters,
       };
       fixture.detectChanges();
