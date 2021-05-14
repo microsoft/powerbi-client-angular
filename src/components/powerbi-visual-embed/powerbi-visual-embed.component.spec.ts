@@ -385,7 +385,8 @@ describe('PowerBIVisualEmbedComponent', () => {
 
   describe('Tests for visual features', () => {
     beforeEach(() => {
-      component.embedConfig = { type: 'visual', visualName: 'fakeVisual', id: 'fakeId' };
+      const fakeFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
+      component.embedConfig = { type: 'visual', visualName: 'fakeVisual', id: 'fakeId', filters: fakeFilters };
       fixture.detectChanges();
     });
 
@@ -399,40 +400,98 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Act
       const testVisualId = testVisual.getId();
 
-      //Assert
+      // Assert
       expect(testVisualId).toEqual(expectedTestVisualId);
     });
 
-    it('returns list of filters', () => {
+    it('returns a list of applied filters', (done) => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const testFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
-      testVisual.setFilters(testFilters);
+      const expectedTestFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
+      const spy = spyOn(testVisual, 'getFilters').and.returnValue(Promise.resolve(expectedTestFilters));
 
       // Act
-      testVisual.getFilters().then(filters => {
+      testVisual.getFilters();
+      spy.calls.mostRecent().returnValue.then((filters) => {
         // Assert
-        console.log(filters)
-        expect(filters).toEqual(testFilters);
+        expect(filters).toEqual(expectedTestFilters);
+        done();
       });
     });
 
-    it('sets a filter', () => {
+    it('sets filters', (done) => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const testFilters: any[] = [
-        (new models.BasicFilter({ table: "Cars", measure: "Make" }, "In", ["subaru", "honda"])).toJSON(),
-        (new models.AdvancedFilter({ table: "Cars", measure: "Make" }, "And", [{ value: "subaru", operator: "None" }, { value: "honda", operator: "Contains" }])).toJSON()
-      ]
+      const expectedResponse = {
+        body: undefined,
+        statusCode: 202,
+        headers: {},
+        statusText: '',
+      };
+
+      const testFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
+
+      const spy = spyOn(testVisual, 'setFilters').and.returnValue(Promise.resolve(expectedResponse));
 
       // Act
       testVisual.setFilters(testFilters);
-      fixture.detectChanges();
-      expect(testVisual.on).toHaveBeenCalled
+      spy.calls.mostRecent().returnValue.then((response) => {
+        // Assert
+        expect(response.statusCode).toEqual(202);
+        done();
+      });
+    });
+
+    it('removes filter', (done) => {
+      // Arrange
+      // Initialize testVisual
+      const testVisual = component.getVisual();
+
+      const expectedResponse = {
+        body: undefined,
+        statusCode: 202,
+        headers: {},
+        statusText: '',
+      };
+
+      const spy = spyOn(testVisual, 'removeFilters').and.returnValue(Promise.resolve(expectedResponse));
+
+      // Act
+      testVisual.removeFilters();
+      spy.calls.mostRecent().returnValue.then((response) => {
+        // Assert
+        expect(response.statusCode).toEqual(202);
+        done();
+      });
+    });
+
+    it('updates filter', (done) => {
+      // Arrange
+      // Initialize testVisual
+      const testVisual = component.getVisual();
+
+      const testFilter: any = { x: 'fakeFilter' };
+
+      const expectedResponse = {
+        body: undefined,
+        statusCode: 202,
+        headers: {},
+        statusText: '',
+      };
+
+      const spy = spyOn(testVisual, 'updateFilters').and.returnValue(Promise.resolve(expectedResponse));
+
+      // Act
+      testVisual.updateFilters(models.FiltersOperations.Replace, [testFilter]);
+      spy.calls.mostRecent().returnValue.then((response) => {
+        // Assert
+        expect(response.statusCode).toEqual(202);
+        done();
+      });
     });
   });
 });
