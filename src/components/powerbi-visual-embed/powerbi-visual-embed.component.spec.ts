@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -384,9 +383,24 @@ describe('PowerBIVisualEmbedComponent', () => {
   });
 
   describe('Tests for visual features', () => {
+    let fakeFilters: any[];
     beforeEach(() => {
-      const fakeFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
-      component.embedConfig = { type: 'visual', visualName: 'fakeVisual', id: 'fakeId', filters: fakeFilters };
+      // Arrange
+      fakeFilters = [
+        {
+          x: 'fakeFilter1',
+        },
+        {
+          x: 'fakeFilter2',
+        },
+      ];
+
+      component.embedConfig = {
+        type: 'visual',
+        visualName: 'fakeVisual',
+        id: 'fakeId',
+        filters: fakeFilters,
+      };
       fixture.detectChanges();
     });
 
@@ -404,24 +418,22 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(testVisualId).toEqual(expectedTestVisualId);
     });
 
-    it('returns a list of applied filters', (done) => {
+    it('returns a list of applied filters', async function () {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const expectedTestFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
-      const spy = spyOn(testVisual, 'getFilters').and.returnValue(Promise.resolve(expectedTestFilters));
+      const resolvePromise = Promise.resolve(fakeFilters);
+      spyOn(testVisual, 'getFilters').and.returnValue(resolvePromise);
 
       // Act
-      testVisual.getFilters();
-      spy.calls.mostRecent().returnValue.then((filters) => {
-        // Assert
-        expect(filters).toEqual(expectedTestFilters);
-        done();
-      });
+      const filters = await testVisual.getFilters();
+
+      // Assert
+      expect(filters).toEqual(jasmine.objectContaining(fakeFilters));
     });
 
-    it('sets filters', (done) => {
+    it('sets filters', async function () {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
@@ -433,20 +445,25 @@ describe('PowerBIVisualEmbedComponent', () => {
         statusText: '',
       };
 
-      const testFilters: any[] = [{ x: 'fakeFilter1' }, { x: 'fakeFilter2' }];
-
-      const spy = spyOn(testVisual, 'setFilters').and.returnValue(Promise.resolve(expectedResponse));
+      const testFilters: any[] = [
+        {
+          x: 'testFilter1',
+        },
+        {
+          x: 'testFilter2',
+        },
+      ];
+      const resolvePromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'setFilters').and.returnValue(resolvePromise);
 
       // Act
-      testVisual.setFilters(testFilters);
-      spy.calls.mostRecent().returnValue.then((response) => {
-        // Assert
-        expect(response.statusCode).toEqual(202);
-        done();
-      });
+      const response = await testVisual.setFilters(testFilters);
+
+      // Assert
+      expect(response.statusCode).toEqual(202);
     });
 
-    it('removes filter', (done) => {
+    it('removes filter', async function () {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
@@ -457,41 +474,35 @@ describe('PowerBIVisualEmbedComponent', () => {
         headers: {},
         statusText: '',
       };
-
-      const spy = spyOn(testVisual, 'removeFilters').and.returnValue(Promise.resolve(expectedResponse));
+      const resolvePromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'removeFilters').and.returnValue(resolvePromise);
 
       // Act
-      testVisual.removeFilters();
-      spy.calls.mostRecent().returnValue.then((response) => {
-        // Assert
-        expect(response.statusCode).toEqual(202);
-        done();
-      });
+      const response = await testVisual.removeFilters();
+
+      // Assert
+      expect(response.statusCode).toEqual(202);
     });
 
-    it('updates filter', (done) => {
+    it('updates filter', async function () {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const testFilter: any = { x: 'fakeFilter' };
-
+      const testFilter: any = { x: 'testFilter' };
       const expectedResponse = {
         body: undefined,
         statusCode: 202,
         headers: {},
         statusText: '',
       };
-
-      const spy = spyOn(testVisual, 'updateFilters').and.returnValue(Promise.resolve(expectedResponse));
+      spyOn(testVisual, 'updateFilters').and.returnValue(Promise.resolve(expectedResponse));
 
       // Act
-      testVisual.updateFilters(models.FiltersOperations.Replace, [testFilter]);
-      spy.calls.mostRecent().returnValue.then((response) => {
-        // Assert
-        expect(response.statusCode).toEqual(202);
-        done();
-      });
+      const response = await testVisual.updateFilters(models.FiltersOperations.Replace, [testFilter]);
+
+      // Assert
+      expect(response.statusCode).toEqual(202);
     });
   });
 });
