@@ -384,6 +384,7 @@ describe('PowerBIVisualEmbedComponent', () => {
 
   describe('Tests for visual features', () => {
     let fakeFilters: any[];
+    
     beforeEach(() => {
       // Arrange
       fakeFilters = [
