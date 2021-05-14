@@ -365,6 +365,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
   describe('Tests for dashboard features', () => {
     beforeEach(() => {
+      // Arrange
       component.embedConfig = {
         type: 'dashboard',
         id: 'fakeId',
