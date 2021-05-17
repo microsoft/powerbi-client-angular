@@ -292,7 +292,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Assert
       expect(testDashboard.off).toHaveBeenCalledTimes(eventHandlers.size);
       // Two events are removed in new event handlers
-      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size -2);
+      expect(testDashboard.on).toHaveBeenCalledTimes(eventHandlers.size - 2);
     });
 
     it('does not console error for valid events of dashboard', () => {
@@ -360,6 +360,31 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Assert
       expect(testDashboard.on).toHaveBeenCalledTimes(0);
       expect(testDashboard.off).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('Tests for dashboard features', () => {
+    beforeEach(() => {
+      // Arrange
+      component.embedConfig = {
+        type: 'dashboard',
+        id: 'fakeId',
+      };
+      fixture.detectChanges();
+    });
+
+    it('returns id of embedded dashboard', () => {
+      // Arrange
+      // Initialize testDashboard
+      const testDashboard = component.getDashboard();
+
+      const expectedTestDashboardId = 'fakeId';
+
+      // Act
+      const testDashboardId = testDashboard.getId();
+
+      // Assert
+      expect(testDashboardId).toEqual(expectedTestDashboardId);
     });
   });
 });
