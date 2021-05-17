@@ -385,7 +385,7 @@ describe('PowerBIVisualEmbedComponent', () => {
 
   describe('Tests for visual features', () => {
     let fakeFilters: any[];
-    
+
     beforeEach(() => {
       // Arrange
       fakeFilters = [
@@ -425,8 +425,8 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const resolvePromise = Promise.resolve(fakeFilters);
-      spyOn(testVisual, 'getFilters').and.returnValue(resolvePromise);
+      const rsolvedPromise = Promise.resolve(fakeFilters);
+      spyOn(testVisual, 'getFilters').and.returnValue(rsolvedPromise);
 
       // Act
       const filters = await testVisual.getFilters();
@@ -455,8 +455,8 @@ describe('PowerBIVisualEmbedComponent', () => {
           x: 'testFilter2',
         },
       ];
-      const resolvePromise = Promise.resolve(expectedResponse);
-      spyOn(testVisual, 'setFilters').and.returnValue(resolvePromise);
+      const rsolvedPromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'setFilters').and.returnValue(rsolvedPromise);
 
       // Act
       const response = await testVisual.setFilters(testFilters);
@@ -476,8 +476,8 @@ describe('PowerBIVisualEmbedComponent', () => {
         headers: {},
         statusText: '',
       };
-      const resolvePromise = Promise.resolve(expectedResponse);
-      spyOn(testVisual, 'removeFilters').and.returnValue(resolvePromise);
+      const rsolvedPromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'removeFilters').and.returnValue(rsolvedPromise);
 
       // Act
       const response = await testVisual.removeFilters();
