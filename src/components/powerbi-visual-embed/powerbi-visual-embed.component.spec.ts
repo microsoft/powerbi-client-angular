@@ -425,8 +425,8 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const rsolvedPromise = Promise.resolve(fakeFilters);
-      spyOn(testVisual, 'getFilters').and.returnValue(rsolvedPromise);
+      const resolvedPromise = Promise.resolve(fakeFilters);
+      spyOn(testVisual, 'getFilters').and.returnValue(resolvedPromise);
 
       // Act
       const filters = await testVisual.getFilters();
@@ -455,8 +455,8 @@ describe('PowerBIVisualEmbedComponent', () => {
           x: 'testFilter2',
         },
       ];
-      const rsolvedPromise = Promise.resolve(expectedResponse);
-      spyOn(testVisual, 'setFilters').and.returnValue(rsolvedPromise);
+      const resolvedPromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'setFilters').and.returnValue(resolvedPromise);
 
       // Act
       const response = await testVisual.setFilters(testFilters);
@@ -476,8 +476,8 @@ describe('PowerBIVisualEmbedComponent', () => {
         headers: {},
         statusText: '',
       };
-      const rsolvedPromise = Promise.resolve(expectedResponse);
-      spyOn(testVisual, 'removeFilters').and.returnValue(rsolvedPromise);
+      const resolvedPromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'removeFilters').and.returnValue(resolvedPromise);
 
       // Act
       const response = await testVisual.removeFilters();
