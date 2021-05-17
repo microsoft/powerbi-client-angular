@@ -498,7 +498,8 @@ describe('PowerBIVisualEmbedComponent', () => {
         headers: {},
         statusText: '',
       };
-      spyOn(testVisual, 'updateFilters').and.returnValue(Promise.resolve(expectedResponse));
+      const resolvedPromise = Promise.resolve(expectedResponse);
+      spyOn(testVisual, 'updateFilters').and.returnValue(resolvedPromise);
 
       // Act
       const response = await testVisual.updateFilters(models.FiltersOperations.Replace, [testFilter]);
