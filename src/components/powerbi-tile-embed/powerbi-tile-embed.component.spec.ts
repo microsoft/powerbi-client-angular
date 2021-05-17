@@ -376,4 +376,30 @@ describe('PowerBITileEmbedComponent', () => {
       expect(testTile.off).toHaveBeenCalledTimes(0);
     });
   });
+
+  describe('Tests for tile features', () => {
+    beforeEach(() => {
+      // Arrange
+      component.embedConfig = {
+        type: 'tile',
+        dashboardId: 'fakeId',
+        id: 'fakeTileId',
+      };
+      fixture.detectChanges();
+    });
+
+    it('returns id of embedded tile', () => {
+      // Arrange
+      // Initialize testTile
+      const testTile = component.getTile();
+
+      const expectedTestTileId = 'fakeTileId';
+
+      // Act
+      const testTileId = testTile.getId();
+
+      // Assert
+      expect(testTileId).toEqual(expectedTestTileId);
+    });
+  });
 });
