@@ -365,6 +365,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
   describe('Tests for dashboard features', () => {
     let fakeDashboardId: any;
+
     beforeEach(() => {
       // Arrange
       fakeDashboardId = 'fakeDashboarId';

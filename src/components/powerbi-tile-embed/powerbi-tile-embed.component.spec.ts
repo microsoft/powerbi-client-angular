@@ -379,6 +379,7 @@ describe('PowerBITileEmbedComponent', () => {
 
   describe('Tests for tile features', () => {
     let fakeTileId: any;
+
     beforeEach(() => {
       // Arrange
       fakeTileId = 'fakeTileId';
