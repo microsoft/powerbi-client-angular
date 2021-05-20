@@ -378,12 +378,15 @@ describe('PowerBITileEmbedComponent', () => {
   });
 
   describe('Tests for tile features', () => {
+    let fakeTileId: any;
     beforeEach(() => {
       // Arrange
+      fakeTileId = 'fakeTileId';
+
       component.embedConfig = {
         type: 'tile',
         dashboardId: 'fakeId',
-        id: 'fakeTileId',
+        id: fakeTileId,
       };
       fixture.detectChanges();
     });
@@ -393,7 +396,7 @@ describe('PowerBITileEmbedComponent', () => {
       // Initialize testTile
       const testTile = component.getTile();
 
-      const expectedTestTileId = 'fakeTileId';
+      const expectedTestTileId = fakeTileId;
 
       // Act
       const testTileId = testTile.getId();

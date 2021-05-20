@@ -385,6 +385,7 @@ describe('PowerBIVisualEmbedComponent', () => {
 
   describe('Tests for visual features', () => {
     let fakeFilters: any[];
+    let fakeVisualId: any;
 
     beforeEach(() => {
       // Arrange
@@ -397,9 +398,11 @@ describe('PowerBIVisualEmbedComponent', () => {
         },
       ];
 
+      fakeVisualId = 'fakeVisualId';
+
       component.embedConfig = {
         type: 'visual',
-        id: 'fakeId',
+        id: fakeVisualId,
         visualName: 'fakeVisual',
         filters: fakeFilters,
       };
@@ -411,7 +414,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       // Initialize testVisual
       const testVisual = component.getVisual();
 
-      const expectedTestVisualId = 'fakeId';
+      const expectedTestVisualId = fakeVisualId;
 
       // Act
       const testVisualId = testVisual.getId();
@@ -420,7 +423,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(testVisualId).toEqual(expectedTestVisualId);
     });
 
-    it('returns a list of applied filters', async function () {
+    it('returns a list of applied filters', async () => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
@@ -435,7 +438,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(filters).toEqual(jasmine.objectContaining(fakeFilters));
     });
 
-    it('sets filters', async function () {
+    it('sets filters', async () => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
@@ -465,7 +468,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(response.statusCode).toEqual(202);
     });
 
-    it('removes filter', async function () {
+    it('removes filter', async () => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();
@@ -486,7 +489,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(response.statusCode).toEqual(202);
     });
 
-    it('updates filter', async function () {
+    it('updates filter', async () => {
       // Arrange
       // Initialize testVisual
       const testVisual = component.getVisual();

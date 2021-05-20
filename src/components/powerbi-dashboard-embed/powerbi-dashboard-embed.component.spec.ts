@@ -364,11 +364,14 @@ describe('PowerBIDashboardEmbedComponent', () => {
   });
 
   describe('Tests for dashboard features', () => {
+    let fakeDashboardId: any;
     beforeEach(() => {
       // Arrange
+      fakeDashboardId = 'fakeDashboarId';
+
       component.embedConfig = {
         type: 'dashboard',
-        id: 'fakeId',
+        id: fakeDashboardId,
       };
       fixture.detectChanges();
     });
@@ -378,7 +381,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       // Initialize testDashboard
       const testDashboard = component.getDashboard();
 
-      const expectedTestDashboardId = 'fakeId';
+      const expectedTestDashboardId = fakeDashboardId;
 
       // Act
       const testDashboardId = testDashboard.getId();
