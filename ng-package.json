@@ -4,11 +4,13 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "powerbi-client": "powerbi-client"
+      "powerbi-client": "powerbi-client",
+      "powerbi-report-authoring": "powerbi-report-authoring"
     }
   },
   "allowedNonPeerDependencies": [
     "powerbi-client",
+    "powerbi-report-authoring",
     "prettier",
     "tslib",
     "zone.js"

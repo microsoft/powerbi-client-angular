@@ -4,6 +4,8 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { models } from 'powerbi-client';
+import 'powerbi-report-authoring';
 import { PowerBIReportEmbedComponent } from './powerbi-report-embed.component';
 
 describe('PowerBIReportEmbedComponent', () => {
@@ -438,6 +440,277 @@ describe('PowerBIReportEmbedComponent', () => {
       // Assert
       expect(testReport.on).toHaveBeenCalledTimes(0);
       expect(testReport.off).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('Test for get report', () => {
+    it('returns the report component', () => {
+      // Arrange
+      const config = {
+        type: 'report',
+      };
+
+      const expectedResponse = {
+        config: {
+          type: 'report',
+          embedUrl: 'https://app.powerbi.com/reportEmbed',
+          groupId: undefined,
+          bootstrapped: true,
+          settings: {
+            filterPaneEnabled: undefined,
+            navContentPaneEnabled: undefined,
+          },
+        },
+      };
+
+      // Act
+      component.embedConfig = config;
+      fixture.detectChanges();
+      const response = component.getReport();
+
+      // Assert
+      expect(response.config).toEqual(jasmine.objectContaining(expectedResponse.config));
+    });
+  });
+
+  describe('Tests for report features', () => {
+    let fakeFilters: any[];
+
+    beforeEach(() => {
+      // Arrange
+      fakeFilters = [
+        {
+          x: 'fakeFilter1',
+        },
+        {
+          x: 'fakeFilter2',
+        },
+      ];
+
+      component.embedConfig = {
+        type: 'report',
+        id: 'fakeId',
+        filters: fakeFilters,
+      };
+      fixture.detectChanges();
+    });
+
+    it('returns id of embedded report', () => {
+      // Arrange
+      // Initialize testReport
+      const testReport = component.getReport();
+
+      const expectedTestReportId = 'fakeId';
+
+      // Act
+      const testReportId = testReport.getId();
+
+      // Assert
+      expect(testReportId).toEqual(expectedTestReportId);
+    });
+
+    describe('Test of report level filters', async () => {
+      it('returns a list of applied filters', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const resolvedPromise = Promise.resolve(fakeFilters);
+        spyOn(testReport, 'getFilters').and.returnValue(resolvedPromise);
+
+        // Act
+        const filters = await testReport.getFilters();
+
+        // Assert
+        expect(filters).toEqual(jasmine.objectContaining(fakeFilters));
+      });
+
+      it('sets filters', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const testFilters: any[] = [
+          {
+            x: 'testFilter1',
+          },
+          {
+            x: 'testFilter2',
+          },
+        ];
+
+        const expectedResponse = {
+          body: undefined,
+          statusCode: 202,
+          headers: {},
+          statusText: '',
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'setFilters').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.setFilters(testFilters);
+
+        // Assert
+        expect(response.statusCode).toEqual(202);
+      });
+
+      it('removes filter', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const expectedResponse = {
+          body: undefined,
+          statusCode: 202,
+          headers: {},
+          statusText: '',
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'removeFilters').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.removeFilters();
+
+        // Assert
+        expect(response.statusCode).toEqual(202);
+      });
+
+      it('updates filter', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const testFilter: any = { x: 'testFilter' };
+
+        const expectedResponse = {
+          body: undefined,
+          statusCode: 202,
+          headers: {},
+          statusText: '',
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'updateFilters').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.updateFilters(models.FiltersOperations.Replace, [testFilter]);
+
+        // Assert
+        expect(response.statusCode).toEqual(202);
+      });
+    });
+
+    describe('Tests of page features', () => {
+      it('sets given page as active page', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const testPageName = 'fakePage';
+
+        const expectedResponse = {
+          body: undefined,
+          statusCode: 202,
+          headers: {},
+          statusText: '',
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'setPage').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.setPage(testPageName);
+
+        // Assert
+        expect(response.statusCode).toEqual(202);
+      });
+
+      it('returns all the pages of a report', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const expectedPages = [testReport.page('page1'), testReport.page('page2')];
+        const resolvedPromise = Promise.resolve(expectedPages);
+        spyOn(testReport, 'getPages').and.returnValue(resolvedPromise);
+
+        // Act
+        const testReportPages = await testReport.getPages();
+
+        // Assert
+        expect(testReportPages[0].name).toEqual(expectedPages[0].name);
+        expect(testReportPages[1].name).toEqual(expectedPages[1].name);
+      });
+    });
+
+    describe('Tests of update settings', () => {
+      it('updates report settings', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const testSettings: models.ISettings = { filterPaneEnabled: true };
+
+        const expectedResponse = {
+          body: undefined,
+          statusCode: 202,
+          headers: {},
+          statusText: '',
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'updateSettings').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.updateSettings(testSettings);
+
+        // Assert
+        expect(response.statusCode).toEqual(202);
+      });
+    });
+
+    describe('Tests of report extensions from report authoring library', () => {
+      it('gets visual capabilities in report', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const testVisualType = 'lineChart';
+
+        const expectedResponse: any = {
+          dataRoles: [
+            {
+              name: 'fakeName',
+              displayName: 'fakeDisplayName',
+              description: 'fakeDescription',
+            },
+          ],
+        };
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'getVisualCapabilities').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.getVisualCapabilities(testVisualType);
+
+        // Assert
+        expect(response.dataRoles).toBe(expectedResponse.dataRoles);
+      });
+
+      it('gets available visual types from current report', async () => {
+        // Arrange
+        // Initialize testReport
+        const testReport = component.getReport();
+
+        const expectedResponse = ['columnChart', 'lineChart'];
+
+        const resolvedPromise = Promise.resolve(expectedResponse);
+        spyOn(testReport, 'getAvailableVisualTypes').and.returnValue(resolvedPromise);
+
+        // Act
+        const response = await testReport.getAvailableVisualTypes();
+
+        // Assert
+        expect(response[0]).toBe(expectedResponse[0]);
+        expect(response[1]).toBe(expectedResponse[1]);
+      });
     });
   });
 });

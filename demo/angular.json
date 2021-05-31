@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "powerbi-report-authoring"
+            ],
             "outputPath": "dist/demo",
             "index": "src/index.html",
             "main": "src/main.ts",

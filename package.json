@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "powerbi-client": "2.17.2",
+    "powerbi-report-authoring": "^1.1.1",
     "prettier": "^2.2.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
