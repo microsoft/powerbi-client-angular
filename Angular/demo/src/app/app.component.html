@@ -1,0 +1,27 @@
+<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. -->
+
+<div class="header">
+  <div class="title">Power BI Embedded Angular Component demo</div>
+</div>
+
+<powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
+</powerbi-report>
+
+<div class="horizontal-rule"></div>
+
+<div class="display-message">{{ displayMessage }}</div>
+
+<div class="controls">
+  <button (click)="embedReport()">Embed Report</button>
+  <button (click)="deleteVisual()">Delete Visual</button>
+  <button (click)="hideFilterPane()">Hide Filter Pane</button>
+  <button (click)="setDataSelectedEvent()">Set Event</button>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    GitHub:
+    <a href="#"> # </a>
+  </div>
+</div>
