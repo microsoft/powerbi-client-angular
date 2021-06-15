@@ -65,6 +65,7 @@
             "polyfills": "demo/src/polyfills.ts",
             "tsConfig": "demo/tsconfig.app.json",
             "assets": [
+              "demo/src/assets",
               "demo/src/favicon.ico"
             ],
             "styles": [

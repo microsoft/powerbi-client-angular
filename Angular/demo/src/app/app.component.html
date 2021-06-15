@@ -5,19 +5,22 @@ Licensed under the MIT License. -->
   <div class="title">Power BI Embedded Angular Component demo</div>
 </div>
 
-<powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
-</powerbi-report>
-
-<div class="horizontal-rule"></div>
-
-<div class="display-message">{{ displayMessage }}</div>
-
-<div class="controls">
-  <button (click)="embedReport()">Embed Report</button>
+<div class="controls" *ngIf="isEmbedded; else embedReportFlow">
   <button (click)="deleteVisual()">Delete Visual</button>
   <button (click)="hideFilterPane()">Hide Filter Pane</button>
   <button (click)="setDataSelectedEvent()">Set Event</button>
+  <div class="display-message" #status>{{ displayMessage }}</div>
 </div>
+<ng-template #embedReportFlow>
+  <div class="display-message" #status>
+    <label>{{ displayMessage }}</label>
+    <button (click)="embedReport()" id="embed-action" class="embed-btn" #embedReportBtn>Embed Report</button>
+  </div>
+  <div class="separator"></div>
+</ng-template>
+
+<powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
+</powerbi-report>
 
 <div class="footer">
   <div class="footer-text">

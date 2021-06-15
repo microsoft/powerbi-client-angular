@@ -2,8 +2,14 @@
 Licensed under the MIT License. */
 
 body {
-  font-family: "Segoe UI";
+  font-family: 'Segoe UI';
   margin: 0;
+}
+
+.status-img {
+  height: 20px;
+  margin-right: 5px;
+  width: 20px;
 }
 
 iframe {
@@ -11,7 +17,7 @@ iframe {
 }
 
 .report-container {
-  height: 69vh;
-  margin: 1% auto;
-  width: 60%;
+  height: 75vh;
+  margin: 8px auto;
+  width: 90%;
 }

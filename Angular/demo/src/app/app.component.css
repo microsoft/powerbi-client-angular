@@ -18,9 +18,29 @@ Licensed under the MIT License. */
   border: 1px solid #e0e0e0;
 }
 
+.embed-btn {
+  margin-left: 7px;
+}
+
+.separator {
+  height: 45px;
+}
+
+.success {
+  color: #107c41;
+}
+
+.error {
+  color: #d13438;
+}
+
 .display-message {
-  font: 400 22px/27px 'Segoe UI';
-  margin-top: 1%;
+  align-items: center;
+  display: flex;
+  font: 400 18px/27px 'Segoe UI';
+  height: 30px;
+  justify-content: center;
+  margin-top: 8px;
   text-align: center;
 }
 

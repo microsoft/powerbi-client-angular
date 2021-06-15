@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IHttpPostMessageResponse } from 'http-post-message';
 import { IReportEmbedConfiguration, models, Page, Report, service, VisualDescriptor } from 'powerbi-client';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import 'powerbi-report-authoring';
+import { errorClass, errorElement, reportUrl, successClass, successElement } from '../constants';
 import { HttpService } from './services/http.service';
-
-// Endpoint to get report config
-export const reportUrl = 'https://aka.ms/CaptureViewsReportEmbedConfig';
 
 // Handles the embed config response for embedding
 export interface ConfigResponse {
@@ -28,6 +26,15 @@ export interface ConfigResponse {
 export class AppComponent {
   // Wrapper object to access report properties
   @ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;
+
+  // Div object to show status of the demo app
+  @ViewChild('status') private statusRef!: ElementRef<HTMLDivElement>;
+
+  // Embed Report button element of the demo app
+  @ViewChild('embedReportBtn') private embedBtnRef!: ElementRef<HTMLButtonElement>;
+
+  // Track Report embedding status
+  isEmbedded = false;
 
   // Overall status message of embedding
   displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
@@ -62,8 +69,13 @@ export class AppComponent {
       () => {
         console.log('Report has rendered');
 
-        // Update display message
-        this.displayMessage = 'The report is rendered.';
+        // Set displayMessage to empty when rendered for the first time
+        if (!this.isEmbedded) {
+          this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';
+        }
+
+        // Update embed status
+        this.isEmbedded = true;
       },
     ],
     [
@@ -86,18 +98,14 @@ export class AppComponent {
    * @returns Promise<void>
    */
   async embedReport(): Promise<void> {
-    // Check if report is embedded
-    if (this.reportConfig.accessToken && this.reportConfig.embedUrl) {
-      this.displayMessage = 'Report is embedded.';
-      console.log(this.displayMessage);
-      return;
-    }
     let reportConfigResponse: ConfigResponse;
 
     // Get the embed config from the service and set the reportConfigResponse
     try {
       reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error) {
+      // Prepare status message for Embed failure
+      await this.prepareDisplayMessageForEmbed(errorElement, errorClass);
       this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
       console.error(this.displayMessage);
       return;
@@ -111,8 +119,29 @@ export class AppComponent {
       accessToken: reportConfigResponse.EmbedToken.Token,
     };
 
+    // Prepare status message for Embed success
+    await this.prepareDisplayMessageForEmbed(successElement, successClass);
+
     // Update the display message
     this.displayMessage = 'Access token is successfully set. Loading Power BI report.';
+  }
+
+  /**
+   * Handle Report embedding flow
+   * @param img Image to show with the display message
+   * @param type Type of the message
+   *
+   * @returns Promise<void>
+   */
+  async prepareDisplayMessageForEmbed(img: HTMLImageElement, type: string): Promise<void> {
+    // Remove the Embed Report button from UI
+    this.embedBtnRef.nativeElement.remove();
+
+    // Prepend the Image element to the display message
+    this.statusRef.nativeElement.prepend(img);
+
+    // Set type of the message
+    this.statusRef.nativeElement.classList.add(type);
   }
 
   /**
@@ -121,17 +150,12 @@ export class AppComponent {
    * @returns Promise<void>
    */
   async deleteVisual(): Promise<void> {
-    // Check if report is embedded
-    if (!this.reportConfig.accessToken || !this.reportConfig.embedUrl) {
-      this.displayMessage = 'Please embed the report first.';
-      console.log(this.displayMessage);
-      return;
-    }
-
     // Get report from the wrapper component
     const report: Report = this.reportObj.getReport();
 
     if (!report) {
+      // Prepare status message for Error
+      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'Report not available.';
       console.log(this.displayMessage);
       return;
@@ -142,6 +166,8 @@ export class AppComponent {
 
     // Check if all the pages of the report deleted
     if (pages.length === 0) {
+      // Prepare status message for Error
+      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'No pages found.';
       console.log(this.displayMessage);
       return;
@@ -155,6 +181,8 @@ export class AppComponent {
       const visuals: VisualDescriptor[] = await activePage.getVisuals();
 
       if (visuals.length === 0) {
+        // Prepare status message for Error
+        this.prepareStatusMessage(errorElement, errorClass);
         this.displayMessage = 'No visuals found.';
         console.log(this.displayMessage);
         return;
@@ -165,6 +193,8 @@ export class AppComponent {
 
       // No visible visual found
       if (!visual) {
+        // Prepare status message for Error
+        this.prepareStatusMessage(errorElement, errorClass);
         this.displayMessage = 'No visible visual available to delete.';
         console.log(this.displayMessage);
         return;
@@ -175,6 +205,8 @@ export class AppComponent {
         // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview
         const response = await activePage.deleteVisual(visual.name);
 
+        // Prepare status message for success
+        this.prepareStatusMessage(successElement, successClass);
         this.displayMessage = `${visual.type} visual was deleted.`;
         console.log(this.displayMessage);
 
@@ -191,17 +223,12 @@ export class AppComponent {
    * @returns Promise<IHttpPostMessageResponse<void> | undefined>
    */
   async hideFilterPane(): Promise<IHttpPostMessageResponse<void> | undefined> {
-    // Check if report is embedded
-    if (!this.reportConfig.accessToken || !this.reportConfig.embedUrl) {
-      this.displayMessage = 'Please embed the report first.';
-      console.log(this.displayMessage);
-      return;
-    }
-
     // Get report from the wrapper component
     const report: Report = this.reportObj.getReport();
 
     if (!report) {
+      // Prepare status message for Error
+      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'Report not available.';
       console.log(this.displayMessage);
       return;
@@ -220,6 +247,8 @@ export class AppComponent {
     try {
       const response = await report.updateSettings(settings);
 
+      // Prepare status message for success
+      this.prepareStatusMessage(successElement, successClass);
       this.displayMessage = 'Filter pane is hidden.';
       console.log(this.displayMessage);
 
@@ -236,19 +265,29 @@ export class AppComponent {
    * @returns void
    */
   setDataSelectedEvent(): void {
-    // Check if report is embedded
-    if (!this.reportConfig.accessToken || !this.reportConfig.embedUrl) {
-      this.displayMessage = 'Please embed the report first.';
-      console.log(this.displayMessage);
-      return;
-    }
-
     // Adding dataSelected event in eventHandlersMap
     this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
       ...this.eventHandlersMap,
       ['dataSelected', (event) => console.log(event)],
     ]);
 
+    // Prepare status message for success
+    this.prepareStatusMessage(successElement, successClass);
     this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';
+  }
+
+  /**
+   * Prepare status message while using JS SDK APIs
+   * @param img Image to show with the display message
+   * @param type Type of the message
+   *
+   * @returns void
+   */
+  prepareStatusMessage(img: HTMLImageElement, type: string) {
+    // Prepend Image to the display message
+    this.statusRef.nativeElement.prepend(img);
+
+    // Add class to the display message
+    this.statusRef.nativeElement.classList.add(type);
   }
 }
