@@ -12,9 +12,11 @@ Licensed under the MIT License. -->
   <div class="display-message" #status>{{ displayMessage }}</div>
 </div>
 <ng-template #embedReportFlow>
-  <div class="display-message" #status>
+  <div class="display-message position" #status>
     <label>{{ displayMessage }}</label>
-    <button (click)="embedReport()" id="embed-action" class="embed-btn" #embedReportBtn>Embed Report</button>
+  </div>
+  <div class="embed-report">
+    <button (click)="embedReport()" id="embed-action" #embedReportBtn>Embed Report</button>
   </div>
   <div class="separator"></div>
 </ng-template>

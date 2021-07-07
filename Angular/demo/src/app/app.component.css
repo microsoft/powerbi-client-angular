@@ -18,10 +18,6 @@ Licensed under the MIT License. */
   border: 1px solid #e0e0e0;
 }
 
-.embed-btn {
-  margin-left: 7px;
-}
-
 .separator {
   height: 45px;
 }
@@ -32,6 +28,19 @@ Licensed under the MIT License. */
 
 .error {
   color: #d13438;
+}
+
+.position {
+  margin-top: 40vh !important;
+}
+
+.embed-report {
+  margin-top: 18px;
+  text-align: center;
+}
+
+#embed-action {
+  margin-right: 0;
 }
 
 .display-message {

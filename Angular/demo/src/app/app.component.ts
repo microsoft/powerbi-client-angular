@@ -6,7 +6,7 @@ import { IHttpPostMessageResponse } from 'http-post-message';
 import { IReportEmbedConfiguration, models, Page, Report, service, VisualDescriptor } from 'powerbi-client';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import 'powerbi-report-authoring';
-import { errorClass, errorElement, reportUrl, successClass, successElement } from '../constants';
+import { errorClass, errorElement, hidden, position, reportUrl, successClass, successElement } from '../constants';
 import { HttpService } from './services/http.service';
 
 // Handles the embed config response for embedding
@@ -40,7 +40,8 @@ export class AppComponent {
   displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  reportClass = 'report-container';
+  // Hide the report container initially
+  reportClass = 'report-container hidden';
 
   // Flag which specify the type of embedding
   phasedEmbeddingFlag = false;
@@ -90,7 +91,7 @@ export class AppComponent {
     ['pageChanged', (event) => console.log(event)],
   ]);
 
-  constructor(public httpService: HttpService) {}
+  constructor(public httpService: HttpService, private element: ElementRef<HTMLDivElement>) {}
 
   /**
    * Embeds report
@@ -118,6 +119,20 @@ export class AppComponent {
       embedUrl: reportConfigResponse.EmbedUrl,
       accessToken: reportConfigResponse.EmbedToken.Token,
     };
+
+    // Get the reference of the report-container div
+    const reportDiv = this.element.nativeElement.querySelector('.report-container');
+    if (reportDiv) {
+      // When Embed report is clicked, show the report container div
+      reportDiv.classList.remove(hidden);
+    }
+
+    // Get the reference of the display-message div
+    const displayMessage = this.element.nativeElement.querySelector('.display-message');
+    if (displayMessage) {
+      // When Embed report is clicked, change the position of the display-message
+      displayMessage.classList.remove(position);
+    }
 
     // Prepare status message for Embed success
     await this.prepareDisplayMessageForEmbed(successElement, successClass);

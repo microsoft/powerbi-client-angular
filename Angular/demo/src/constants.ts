@@ -17,4 +17,10 @@ const reportUrl = 'https://aka.ms/CaptureViewsReportEmbedConfig';
 const errorClass = 'error';
 const successClass = 'success';
 
-export { errorClass, errorElement, reportUrl, successClass, successElement };
+// To show / hide the report container
+const hidden = 'hidden';
+
+// To position the display message
+const position = 'position';
+
+export { errorClass, errorElement, hidden, position, reportUrl, successClass, successElement };

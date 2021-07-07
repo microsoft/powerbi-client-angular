@@ -16,6 +16,11 @@ iframe {
   border: none;
 }
 
+.hidden {
+  height: 0 !important;
+  width: 0 !important;
+}
+
 .report-container {
   height: 75vh;
   margin: 8px auto;
