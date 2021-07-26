@@ -1,0 +1,18 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/powerbi-client-angular",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "powerbi-client": "powerbi-client",
+      "powerbi-report-authoring": "powerbi-report-authoring"
+    }
+  },
+  "allowedNonPeerDependencies": [
+    "powerbi-client",
+    "powerbi-report-authoring",
+    "prettier",
+    "tslib",
+    "zone.js"
+  ]
+}
