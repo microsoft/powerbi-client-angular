@@ -203,13 +203,16 @@ There are two ways in which ```reportObj``` can be used:
         console.log(visuals);
     }
     ```
+
+### Dependencies
+
+powerbi-client (https://www.npmjs.com/package/powerbi-client)
+
 ### Peer Dependencies
 
 @angular/common (https://www.npmjs.com/package/@angular/common)
 
 @angular/core (https://www.npmjs.com/package/@angular/core)
-
-powerbi-client (https://www.npmjs.com/package/powerbi-client)
 
 ### Contributing
 

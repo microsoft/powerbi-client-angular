@@ -14,16 +14,16 @@
     "authoring"
   ],
   "repository": {
-		"type": "git",
-		"url": "https://github.com/microsoft/powerbi-client-angular.git"
-	},
+    "type": "git",
+    "url": "https://github.com/microsoft/powerbi-client-angular.git"
+  },
   "license": "MIT",
   "dependencies": {
+    "powerbi-client": "^2.18.0",
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
     "@angular/common": "^12.0.1",
-    "@angular/core": "^12.0.1",
-    "powerbi-client": "^2.18.0"
+    "@angular/core": "^12.0.1"
   }
 }
