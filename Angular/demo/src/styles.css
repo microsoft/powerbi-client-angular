@@ -1,0 +1,28 @@
+/* Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. */
+
+body {
+  font-family: 'Segoe UI';
+  margin: 0;
+}
+
+.status-img {
+  height: 20px;
+  margin-right: 5px;
+  width: 20px;
+}
+
+iframe {
+  border: none;
+}
+
+.hidden {
+  height: 0 !important;
+  width: 0 !important;
+}
+
+.report-container {
+  height: 75vh;
+  margin: 8px auto;
+  width: 90%;
+}

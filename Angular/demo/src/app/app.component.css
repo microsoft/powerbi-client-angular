@@ -1,0 +1,101 @@
+/* Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. */
+
+.header {
+  background: #3476ae 0 0 no-repeat padding-box;
+  border: 1px solid #707070;
+  height: 55px;
+}
+
+.title {
+  color: #fff;
+  font: 700 22px/27px 'Segoe UI';
+  margin: 13px 13px 13px 36px;
+  text-align: left;
+}
+
+.horizontal-rule {
+  border: 1px solid #e0e0e0;
+}
+
+.separator {
+  height: 45px;
+}
+
+.success {
+  color: #107c41;
+}
+
+.error {
+  color: #d13438;
+}
+
+.position {
+  margin-top: 40vh !important;
+}
+
+.embed-report {
+  margin-top: 18px;
+  text-align: center;
+}
+
+#embed-action {
+  margin-right: 0;
+}
+
+.display-message {
+  align-items: center;
+  display: flex;
+  font: 400 18px/27px 'Segoe UI';
+  height: 30px;
+  justify-content: center;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.controls {
+  margin-top: 1%;
+  text-align: center;
+}
+
+button {
+  background: #337ab7;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  height: 35px;
+  margin-right: 15px;
+  width: 160px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.footer {
+  background: #eef3f8 0 0 no-repeat padding-box;
+  bottom: 0;
+  height: 39px;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+}
+
+.footer-text {
+  font: 400 16px/21px 'Segoe UI';
+  height: 21px;
+  letter-spacing: 0;
+  margin-top: 9px;
+  opacity: 1;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-text > a {
+  color: #606a74;
+  font: Regular 16px/21px 'Segoe UI';
+  letter-spacing: 0;
+  text-decoration: underline;
+}
