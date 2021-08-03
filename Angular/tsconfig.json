@@ -13,11 +13,6 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "paths": {
-      "powerbi-client-angular": [
-        "dist/powerbi-client-angular"
-      ]
-    },
     "target": "es2017",
     "module": "es2020",
     "lib": [
