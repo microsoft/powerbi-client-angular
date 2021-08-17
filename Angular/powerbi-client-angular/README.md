@@ -107,7 +107,7 @@ To run the demo on localhost, run the following command:
 ```
 npm run demo
 ```
-
+__Note__: Please run command ```npm run build``` at the first time to build the library before run the demo
 Redirect to http://localhost:4200/ to view in the browser.
 
 ### Usage
