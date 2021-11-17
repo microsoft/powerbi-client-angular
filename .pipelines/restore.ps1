@@ -12,7 +12,7 @@ Write-Host "Global npm version"
 $exitCode = 0;
 
 Write-Host "start: try install latest Angular Client CLI version"
-& npm install @angular/cli@latest -g
+& npm install @angular/cli@12.2.11 -g
 Write-Host "done: try install latest Angular Client CLI version"
 
 Write-Host "Global ng path.."
