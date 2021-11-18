@@ -104,7 +104,7 @@ export class AppComponent {
     // Get the embed config from the service and set the reportConfigResponse
     try {
       reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
-    } catch (error) {
+    } catch (error: any) {
       // Prepare status message for Embed failure
       await this.prepareDisplayMessageForEmbed(errorElement, errorClass);
       this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
