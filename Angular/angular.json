@@ -108,6 +108,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "demo:build"
+          },
           "configurations": {
             "production": {
               "browserTarget": "demo:build:production"

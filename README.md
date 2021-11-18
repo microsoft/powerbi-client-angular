@@ -92,7 +92,6 @@ You can embed other artifacts such as:
     [eventHandlers] = "<Map of String and eventHandler>"
 >
 </powerbi-dashboard>
-
 ```
 ### Demo
 
@@ -115,7 +114,7 @@ Redirect to http://localhost:4200/ to view in the browser.
 |:------|:------|
 |Embed Power BI|To embed your powerbi artifact, pass the component with at least type, embedUrl and accessToken in embedConfig property.|
 |Apply style class|Pass the name(s) of style classes to be applied to the embed container div to the cssClassName property.|
-|Set event handlers|Pass a map object of event name (string) and event handler (function) to the _eventHandlers_ prop. <br/>__Key__: Event name <br/>__Value__: Event handler method to be triggered<br/>Event handler method takes two optional paramaters:<br/>*First parameter*: Event<br/>*Second parameter*: Reference to the embedded entity|
+|Set event handlers|Pass a map object of event name (string) and event handler (function) to the _eventHandlers_ prop. <br/>__Key__: Event name <br/>__Value__: Event handler method to be triggered<br/>Event handler method takes two optional parameters:<br/>*First parameter*: Event<br/>*Second parameter*: Reference to the embedded entity <br /><br /> List of supported events is given here: [Additional events](#supported-events)|
 |Reset event handlers|To reset event handler for an event, set the event handler's value as null in the eventHandlers map of properties.|
 |Bootstrap Power BI|To [bootstrap your powerbi entity](https://docs.microsoft.com/javascript/api/overview/powerbi/bootstrap-better-performance), pass the property *embedConfig* to the component without _accessToken_<br/>__Note__: _embedConfig_ should at least contain __type__ of the powerbi entity being embedded. <br/>Available types: "report", "dashboard", "tile", "visual" and "qna".<br/>Refer to _How to bootstrap a report_ section in [Quick Start](#quick-start). <br /><br />__Note__:  A paginated report cannot be bootstrapped.|
 |Using with PowerBI Report Authoring|1. Install [powerbi-report-authoring](https://www.npmjs.com/package/powerbi-report-authoring) as an npm dependency.<br>2. Use the report authoring APIs using the embedded report's instance.|
@@ -124,7 +123,6 @@ Redirect to http://localhost:4200/ to view in the browser.
 <br />
 
 __Note__: Supported browsers are _Edge_, _Chrome_,  and _Firefox_.
-
 <br />
 
 ### Properties accepted by Components
@@ -132,10 +130,24 @@ __Note__: Supported browsers are _Edge_, _Chrome_,  and _Firefox_.
 |Property|Description|Supported by|
 |:-------|:----------|:----------|
 |embedConfig|Configuration for embedding the PowerBI entity (required)|All|
-|phasedEmbedding|Phased embedding flag (optional)|report|
-|eventHandlers|Map of pair of event name and its handler method to be triggered on the event (optional)|report, dashboard, tile, visual, qna|
+|phasedEmbedding|Phased embedding flag (optional)|Report|
+|eventHandlers|Map of pair of event name and its handler method to be triggered on the event (optional)|Report, Dashboard, Tile, Visual, Qna|
 |cssClassName|CSS class to be set on the embedding container (optional)|All|
 |service|Provide the instance of PowerBI service (optional)|All|
+
+<br />
+
+## Supported Events
+
+
+### Events supported by various Power BI entities:
+
+|Entity|Event|
+|:----- |:----- |
+| Report | "buttonClicked", "commandTriggered", "dataHyperlinkClicked", "dataSelected", "loaded", "pageChanged", "rendered", "saveAsTriggered", "saved", "selectionChanged", "visualClicked", "visualRendered" |
+| Dashboard | "loaded", "tileClicked" |
+| Tile | "tileLoaded", "tileClicked" |
+| QnA | "visualRendered" |
 
 <br />
 
@@ -203,6 +215,10 @@ There are two ways in which ```reportObj``` can be used:
         console.log(visuals);
     }
     ```
+
+
+### Note
+The library supports Angular applications having version **>= 11**.
 
 ### Dependencies
 
