@@ -1,6 +1,6 @@
 {
   "name": "angular",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "scripts": {
     "ng": "ng",
     "build": "ng build",
@@ -19,7 +19,7 @@
     "@angular/core": "^11.2.7",
     "@angular/platform-browser": "~11.2.7",
     "@angular/platform-browser-dynamic": "~11.2.7",
-    "powerbi-client-angular": "^1.0.1",
+    "powerbi-client-angular": "^2.0.0",
     "powerbi-report-authoring": "^1.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
