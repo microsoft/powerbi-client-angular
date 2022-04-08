@@ -3,6 +3,16 @@ Power BI Angular component. This library lets you embed Power BI reports, dashbo
 
 ## Quick Start
 
+### Install
+
+*Run this command in the base directory of your Angular project where you have package.json:*
+#### npm version >= 5
+* ```npm install powerbi-client-angular```
+#### npm version < 5
+* ```npm install powerbi-client-angular --save```
+
+__Note__: You must have at least Angular version 12 or higher to build and run the application.
+
 ### Import
 *Import the 'PowerBIEmbedModule' inside your target module:*
 ```ts
