@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { EventHandler } from '../components/powerbi-embed/powerbi-embed.component';
+import packageInfo from '../../package.json';
 
 /**
  * Get JSON string representation of the given map.
@@ -26,3 +27,7 @@ export const stringifyMap = (map: Map<string, EventHandler | null> | undefined):
     )
   );
 };
+
+// SDK information to be used with service instance
+export const SdkType: string = "powerbi-client-angular";
+export const SdkWrapperVersion: string = packageInfo.version;

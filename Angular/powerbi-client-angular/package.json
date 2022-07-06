@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "powerbi-client": "^2.18.0",
+    "powerbi-client": "^2.21.1",
     "tslib": "^2.1.0"
   },
   "peerDependencies": {
