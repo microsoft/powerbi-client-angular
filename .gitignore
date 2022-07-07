@@ -50,3 +50,6 @@ Thumbs.db
 
 # Other
 owners.txt
+
+# Angular
+Angular/.angular/
