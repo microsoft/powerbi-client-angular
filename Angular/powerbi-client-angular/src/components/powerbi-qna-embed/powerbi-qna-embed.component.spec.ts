@@ -97,7 +97,7 @@ describe('PowerBIQnaEmbedComponent', () => {
     let mockPowerBIService: any;
 
     beforeEach(() => {
-      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap', 'setSdkInfo']);
     });
 
     it('embeds qna visual when accessToken provided', () => {

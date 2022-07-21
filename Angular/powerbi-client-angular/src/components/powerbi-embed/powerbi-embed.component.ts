@@ -3,7 +3,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { Embed, factories, service } from 'powerbi-client';
-import { stringifyMap, SdkType, SdkWrapperVersion } from '../../utils/utils';
+import { stringifyMap, sdkType, sdkWrapperVersion } from '../../utils/utils';
 
 /**
  * Type for event handler function of embedded entity
@@ -39,7 +39,7 @@ export class PowerBIEmbedComponent implements OnInit {
       this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
     }
 
-    this.powerbi.setSdkInfo(SdkType, SdkWrapperVersion);
+    this.powerbi.setSdkInfo(sdkType, sdkWrapperVersion);
   }
 
   /**
