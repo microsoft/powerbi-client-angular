@@ -29,4 +29,4 @@ export const stringifyMap = (map: Map<string, EventHandler | null> | undefined):
 
 // SDK information to be used with service instance
 export const sdkType = 'powerbi-client-angular';
-export const sdkWrapperVersion = '2.0.0';
+export const sdkWrapperVersion = '2.0.1';

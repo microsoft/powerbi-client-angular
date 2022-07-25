@@ -32,6 +32,13 @@ if ($exitCode -ne 0) {
 # Get contents of dist folder
 Write-Host "start: Get dist folder files"
 & dir "dist"
+$distItems = Get-ChildItem -Force './dist'
+If ($distItems.Count -ne 1 -or $distItems.Name -ne "powerbi-client-angular") {
+    Write-Host "Error: dist folder should contain only powerbi-client-angular folder!"
+    $exitCode += 1;
+    exit $exitCode
+}
+& dir "dist/powerbi-client-angular"
 Write-Host "Done: Get dist folder files"
 
 exit $exitCode
