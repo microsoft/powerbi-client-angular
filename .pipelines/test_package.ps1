@@ -15,7 +15,8 @@ if ($packName -ne $expectedPackName) {
 Write-Host "done: verify package name"
 
 Write-Host "start: install package in test environment"
-cd (Split-Path $pwd -Qualifier)\
+$qualifier = (Split-Path $pwd -Qualifier)
+cd $qualifier\
 mkdir testProject
 cd .\testProject
 npm init -y
