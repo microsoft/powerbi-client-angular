@@ -3,7 +3,7 @@ $packPath = $package.FullName
 Write-Host "Package full name: $packPath"
 
 Write-Host "start: verify package name"
-$version = [Environment]::GetEnvironmentVariable("Version", "User")
+$version = (Get-Content "powerbi-client-angular/package.json") -join "`n" | ConvertFrom-Json | Select -ExpandProperty "version"
 $expectedPackName = "powerbi-client-angular-$version.tgz"
 $packName = $package.Name
 if ($packName -ne $expectedPackName) {
