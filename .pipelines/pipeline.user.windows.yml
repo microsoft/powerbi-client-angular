@@ -43,7 +43,8 @@ package_sources:
   npm:
     config_files:
           - include:
-            - ".npmrc"
+            - "Angular\\.npmrc"
+            - "Angular\\powerbi-client-angular\\.npmrc"
     feeds:
       registry: https://powerbi.pkgs.visualstudio.com/_packaging/SDK.Externals/npm/registry/
 
