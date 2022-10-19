@@ -5,7 +5,7 @@ environment:
     version: '2016'
   runtime:
     provider: 'appcontainer'
-    image: 'cdpxwinrs5.azurecr.io/global/vse2019/16.3.7:latest'
+    image: 'cdpxwin1809.azurecr.io/global/obinfra/windows/1809/vs2019:latest'
     source_mode: 'map'
 
 artifact_publish_options:
