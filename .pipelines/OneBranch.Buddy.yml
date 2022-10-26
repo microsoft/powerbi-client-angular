@@ -75,6 +75,11 @@ extends:
             inputs:
               versionSpec: '16.x'
 
+          - task: npmAuthenticate@0
+            displayName: 'NPM Authenticate'
+            inputs:
+              workingFile: '$(Build.SourcesDirectory)\Angular\.npmrc'
+
           # Commands to run during the restore stage
           - task: CmdLine@2
             displayName: 'NPM Install'
