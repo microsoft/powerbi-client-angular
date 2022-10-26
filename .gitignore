@@ -49,4 +49,5 @@ testem.log
 Thumbs.db
 
 # Angular
-Angular/.angular/
+Angular/demo/.angular
+Angular/powerbi-client-angular/.angular

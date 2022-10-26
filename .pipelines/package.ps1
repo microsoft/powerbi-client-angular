@@ -1,7 +1,7 @@
 $exitCode = 0;
 $baseDir = $pwd;
 Write-Host "start: npm pack"
-& cd .\Angular
+& cd .\Angular\powerbi-client-angular
 & npm run package
 Write-Host "done: npm pack"
 
