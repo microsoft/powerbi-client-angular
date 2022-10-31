@@ -23,12 +23,12 @@ variables:
   ROOT: $(Build.SourcesDirectory)
   REPOROOT: $(Build.SourcesDirectory)
   OUTPUTROOT: $(REPOROOT)\out
-  NUGET_XMLDOC_MODE: none
+  NUGET_XMLDOC_MODE: skip
 
   WindowsContainerImage: 'cdpxwin1809.azurecr.io/global/obinfra/windows/1809/vs2019:latest' # Docker image which is used to build the project https://aka.ms/obpipelines/containers
 
 resources:
-  repositories: 
+  repositories:
     - repository: templates
       type: git
       name: OneBranch.Pipelines/GovernedTemplates
@@ -49,7 +49,7 @@ extends:
       - job: main
         pool:
           type: windows  # read more about custom job pool types at https://aka.ms/obpipelines/yaml/jobs
-        
+
         variables: # More settings at https://aka.ms/obpipelines/yaml/jobs
           ob_outputDirectory: '$(OUTPUTROOT)' # this directory is uploaded to pipeline artifacts, reddog and cloudvault. More info at https://aka.ms/obpipelines/artifacts
           ob_sdl_binskim_break: true # https://aka.ms/obpipelines/sdl
@@ -58,10 +58,11 @@ extends:
 
         steps:
           # Custom Versioning - we will build the version using package.json in versioning commands.
-          - task: CmdLine@2
+          - task: PowerShell@2
             displayName: 'Set Version'
             inputs:
-              script: '$(Build.SourcesDirectory)\.pipelines\onebranch_run_ps.cmd version.ps1'
+              targetType: 'filePath'
+              filePath: '$(Build.SourcesDirectory)\.pipelines\version.ps1'
               workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
 
           # Add the versioning task after running Version script
@@ -80,25 +81,25 @@ extends:
             inputs:
               workingFile: '$(Build.SourcesDirectory)\Angular\.npmrc'
 
-          # Commands to run during the restore stage
-          - task: CmdLine@2
+          - task: PowerShell@2
             displayName: 'NPM Install'
             inputs:
-              script: '$(Build.SourcesDirectory)\.pipelines\onebranch_run_ps.cmd restore.ps1'
+              targetType: 'filePath'
+              filePath: '$(Build.SourcesDirectory)\.pipelines\restore.ps1'
               workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
 
-          # Commands to run during the build stage.
-          - task: CmdLine@2
+          - task: PowerShell@2
             displayName: 'Build'
             inputs:
-              script: '$(Build.SourcesDirectory)\.pipelines\onebranch_run_ps.cmd build.ps1'
+              targetType: 'filePath'
+              filePath: '$(Build.SourcesDirectory)\.pipelines\build.ps1'
               workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
 
-          # Commands to run during the packaging stage.
-          - task: CmdLine@2
+          - task: PowerShell@2
             displayName: 'Package'
             inputs:
-              script: '$(Build.SourcesDirectory)\.pipelines\onebranch_run_ps.cmd package.ps1'
+              targetType: 'filePath'
+              filePath: '$(Build.SourcesDirectory)\.pipelines\package.ps1'
               workingDirectory: '$(Build.SourcesDirectory)\Angular'
 
           # Signing the files created by the build and packaging script
@@ -108,7 +109,7 @@ extends:
               command: 'sign'
               signing_environment: 'azure-ado'
               signing_profile: 'internal_azure_service'
-              files_to_sign: 'Angular\dist\**\*;LICENSE.txt;Angular\powerbi-client-angular\package.json;;README.md;**\*;**\*.tgz'
+              files_to_sign: 'Angular\dist\**\*;LICENSE.txt;Angular\powerbi-client-angular\package.json;README.md;**\*;**\*.tgz'
               search_root: '$(Build.SourcesDirectory)'
 
           # Copying build artifacts to the Output folder.
@@ -143,5 +144,5 @@ extends:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                $(Build.SourcesDirectory)\*.tgz
+                $(Build.SourcesDirectory)\**\*.tgz
               TargetFolder: '$(OUTPUTROOT)\outputs\package\tgz-package'
