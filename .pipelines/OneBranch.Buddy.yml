@@ -63,7 +63,7 @@ extends:
             inputs:
               targetType: 'filePath'
               filePath: '$(Build.SourcesDirectory)\.pipelines\version.ps1'
-              workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
+              workingDirectory: '$(Build.SourcesDirectory)'
 
           # Add the versioning task after running Version script
           - task: onebranch.pipeline.version@1
@@ -86,21 +86,21 @@ extends:
             inputs:
               targetType: 'filePath'
               filePath: '$(Build.SourcesDirectory)\.pipelines\restore.ps1'
-              workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
+              workingDirectory: '$(Build.SourcesDirectory)'
 
           - task: PowerShell@2
             displayName: 'Build'
             inputs:
               targetType: 'filePath'
               filePath: '$(Build.SourcesDirectory)\.pipelines\build.ps1'
-              workingDirectory: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular'
+              workingDirectory: '$(Build.SourcesDirectory)'
 
           - task: PowerShell@2
             displayName: 'Package'
             inputs:
               targetType: 'filePath'
               filePath: '$(Build.SourcesDirectory)\.pipelines\package.ps1'
-              workingDirectory: '$(Build.SourcesDirectory)\Angular'
+              workingDirectory: '$(Build.SourcesDirectory)'
 
           # Signing the files created by the build and packaging script
           - task: onebranch.pipeline.signing@1
@@ -112,7 +112,7 @@ extends:
               files_to_sign: 'Angular\dist\**\*;LICENSE.txt;Angular\powerbi-client-angular\package.json;README.md;**\*;**\*.tgz'
               search_root: '$(Build.SourcesDirectory)'
 
-          # Copying build artifacts to the Output folder.
+          # Copying build artifacts to the Output folder
           - task: CopyFiles@2
             displayName: 'Copy Dist to Output folder'
             inputs:
@@ -124,7 +124,7 @@ extends:
                 !$(Build.SourcesDirectory)\Angular\node_modules\**
               TargetFolder: '$(OUTPUTROOT)\outputs\build\build_artifacts'
 
-          # Copying source artifacts to the Output folder.
+          # Copying source artifacts to the Output folder
           - task: CopyFiles@2
             displayName: 'Copy source to Output folder'
             inputs:
@@ -138,9 +138,9 @@ extends:
                 !$(Build.SourcesDirectory)\**\node_modules\**
               TargetFolder: '$(OUTPUTROOT)\outputs\build\source'
 
-          # Copying tgz package to the Output folder.
+          # Copying tgz package to the Output folder
           - task: CopyFiles@2
-            displayName: 'Copy tgz package to Output folder'
+            displayName: 'Copy tgz-package to Output folder'
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
