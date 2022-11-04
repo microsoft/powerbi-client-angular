@@ -102,15 +102,15 @@ extends:
               filePath: '$(Build.SourcesDirectory)\.pipelines\package.ps1'
               workingDirectory: '$(Build.SourcesDirectory)'
 
-          # # Signing the files created by the build and packaging script
-          # - task: onebranch.pipeline.signing@1
-          #   displayName: 'Sign binaries'
-          #   inputs:
-          #     command: 'sign'
-          #     signing_environment: 'azure-ado'
-          #     signing_profile: 'internal_azure_service'
-          #     files_to_sign: 'Angular\dist\**\*;LICENSE.txt;Angular\powerbi-client-angular\package.json;README.md;**\*;**\*.tgz'
-          #     search_root: '$(Build.SourcesDirectory)'
+          # Signing the files created by the build and packaging script
+          - task: onebranch.pipeline.signing@1
+            displayName: 'Sign binaries'
+            inputs:
+              command: 'sign'
+              signing_environment: 'azure-ado'
+              signing_profile: 'internal_azure_service'
+              files_to_sign: '**\dist\**\*;LICENSE.txt;**\powerbi-client-angular\package.json;README.md;**\**\*.tgz'
+              search_root: '$(Build.SourcesDirectory)'
 
           # Copying build artifacts to the Output folder
           - task: CopyFiles@2
