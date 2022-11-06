@@ -1,6 +1,6 @@
 {
   "name": "powerbi-client-angular-demo",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "private": true,
   "dependencies": {
     "powerbi-client-angular": "^2.0.1",

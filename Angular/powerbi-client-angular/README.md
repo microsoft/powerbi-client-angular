@@ -218,7 +218,7 @@ There are two ways in which ```reportObj``` can be used:
 
 
 ### Note
-The library supports Angular applications having version **>= 11**.
+The library supports Angular applications having version **>= 13**.
 
 ### Dependencies
 
