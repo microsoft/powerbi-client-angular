@@ -82,7 +82,7 @@ extends:
               workingFile: '$(Build.SourcesDirectory)\Angular\.npmrc'
 
           - task: PowerShell@2
-            displayName: 'NPM Install'
+            displayName: 'Restore'
             inputs:
               targetType: 'filePath'
               filePath: '$(Build.SourcesDirectory)\.pipelines\restore.ps1'
@@ -134,7 +134,7 @@ extends:
                 !$(Build.SourcesDirectory)\**\.pipelines\**\*
                 !$(Build.SourcesDirectory)\**\.vscode\**\*
                 !$(Build.SourcesDirectory)\**\demo\**
-                !$(Build.SourcesDirectory\**)\dist\**
+                !$(Build.SourcesDirectory\**\dist\**
                 !$(Build.SourcesDirectory)\**\node_modules\**
               TargetFolder: '$(OUTPUTROOT)\outputs\build\source'
 
@@ -144,5 +144,5 @@ extends:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                $(Build.SourcesDirectory)\**\*.tgz
+                $(Build.SourcesDirectory)\Angular\dist\**\*.tgz
               TargetFolder: '$(OUTPUTROOT)\outputs\package\tgz-package'
