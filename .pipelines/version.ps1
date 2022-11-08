@@ -2,8 +2,7 @@ cd .\Angular\powerbi-client-angular
 try {
   # package.json is in Angular\powerbi-client-angular folder, while version.ps1 runs in .pipelines folder.
   $version = (Get-Content "package.json") -join "`n" | ConvertFrom-Json | Select -ExpandProperty "version"
-  $revision = $env:CDP_DEFINITION_BUILD_COUNT
-  $buildNumber = "$version.$revision"
+  $buildNumber = "$version"
 
   Write-Host "Build Number is" $buildNumber
 

@@ -35,7 +35,7 @@ Write-Host "done: try install latest npm version"
 # Do not update $exitCode because we do not want to fail if install latest npm version fails.
 
 Write-Host "start: npm install"
-& cd .\Angular
+& cd .\Angular\powerbi-client-angular
 & npm install --no-audit --no-save
 Write-Host "done: npm install"
 $exitCode += $LASTEXITCODE;

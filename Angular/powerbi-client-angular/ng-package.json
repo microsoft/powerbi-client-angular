@@ -1,6 +1,6 @@
 {
-  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../dist/powerbi-client-angular",
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "./dist/powerbi-client-angular",
   "lib": {
     "entryFile": "src/public-api.ts"
   },

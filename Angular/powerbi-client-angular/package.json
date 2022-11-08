@@ -1,9 +1,9 @@
 {
   "name": "powerbi-client-angular",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Angular wrapper for powerbi-client library",
-  "main": "../dist/powerbi-client-angular/bundles/powerbi-client-angular.umd.js",
-  "typings": "../dist/powerbi-client-angular/powerbi-client-angular.d.ts",
+  "main": "./dist/powerbi-client-angular/bundles/powerbi-client-angular.umd.js",
+  "typings": "./dist/powerbi-client-angular/powerbi-client-angular.d.ts",
   "keywords": [
     "microsoft",
     "powerbi",
@@ -18,12 +18,47 @@
     "url": "https://github.com/microsoft/powerbi-client-angular.git"
   },
   "license": "MIT",
+  "scripts": {
+    "build": "ng build",
+    "demo": "cd ../demo && npm install && ng serve",
+    "package": "ng build && cd dist/powerbi-client-angular && npm pack",
+    "test": "ng test"
+  },
   "dependencies": {
     "powerbi-client": "^2.21.1",
     "tslib": "^2.1.0"
   },
-  "peerDependencies": {
-    "@angular/common": ">=11",
-    "@angular/core": ">=11"
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.3.8",
+    "@angular-eslint/builder": "^13.5.0",
+    "@angular-eslint/eslint-plugin": "^13.5.0",
+    "@angular-eslint/eslint-plugin-template": "^13.5.0",
+    "@angular-eslint/schematics": "^13.5.0",
+    "@angular-eslint/template-parser": "^13.5.0",
+    "@angular/cli": "~13.3.8",
+    "@angular/compiler": "~13.3.11",
+    "@angular/compiler-cli": "~13.3.11",
+    "@angular/core": "^13.3.11",
+    "@angular/platform-browser": "~13.3.11",
+    "@angular/platform-browser-dynamic": "~13.3.11",
+    "@types/jasmine": "~3.6.0",
+    "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "4.16.1",
+    "@typescript-eslint/parser": "4.16.1",
+    "eslint": "^7.6.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsdoc": "30.7.6",
+    "eslint-plugin-prefer-arrow": "1.2.2",
+    "jasmine-core": "~4.2.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-packagr": "^13.3.1",
+    "powerbi-report-authoring": "^1.1.1",
+    "typescript": "~4.6.4",
+    "zone.js": "~0.11.3"
   }
 }

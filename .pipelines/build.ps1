@@ -1,7 +1,7 @@
 $exitCode = 0;
 
 Write-Host "start: List all files"
-& cd .\Angular
+& cd .\Angular\powerbi-client-angular
 & dir
 Write-Host "end: List all files"
 
@@ -13,7 +13,7 @@ Write-Host "done: ng build"
 $exitCode += $LASTEXITCODE;
 
 if ($exitCode -ne 0) {
-  Write-Host "Failed to run ng bulild"
+  Write-Host "Failed to run ng build"
   exit $exitCode
 }
 
