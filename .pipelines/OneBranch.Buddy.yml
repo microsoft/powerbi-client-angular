@@ -121,26 +121,27 @@ extends:
           - task: CopyFiles@2
             displayName: 'Copy Dist to Output folder'
             inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                $(Build.SourcesDirectory)\Angular\dist\**
-                $(Build.SourcesDirectory)\LICENSE.txt
-                $(Build.SourcesDirectory)\Angular\powerbi-client-angular\package.json
+                Angular\dist\**\*
+                LICENSE.txt
+                Angular\powerbi-client-angular\package.json
                 $(Build.SourcesDirectory)\README.md
-                !$(Build.SourcesDirectory)\Angular\node_modules\**
               TargetFolder: '$(OUTPUTROOT)\outputs\build\build_artifacts'
 
           # Copying source artifacts to the Output folder
           - task: CopyFiles@2
             displayName: 'Copy source to Output folder'
             inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                $(Build.SourcesDirectory)\**\*
-                !$(Build.SourcesDirectory)\**\.git\**\*
-                !$(Build.SourcesDirectory)\**\.pipelines\**\*
-                !$(Build.SourcesDirectory)\**\.vscode\**\*
-                !$(Build.SourcesDirectory)\**\demo\**
-                !$(Build.SourcesDirectory\**\dist\**
-                !$(Build.SourcesDirectory)\**\node_modules\**
+                **\*
+                !**\.git\**\*
+                !**\.pipelines\**\*
+                !**\.vscode\**\*
+                !**\demo\**\*
+                !**\dist\**\*
+                !**\node_modules\**\*
               TargetFolder: '$(OUTPUTROOT)\outputs\build\source'
 
           # Copying tgz package to the Output folder
@@ -149,5 +150,5 @@ extends:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                $(Build.SourcesDirectory)\Angular\dist\**\*.tgz
+                **\*.tgz
               TargetFolder: '$(OUTPUTROOT)\outputs\package\tgz-package'
