@@ -123,7 +123,7 @@ extends:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                Angular\dist\**\*
+                Angular\powerbi-client-angular\dist\**\*
                 LICENSE.txt
                 Angular\powerbi-client-angular\package.json
                 $(Build.SourcesDirectory)\README.md
