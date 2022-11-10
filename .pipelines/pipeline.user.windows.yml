@@ -77,7 +77,7 @@ build:
       artifacts:
         - to: 'build_artifacts'
           include:
-            - 'Angular\dist\**\*'
+            - 'Angular\powerbi-client-angular\dist\**\*'
             - 'LICENSE.txt'
             - 'Angular\powerbi-client-angular\package.json'
             - 'README.md'
