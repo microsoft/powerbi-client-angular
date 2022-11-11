@@ -123,7 +123,7 @@ extends:
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                Angular\powerbi-client-angular\dist\**\*
+                Angular\powerbi-client-angular\dist\**\**
                 LICENSE.txt
                 Angular\powerbi-client-angular\package.json
                 $(Build.SourcesDirectory)\README.md
@@ -136,12 +136,14 @@ extends:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 **\*
-                !**\.git\**\*
-                !**\.pipelines\**\*
-                !**\.vscode\**\*
-                !**\demo\**\*
-                !**\dist\**\*
-                !**\node_modules\**\*
+                !.git\**\*
+                !.pipelines\**\*
+                !.vscode\**\*
+                !demo\**\*
+                !dist\**\*
+                !out\**\*
+                !**\*.tgz
+                !node_modules\**\*
               TargetFolder: '$(OUTPUTROOT)\outputs\build\source'
 
           # Copying tgz package to the Output folder
