@@ -136,14 +136,14 @@ extends:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 **\*
-                !.git\**\*
-                !.pipelines\**\*
-                !.vscode\**\*
-                !demo\**\*
-                !dist\**\*
-                !out\**\*
+                !**\.git\**\*
+                !**\.pipelines\**\*
+                !**\.vscode\**\*
+                !**\demo\**\*
+                !**\dist\**\*
+                !**\out\**\*
                 !**\*.tgz
-                !node_modules\**\*
+                !**\node_modules\**\*
               TargetFolder: '$(OUTPUTROOT)\outputs\build\source'
 
           # Copying tgz package to the Output folder
