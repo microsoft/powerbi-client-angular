@@ -126,7 +126,7 @@ extends:
                 Angular\powerbi-client-angular\dist\**\**
                 LICENSE.txt
                 Angular\powerbi-client-angular\package.json
-                $(Build.SourcesDirectory)\README.md
+                README.md
               TargetFolder: '$(OUTPUTROOT)\outputs\build\build_artifacts'
 
           # Copying source artifacts to the Output folder
