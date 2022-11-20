@@ -24,6 +24,9 @@
     "package": "ng build && cd dist/powerbi-client-angular && npm pack",
     "test": "ng test"
   },
+  "publishConfig": {
+    "tag": "beta"
+  },
   "dependencies": {
     "powerbi-client": "^2.21.1",
     "tslib": "^2.1.0"

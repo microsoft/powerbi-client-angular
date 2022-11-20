@@ -9,9 +9,9 @@ git clone <url>
 
 Navigate to the cloned directory
 
-Navigate to the *Angular* workspace folder:
+Navigate to the *Angular\powerbi-client-angular* workspace folder:
 ```
-cd Angular
+cd Angular\powerbi-client-angular
 ```
 
 Install local dependencies:
