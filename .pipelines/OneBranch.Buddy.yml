@@ -107,23 +107,13 @@ extends:
               filePath: '$(Build.SourcesDirectory)\.pipelines\package.ps1'
               workingDirectory: '$(Build.SourcesDirectory)'
 
-          # Signing the files created by the build and packaging script
-          - task: onebranch.pipeline.signing@1
-            displayName: 'Sign binaries'
-            inputs:
-              command: 'sign'
-              signing_environment: 'azure-ado'
-              signing_profile: 'internal_azure_service'
-              files_to_sign: '**\dist\**\*;LICENSE.txt;**\powerbi-client-angular\package.json;README.md;**\**\*.tgz'
-              search_root: '$(Build.SourcesDirectory)'
-
           # Copying build artifacts to the Output folder
           - task: CopyFiles@2
             displayName: 'Copy Dist to Output folder'
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
-                Angular\powerbi-client-angular\dist\**\**
+                Angular\powerbi-client-angular\dist\**\*
                 LICENSE.txt
                 Angular\powerbi-client-angular\package.json
                 README.md
@@ -154,3 +144,13 @@ extends:
               Contents: |
                 **\*.tgz
               TargetFolder: '$(OUTPUTROOT)\outputs\package\tgz-package'
+
+          # Signing the files created by the build and packaging script
+          - task: onebranch.pipeline.signing@1
+            displayName: 'Sign binaries'
+            inputs:
+              command: 'sign'
+              signing_environment: 'azure-ado'
+              signing_profile: 'internal_azure_service'
+              files_to_sign: '**'
+              search_root: '$(OUTPUTROOT)'
