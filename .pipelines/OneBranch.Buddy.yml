@@ -143,6 +143,7 @@ extends:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 **\*.tgz
+                !out\**\*
               TargetFolder: '$(OUTPUTROOT)\outputs\package\tgz-package'
 
           # Signing the files created by the build and packaging script
