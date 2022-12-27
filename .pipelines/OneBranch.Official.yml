@@ -28,7 +28,7 @@ variables:
   ${{ else }}:
     obpTemplate: v2/OneBranch.NonOfficial.CrossPlat.yml@templates # https://aka.ms/obpipelines/templates
 
-  WindowsContainerImage: 'cdpxwin1809.azurecr.io/global/obinfra/windows/1809/vs2019:latest' # Docker image which is used to build the project https://aka.ms/obpipelines/containers
+  WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest' # Docker image which is used to build the project https://aka.ms/obpipelines/containers
 
 resources:
   repositories: 
@@ -40,8 +40,6 @@ resources:
 extends:
   template: ${{ variables.obpTemplate }}
   parameters:
-    cloudvault: # https://aka.ms/obpipelines/cloudvault
-      enabled: false
     globalSdl: # https://aka.ms/obpipelines/sdl
       tsa:
         enabled: false
@@ -58,8 +56,6 @@ extends:
         variables:
           ob_outputDirectory: '$(OUTPUTROOT)' # this directory is uploaded to pipeline artifacts, reddog and cloudvault. More info at https://aka.ms/obpipelines/artifacts
           ob_sdl_binskim_break: true # https://aka.ms/obpipelines/sdl
-          ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}: # conditionally enable symbolsPublishing for master branch only
-            ob_symbolsPublishing_enabled: true # https://aka.ms/obpipelines/symbols
           ob_artifactBaseName: 'drop'
           ob_sdl_cg_failOnAlert: false
           ob_sdl_codeSignValidation_excludes: 'regex|.+(?:exe|dll)$;-|*.nd.dll;-|.gdn\\**'
