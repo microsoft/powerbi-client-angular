@@ -79,11 +79,6 @@ extends:
           - task: npmAuthenticate@0
             displayName: 'NPM Authenticate'
             inputs:
-              workingFile: '$(Build.SourcesDirectory)\Angular\.npmrc'
-
-          - task: npmAuthenticate@0
-            displayName: 'NPM Authenticate'
-            inputs:
               workingFile: '$(Build.SourcesDirectory)\Angular\powerbi-client-angular\.npmrc'
 
           - task: PowerShell@2
