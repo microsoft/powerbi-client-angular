@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IHttpPostMessageResponse } from 'http-post-message';
-import { IReportEmbedConfiguration, models, Page, Report, service, VisualDescriptor } from 'powerbi-client';
+import { IReportEmbedConfiguration, models, Page, Report, service, Embed } from 'powerbi-client';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
+import { IHttpPostMessageResponse } from 'http-post-message';
 import 'powerbi-report-authoring';
-import { errorClass, errorElement, hidden, position, reportUrl, successClass, successElement } from '../constants';
+
+import { reportUrl } from '../public/constants';
 import { HttpService } from './services/http.service';
 
 // Handles the embed config response for embedding
@@ -27,12 +28,6 @@ export class AppComponent {
   // Wrapper object to access report properties
   @ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;
 
-  // Div object to show status of the demo app
-  @ViewChild('status') private statusRef!: ElementRef<HTMLDivElement>;
-
-  // Embed Report button element of the demo app
-  @ViewChild('embedReportBtn') private embedBtnRef!: ElementRef<HTMLButtonElement>;
-
   // Track Report embedding status
   isEmbedded = false;
 
@@ -40,8 +35,7 @@ export class AppComponent {
   displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  // Hide the report container initially
-  reportClass = 'report-container hidden';
+  reportClass = 'report-container';
 
   // Flag which specify the type of embedding
   phasedEmbeddingFlag = false;
@@ -63,25 +57,10 @@ export class AppComponent {
   // Set event handler to null if event needs to be removed
   // More events can be provided from here
   // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
-  eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+  eventHandlersMap = new Map ([
     ['loaded', () => console.log('Report has loaded')],
-    [
-      'rendered',
-      () => {
-        console.log('Report has rendered');
-
-        // Set displayMessage to empty when rendered for the first time
-        if (!this.isEmbedded) {
-          this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';
-        }
-
-        // Update embed status
-        this.isEmbedded = true;
-      },
-    ],
-    [
-      'error',
-      (event?: service.ICustomEvent<any>) => {
+    ['rendered', () => console.log('Report has rendered')],
+    ['error', (event?: service.ICustomEvent<any>) => {
         if (event) {
           console.error(event.detail);
         }
@@ -89,7 +68,7 @@ export class AppComponent {
     ],
     ['visualClicked', () => console.log('visual clicked')],
     ['pageChanged', (event) => console.log(event)],
-  ]);
+  ]) as Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>;
 
   constructor(public httpService: HttpService, private element: ElementRef<HTMLDivElement>) {}
 
@@ -105,9 +84,7 @@ export class AppComponent {
     try {
       reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
     } catch (error: any) {
-      // Prepare status message for Embed failure
-      await this.prepareDisplayMessageForEmbed(errorElement, errorClass);
-      this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
+      this.displayMessage = `Failed to fetch config for report. Status: ${error.status} ${error.statusText}`;
       console.error(this.displayMessage);
       return;
     }
@@ -120,57 +97,23 @@ export class AppComponent {
       accessToken: reportConfigResponse.EmbedToken.Token,
     };
 
-    // Get the reference of the report-container div
-    const reportDiv = this.element.nativeElement.querySelector('.report-container');
-    if (reportDiv) {
-      // When Embed report is clicked, show the report container div
-      reportDiv.classList.remove(hidden);
-    }
-
-    // Get the reference of the display-message div
-    const displayMessage = this.element.nativeElement.querySelector('.display-message');
-    if (displayMessage) {
-      // When Embed report is clicked, change the position of the display-message
-      displayMessage.classList.remove(position);
-    }
-
-    // Prepare status message for Embed success
-    await this.prepareDisplayMessageForEmbed(successElement, successClass);
+    // Update embed status
+    this.isEmbedded = true;
 
     // Update the display message
-    this.displayMessage = 'Access token is successfully set. Loading Power BI report.';
+    this.displayMessage = 'Use the buttons above to interact with the report using Power BI Client APIs.';
   }
 
   /**
-   * Handle Report embedding flow
-   * @param img Image to show with the display message
-   * @param type Type of the message
+   * Change Visual type
    *
    * @returns Promise<void>
    */
-  async prepareDisplayMessageForEmbed(img: HTMLImageElement, type: string): Promise<void> {
-    // Remove the Embed Report button from UI
-    this.embedBtnRef.nativeElement.remove();
-
-    // Prepend the Image element to the display message
-    this.statusRef.nativeElement.prepend(img);
-
-    // Set type of the message
-    this.statusRef.nativeElement.classList.add(type);
-  }
-
-  /**
-   * Delete visual
-   *
-   * @returns Promise<void>
-   */
-  async deleteVisual(): Promise<void> {
+  async changeVisualType(): Promise<void> {
     // Get report from the wrapper component
     const report: Report = this.reportObj.getReport();
 
     if (!report) {
-      // Prepare status message for Error
-      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'Report not available.';
       console.log(this.displayMessage);
       return;
@@ -179,55 +122,38 @@ export class AppComponent {
     // Get all the pages of the report
     const pages: Page[] = await report.getPages();
 
-    // Check if all the pages of the report deleted
+    // Check if the pages are available
     if (pages.length === 0) {
-      // Prepare status message for Error
-      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'No pages found.';
-      console.log(this.displayMessage);
       return;
     }
 
     // Get active page of the report
     const activePage: Page | undefined = pages.find((page) => page.isActive);
 
-    if (activePage) {
-      // Get all visuals in the active page of the report
-      const visuals: VisualDescriptor[] = await activePage.getVisuals();
+    if (!activePage) {
+      this.displayMessage = 'No Active page found';
+      return;
+    }
 
-      if (visuals.length === 0) {
-        // Prepare status message for Error
-        this.prepareStatusMessage(errorElement, errorClass);
-        this.displayMessage = 'No visuals found.';
-        console.log(this.displayMessage);
-        return;
-      }
+    try {
+      // Change the visual type using powerbi-report-authoring
+      // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview
+      // Get the visual
+      const visual = await activePage.getVisualByName('VisualContainer6');
 
-      // Get first visible visual
-      const visual: VisualDescriptor | undefined = visuals.find((v) => v.layout.displayState?.mode === models.VisualContainerDisplayMode.Visible);
+      const response = await visual.changeType('lineChart');
 
-      // No visible visual found
-      if (!visual) {
-        // Prepare status message for Error
-        this.prepareStatusMessage(errorElement, errorClass);
-        this.displayMessage = 'No visible visual available to delete.';
-        console.log(this.displayMessage);
-        return;
-      }
+      this.displayMessage = `The ${visual.type} was updated to lineChart.`;
 
-      try {
-        // Delete the visual using powerbi-report-authoring
-        // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview
-        const response = await activePage.deleteVisual(visual.name);
+      console.log(this.displayMessage);
 
-        // Prepare status message for success
-        this.prepareStatusMessage(successElement, successClass);
-        this.displayMessage = `${visual.type} visual was deleted.`;
-        console.log(this.displayMessage);
-
-        return response;
-      } catch (error) {
-        console.error(error);
+      return response;
+    } catch (error) {
+      if (error === 'PowerBIEntityNotFound') {
+        console.log('No Visual found with that name');
+      } else {
+        console.log(error);
       }
     }
   }
@@ -242,8 +168,6 @@ export class AppComponent {
     const report: Report = this.reportObj.getReport();
 
     if (!report) {
-      // Prepare status message for Error
-      this.prepareStatusMessage(errorElement, errorClass);
       this.displayMessage = 'Report not available.';
       console.log(this.displayMessage);
       return;
@@ -261,9 +185,6 @@ export class AppComponent {
 
     try {
       const response = await report.updateSettings(settings);
-
-      // Prepare status message for success
-      this.prepareStatusMessage(successElement, successClass);
       this.displayMessage = 'Filter pane is hidden.';
       console.log(this.displayMessage);
 
@@ -281,28 +202,11 @@ export class AppComponent {
    */
   setDataSelectedEvent(): void {
     // Adding dataSelected event in eventHandlersMap
-    this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>) => void>([
+    this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>([
       ...this.eventHandlersMap,
       ['dataSelected', (event) => console.log(event)],
     ]);
 
-    // Prepare status message for success
-    this.prepareStatusMessage(successElement, successClass);
     this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';
-  }
-
-  /**
-   * Prepare status message while using JS SDK APIs
-   * @param img Image to show with the display message
-   * @param type Type of the message
-   *
-   * @returns void
-   */
-  prepareStatusMessage(img: HTMLImageElement, type: string) {
-    // Prepend Image to the display message
-    this.statusRef.nativeElement.prepend(img);
-
-    // Add class to the display message
-    this.statusRef.nativeElement.classList.add(type);
   }
 }
