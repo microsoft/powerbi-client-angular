@@ -1,6 +1,6 @@
 {
   "name": "powerbi-client-angular",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Angular wrapper for powerbi-client library",
   "main": "./dist/powerbi-client-angular/bundles/powerbi-client-angular.umd.js",
   "typings": "./dist/powerbi-client-angular/powerbi-client-angular.d.ts",
