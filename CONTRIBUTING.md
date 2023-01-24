@@ -44,4 +44,4 @@ Open the address to view in the browser:
 http://localhost:4200/
 
 ## Flow Diagram for the PowerBI Report Component:
-![Flow Diagram](https://github.com/microsoft/powerbi-client-angular/raw/master/resources/angular_wrapper_flow_diagram.png)
+![Flow Diagram](/resources/angular_wrapper_flow_diagram.png)
