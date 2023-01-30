@@ -58,7 +58,12 @@ export class AppComponent {
   // More events can be provided from here
   // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
   eventHandlersMap = new Map ([
-    ['loaded', () => console.log('Report has loaded')],
+    ['loaded', () => {
+        const report = this.reportObj.getReport();
+        report.setComponentTitle('Embedded report');
+        console.log('Report has loaded');
+      },
+    ],
     ['rendered', () => console.log('Report has rendered')],
     ['error', (event?: service.ICustomEvent<any>) => {
         if (event) {
