@@ -109,11 +109,19 @@ extends:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 Angular\powerbi-client-angular\dist\**\*
-                LICENSE.txt
                 Angular\powerbi-client-angular\package.json
-                README.md
                 !Angular\powerbi-client-angular\dist\**\*.tgz
               TargetFolder: '$(OUTPUTROOT)\outputs\build\build_artifacts'
+
+          # Copying Readme and License to the Output Dist folder
+          - task: CopyFiles@2
+            displayName: 'Copy Readme and License to Output folder'
+            inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
+              Contents: |
+                README.md
+                LICENSE.txt
+              TargetFolder: '$(OUTPUTROOT)\outputs\build\build_artifacts\Angular\powerbi-client-angular\dist\powerbi-client-angular'
 
           # Copying source artifacts to the Output folder
           - task: CopyFiles@2
