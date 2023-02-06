@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "private": true,
   "dependencies": {
-    "powerbi-client-angular": "^3.0.4",
+    "powerbi-client-angular": "^3.0.5",
     "powerbi-report-authoring": "^1.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0"
