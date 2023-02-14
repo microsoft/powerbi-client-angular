@@ -82,11 +82,11 @@ The library is offering the following components that can be used to embed vario
 |PowerBIVisualEmbedComponent|```<powerbi-visual>```|
 |PowerBIQnaEmbedComponent|```<powerbi-qna>```|
 |PowerBIPaginatedReportEmbedComponent|```<powerbi-paginated-report>```|
-<br> 
+<br>
 
 You can embed other artifacts such as:
 ```ts
-<powerbi-dashboard 
+<powerbi-dashboard
     [embedConfig] = "<IDashboardEmbedConfiguration>"
     [cssClassName] = "<className>"
     [eventHandlers] = "<Map of String and eventHandler>"
@@ -97,7 +97,7 @@ You can embed other artifacts such as:
 
 This demo includes an Angular application that embeds a sample report using the _PowerBIReportEmbed_ component.<br/>
 It demonstrates the complete flow from bootstrapping the report, to embedding and updating the embedded report.<br/>
-It also demonstrates using the *powerbi report authoring* library, by enabling the user to delete a visual from a report using the "Delete Visual" button.<br />
+It also demonstrates using the *powerbi report authoring* library, by enabling the user to change the type of a report visual from a report using the "Change visual type" button.<br/>
 It also sets a 'DataSelected' event.
 
 <br />
@@ -179,7 +179,7 @@ There are two ways in which ```reportObj``` can be used:
    1. Create one class variable, for example, ```report```.
    2. Implement the ``` AfterViewInit ``` hook for the component class.
    <br /><br />
-   
+
    ```ts
     class AppComponent implements AfterViewInit { ... }
    ```
@@ -204,7 +204,7 @@ There are two ways in which ```reportObj``` can be used:
     ```
 
 * Use ```reportObj``` inside a class method.
-    
+
     This approach will not expose the Report object globally, instead ```reportObj``` would be available locally in the function.
 
     Example:
@@ -218,7 +218,7 @@ There are two ways in which ```reportObj``` can be used:
 
 
 ### Note
-The library supports Angular applications with the same major version.
+The library supports Angular applications having version **>= 13**.
 
 ### Dependencies
 
@@ -230,6 +230,10 @@ powerbi-client (https://www.npmjs.com/package/powerbi-client)
 
 @angular/core (https://www.npmjs.com/package/@angular/core)
 
+### Trademarks
+
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft’s Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party’s policies.
+
 ### Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.opensource.microsoft.com>.
@@ -237,3 +241,13 @@ This project welcomes contributions and suggestions. Most contributions require 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repositories using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments
+
+### Data Collection.
+
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications.
+
+If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement.
+Our privacy statement is located at [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement). You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
+### Support
+Our public support page is available at [Microsoft Support Statement](https://powerbi.microsoft.com/en-us/support/).

@@ -1,3 +1,5 @@
+powerbi-client-angular
+
 Copyright (c) Microsoft Corporation.
 
 MIT License

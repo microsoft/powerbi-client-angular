@@ -48,8 +48,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Angular
+Angular/demo/.angular
+Angular/powerbi-client-angular/.angular
+
 # Other
 owners.txt
-
-# Angular
-Angular/.angular/
