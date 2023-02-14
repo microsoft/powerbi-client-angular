@@ -105,7 +105,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
     let mockPowerBIService: any;
 
     beforeEach(() => {
-      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed']);
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'setSdkInfo']);
     });
 
     it('embeds paginated report when accessToken provided', () => {

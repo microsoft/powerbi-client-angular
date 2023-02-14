@@ -1,0 +1,23 @@
+{
+  "name": "powerbi-client-angular-demo",
+  "version": "5.0.0",
+  "private": true,
+  "dependencies": {
+    "powerbi-client-angular": "^3.0.5",
+    "powerbi-report-authoring": "^1.1.1",
+    "rxjs": "~6.6.0",
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.3.8",
+    "@angular/cli": "~13.3.8",
+    "@angular/common": "^13.3.11",
+    "@angular/compiler": "~13.3.11",
+    "@angular/compiler-cli": "~13.3.11",
+    "@angular/core": "^13.3.11",
+    "@angular/platform-browser": "~13.3.11",
+    "@angular/platform-browser-dynamic": "~13.3.11",
+    "@types/node": "^12.11.1",
+    "typescript": "~4.6.4"
+  }
+}

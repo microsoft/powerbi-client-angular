@@ -46,7 +46,7 @@ module.exports = function (config) {
 
     // Generate code coverage
     coverageReporter: {
-      dir: require('path').join(__dirname, '../../../coverage/powerbi-client-angular'),
+      dir: require('path').join(__dirname, '../../coverage/powerbi-client-angular'),
       subdir: '.',
       reporters: [
         { type: 'html' },

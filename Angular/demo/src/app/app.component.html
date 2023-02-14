@@ -1,32 +1,36 @@
 <!-- Copyright (c) Microsoft Corporation.
 Licensed under the MIT License. -->
 
-<div class="header">
-  <div class="title">Power BI Embedded Angular Component demo</div>
-</div>
+<div class="container">
+  <div class="header">Power BI Embedded Angular Component Demo</div>
 
-<div class="controls" *ngIf="isEmbedded; else embedReportFlow">
-  <button (click)="deleteVisual()">Delete Visual</button>
-  <button (click)="hideFilterPane()">Hide Filter Pane</button>
-  <button (click)="setDataSelectedEvent()">Set Event</button>
-  <div class="display-message" #status>{{ displayMessage }}</div>
-</div>
-<ng-template #embedReportFlow>
-  <div class="display-message position" #status>
-    <label>{{ displayMessage }}</label>
+  <div class="controls">
+    <ng-container *ngIf="isEmbedded; else embedReportFlow">
+      <button (click)="changeVisualType()">Change visual type</button>
+      <button (click)="hideFilterPane()">Hide filter pane</button>
+      <button (click)="setDataSelectedEvent()">Set event</button>
+      <label class="display-message">{{ displayMessage }}</label>
+    </ng-container>
+    <ng-template #embedReportFlow>
+      <label class="display-message position">
+        {{ displayMessage }}
+      </label>
+      <button (click)="embedReport()" class="embed-report">Embed Report</button>
+    </ng-template>
+
+    <ng-container *ngIf="isEmbedded">
+      <powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
+      </powerbi-report>
+    </ng-container>
   </div>
-  <div class="embed-report">
-    <button (click)="embedReport()" id="embed-action" #embedReportBtn>Embed Report</button>
-  </div>
-  <div class="separator"></div>
-</ng-template>
 
-<powerbi-report [embedConfig]="reportConfig" [cssClassName]="reportClass" [phasedEmbedding]="phasedEmbeddingFlag" [eventHandlers]="eventHandlersMap">
-</powerbi-report>
-
-<div class="footer">
-  <div class="footer-text">
-    GitHub:
-    <a href="https://github.com/microsoft/powerBI-client-angular"> https://github.com/microsoft/PowerBI-client-angular </a>
+  <div class="footer">
+    <p>This demo is powered by Power BI Embedded Analytics</p>
+    <label class="separator-pipe">|</label>
+    <img title="Power-BI" alt="PowerBI_Icon" class="footer-icon" src="./assets/PowerBI_Icon.png">
+    <p>Explore our<a href="https://aka.ms/pbijs/" target="_blank" rel="noreferrer noopener">Playground</a></p>
+    <label class="separator-pipe">|</label>
+    <img title="GitHub" alt="GitHub_Icon" class="footer-icon" src="./assets/GitHub_Icon.png">
+    <p>Find the<a href="https://github.com/microsoft/powerBI-client-angular" target="_blank" rel="noreferrer noopener">source code</a></p>
   </div>
 </div>

@@ -26,3 +26,7 @@ export const stringifyMap = (map: Map<string, EventHandler | null> | undefined):
     )
   );
 };
+
+// SDK information to be used with service instance
+export const sdkType = 'powerbi-client-angular';
+export const sdkWrapperVersion = '3.0.5';

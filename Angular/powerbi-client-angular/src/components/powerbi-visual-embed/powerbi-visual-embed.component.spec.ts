@@ -98,7 +98,7 @@ describe('PowerBIVisualEmbedComponent', () => {
     let mockPowerBIService: any;
 
     beforeEach(() => {
-      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap']);
+      mockPowerBIService = jasmine.createSpyObj('mockService', ['embed', 'bootstrap', 'setSdkInfo']);
     });
 
     it('embeds visual when accessToken provided', () => {
