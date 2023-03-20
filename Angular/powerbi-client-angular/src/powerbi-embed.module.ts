@@ -9,6 +9,7 @@ import { PowerBIQnaEmbedComponent } from './components/powerbi-qna-embed/powerbi
 import { PowerBIReportEmbedComponent } from './components/powerbi-report-embed/powerbi-report-embed.component';
 import { PowerBITileEmbedComponent } from './components/powerbi-tile-embed/powerbi-tile-embed.component';
 import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/powerbi-visual-embed.component';
+import { PowerBICreateReportEmbedComponent } from './components/powerbi-create-report/powerbi-create-report.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/p
     PowerBIReportEmbedComponent,
     PowerBITileEmbedComponent,
     PowerBIVisualEmbedComponent,
+    PowerBICreateReportEmbedComponent
   ],
   imports: [],
   exports: [
@@ -28,6 +30,7 @@ import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/p
     PowerBIReportEmbedComponent,
     PowerBITileEmbedComponent,
     PowerBIVisualEmbedComponent,
+    PowerBICreateReportEmbedComponent
   ],
 })
 export class PowerBIEmbedModule {}
