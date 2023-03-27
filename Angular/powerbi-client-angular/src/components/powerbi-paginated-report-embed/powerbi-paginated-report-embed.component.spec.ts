@@ -28,7 +28,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
     it('should create', () => {
       // Arrange
       const config = {
-        type: 'dashboard',
+        type: 'report',
         id: 'fakeId',
         embedUrl: 'fakeUrl',
         accessToken: 'fakeToken',

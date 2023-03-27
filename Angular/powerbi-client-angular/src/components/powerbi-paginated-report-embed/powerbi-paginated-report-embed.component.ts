@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, IEmbedConfiguration } from 'powerbi-client';
+import { Embed } from 'powerbi-client';
+import { IPaginatedReportLoadConfiguration } from 'powerbi-models';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
@@ -15,7 +16,7 @@ import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component'
 export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Paginated report (Required)
-  @Input() embedConfig!: IEmbedConfiguration;
+  @Input() embedConfig!: IPaginatedReportLoadConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('paginatedReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
@@ -45,14 +46,14 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
+      const prevEmbedConfig = changes.embedConfig.previousValue as IPaginatedReportLoadConfiguration;
 
       // Check if the function is being called for the first time
       if (!prevEmbedConfig) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
+      // Input from parent get updated, thus call embedOrUpdatedPaginatedReport function
       this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
     }
   }
@@ -84,10 +85,10 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
    * When component updates, choose to _embed_ the powerbi paginated report
    * or do nothing if the embedUrl and accessToken did not update in the new properties
    *
-   * @param prevEmbedConfig IEmbedConfiguration
+   * @param prevEmbedConfig IPaginatedReportLoadConfiguration
    * @returns void
    */
-  private embedOrUpdatedPaginatedReport(prevEmbedConfig: IEmbedConfiguration): void {
+  private embedOrUpdatedPaginatedReport(prevEmbedConfig: IPaginatedReportLoadConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
