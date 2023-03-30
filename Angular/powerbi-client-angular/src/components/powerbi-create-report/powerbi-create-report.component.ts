@@ -3,7 +3,7 @@
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, models } from 'powerbi-client';
-import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
  * Create report component to embed the entity, extends the Base component
@@ -20,6 +20,9 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
   // Ref to the HTML div container element
   @ViewChild('createReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
+  // Map of event name and handler methods pairs to be triggered on the event (Optional)
+  @Input() eventHandlers?: Map<string, EventHandler | null>;
+
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
   private _embed?: Embed;
@@ -32,6 +35,10 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
   // Setter for this._embed
   private set embed(newEmbedInstance: Embed | undefined) {
     this._embed = newEmbedInstance;
+  }
+
+  create() {
+    return this.embed
   }
 
   constructor() {
@@ -55,6 +62,11 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
       // Input from parent get updated, thus call embedOrUpdateCreateReport function
       this.embedOrUpdatedCreateReport(prevEmbedConfig);
     }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -62,6 +74,11 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
     if (this.containerRef.nativeElement) {
       // Decide to embed
       this.embedCreateReport();
+    }
+
+    // Set event handlers if available
+    if (this.eventHandlers && this.embed) {
+      super.setEventHandlers(this.embed, this.eventHandlers);
     }
   }
 
