@@ -32,6 +32,14 @@ describe('PowerBICreateReportEmbedComponent', () => {
   });
 
   describe('Basic tests', () => {
+    // Arrange
+    const config: IReportCreateConfiguration = {
+      type: 'create',
+      datasetId: 'fakeId',
+      embedUrl: 'fakeUrl',
+      accessToken: 'fakeToken'
+    };
+
     it('should create', () => {
       // Act
       component.embedConfig = config;
@@ -123,7 +131,15 @@ describe('PowerBICreateReportEmbedComponent', () => {
       expect(mockPowerBIService.createReport).not.toHaveBeenCalled();
     });
 
-    it('embeds when embedUrl of created report is updated in new input data', () => {
+    it('embeds when embedUrl of report is updated in new input data', () => {
+      // Arrange
+      const config: IReportCreateConfiguration = {
+        type: 'create',
+        datasetId: 'fakeId',
+        embedUrl: 'fakeUrl',
+        accessToken: 'fakeToken'
+      };
+
       // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;
@@ -139,7 +155,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
       // Assert
       expect(mockPowerBIService.createReport).toHaveBeenCalled();
     });
-
   });
 
   describe('Tests for setting event handlers', () => {
@@ -155,7 +170,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Initialize testCreateReport
-      testCreateReport = component.create();
+      testCreateReport = component.getEmbed();
     });
 
     it('clears previous event handlers and sets new event handlers', () => {
@@ -166,9 +181,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
         ['error', () => {}],
       ]);
 
-      // // Act
-      // let x = spyOnProperty( (component as any).embed , 'on');
-      // let y = spyOnProperty( (component as any).embed, 'off');
       spyOn(testCreateReport, 'on');
       spyOn(testCreateReport, 'off');
 
@@ -179,8 +191,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Assert
-      // expect( y).toHaveBeenCalledTimes(eventHandlers.size);
-      // expect( x).toHaveBeenCalledTimes(eventHandlers.size);
       expect(testCreateReport.off).toHaveBeenCalledTimes(eventHandlers.size);
       expect(testCreateReport.on).toHaveBeenCalledTimes(eventHandlers.size);
     });
@@ -196,7 +206,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
       // Act
       spyOn(testCreateReport, 'on');
       spyOn(testCreateReport, 'off');
-      // const mockEmbed: Embed = jasmine.createSpyObj('Embed', ['on', 'off']);
 
       component.eventHandlers = eventHandlers;
       component.ngOnChanges({

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, models } from 'powerbi-client';
+import { Embed, Report } from 'powerbi-client';
+import { IReportCreateConfiguration } from 'powerbi-models';
+
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 
 /**
@@ -15,7 +17,7 @@ import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-em
 export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Create report (Required)
-  @Input() embedConfig!: models.IReportCreateConfiguration;
+  @Input() embedConfig!: IReportCreateConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('createReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
@@ -37,12 +39,13 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
     this._embed = newEmbedInstance;
   }
 
-  create() {
-    return this.embed
-  }
-
   constructor() {
     super();
+  }
+
+  // Returns embed object to calling function
+  getEmbed(): Report {
+    return this._embed as Report;
   }
 
   ngOnInit(): void {
@@ -52,7 +55,7 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as models.IReportCreateConfiguration;
+      const prevEmbedConfig = changes.embedConfig.previousValue as IReportCreateConfiguration;
 
       // Check if the function is being called for the first time
       if (!prevEmbedConfig) {
@@ -104,7 +107,7 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
    * @param prevEmbedConfig IReportCreateConfiguration
    * @returns void
    */
-  private embedOrUpdatedCreateReport(prevEmbedConfig: models.IReportCreateConfiguration): void {
+  private embedOrUpdatedCreateReport(prevEmbedConfig: IReportCreateConfiguration): void {
     // Check if Embed URL and Access Token are present in current properties
     if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;

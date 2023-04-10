@@ -1,5 +1,5 @@
 # powerbi-client-angular
-Power BI Angular component. This library lets you embed Power BI reports, dashboards, tiles, report visuals, Q&As and paginated reports in your Angular application.
+Power BI Angular component. This library enables you to embed Power BI reports, dashboards, dashboard tiles, report visuals, Q&A or paginated reports in your Angular application, and to create new Power BI reports directly in your application.
 
 ## Quick Start
 
@@ -82,6 +82,7 @@ The library is offering the following components that can be used to embed vario
 |PowerBIVisualEmbedComponent|```<powerbi-visual>```|
 |PowerBIQnaEmbedComponent|```<powerbi-qna>```|
 |PowerBIPaginatedReportEmbedComponent|```<powerbi-paginated-report>```|
+|PowerBICreateReportEmbedComponent|```powerbi-create-report```|
 <br>
 
 You can embed other artifacts such as:
@@ -119,6 +120,7 @@ Redirect to http://localhost:4200/ to view in the browser.
 |Bootstrap Power BI|To [bootstrap your powerbi entity](https://docs.microsoft.com/javascript/api/overview/powerbi/bootstrap-better-performance), pass the property *embedConfig* to the component without _accessToken_<br/>__Note__: _embedConfig_ should at least contain __type__ of the powerbi entity being embedded. <br/>Available types: "report", "dashboard", "tile", "visual" and "qna".<br/>Refer to _How to bootstrap a report_ section in [Quick Start](#quick-start). <br /><br />__Note__:  A paginated report cannot be bootstrapped.|
 |Using with PowerBI Report Authoring|1. Install [powerbi-report-authoring](https://www.npmjs.com/package/powerbi-report-authoring) as an npm dependency.<br>2. Use the report authoring APIs using the embedded report's instance.|
 |Phased embedding (Report type only)|Set the phasedEmbedding property value to `true` <br/> Refer to the [Phased embedding article](https://docs.microsoft.com/javascript/api/overview/powerbi/phased-embedding).|
+|Create report|To create a new report, pass the component with at least _type_, _embedUrl_ and _datasetId_ in _embedConfig_ prop.|
 
 <br />
 
