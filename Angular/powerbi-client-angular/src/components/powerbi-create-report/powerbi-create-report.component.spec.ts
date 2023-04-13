@@ -5,6 +5,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { IReportCreateConfiguration } from 'powerbi-models';
+
 import { PowerBICreateReportEmbedComponent } from './powerbi-create-report.component';
 
 describe('PowerBICreateReportEmbedComponent', () => {
@@ -32,14 +33,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
   });
 
   describe('Basic tests', () => {
-    // Arrange
-    const config: IReportCreateConfiguration = {
-      type: 'create',
-      datasetId: 'fakeId',
-      embedUrl: 'fakeUrl',
-      accessToken: 'fakeToken'
-    };
-
     it('should create', () => {
       // Act
       component.embedConfig = config;
@@ -104,10 +97,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
 
     it('does not embed again when accessToken and embedUrl are same', () => {
       const newConfig: IReportCreateConfiguration = {
-        type: 'create',
-        datasetId: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken',
+        ...config,
       };
 
       // Act
@@ -132,28 +122,30 @@ describe('PowerBICreateReportEmbedComponent', () => {
     });
 
     it('embeds when embedUrl of report is updated in new input data', () => {
-      // Arrange
-      const config: IReportCreateConfiguration = {
-        type: 'create',
-        datasetId: 'fakeId',
-        embedUrl: 'fakeUrl',
-        accessToken: 'fakeToken'
-      };
-
       // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.createReport).toHaveBeenCalledTimes(1);
+      mockPowerBIService.createReport.calls.reset();
+
       // Embed URL of different create report
-      config.embedUrl = 'newFakeUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'newFakeUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       fixture.detectChanges();
 
       // Assert
-      expect(mockPowerBIService.createReport).toHaveBeenCalled();
+      expect(mockPowerBIService.createReport).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -174,13 +166,6 @@ describe('PowerBICreateReportEmbedComponent', () => {
     });
 
     it('clears previous event handlers and sets new event handlers', () => {
-      // Arrange
-      const eventHandlers = new Map([
-        ['loaded', () => {}],
-        ['rendered', () => {}],
-        ['error', () => {}],
-      ]);
-
       spyOn(testCreateReport, 'on');
       spyOn(testCreateReport, 'off');
 
@@ -197,7 +182,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
 
     it('clears already set event handlers in case of null provided for event handler', () => {
       // Arrange
-      const eventHandlers = new Map([
+      const eventHandlersWithNull = new Map([
         ['loaded', null],
         ['rendered', null],
         ['error', () => {}],
@@ -207,7 +192,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       spyOn(testCreateReport, 'on');
       spyOn(testCreateReport, 'off');
 
-      component.eventHandlers = eventHandlers;
+      component.eventHandlers = eventHandlersWithNull;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
@@ -222,9 +207,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
     it('does not console error for valid events of report', () => {
       // Arrange
       const allEventHandlers = new Map([
-        ['loaded', () => {}],
-        ['rendered', () => {}],
-        ['error', () => {}],
+        ...eventHandlers,
         ['saved', () => {}],
         ['saveAsTriggered', () => {}],
         ['buttonClicked', () => {}],
@@ -247,15 +230,13 @@ describe('PowerBICreateReportEmbedComponent', () => {
     it('does not set the same eventHandler map again', () => {
       // Arrange
       const newEventHandlers = new Map([
-        ['loaded', () => {}],
-        ['rendered', () => {}],
-        ['error', () => {}],
+        ...eventHandlers,
       ]);
 
       // Act
       const spyForOn = spyOn(testCreateReport, 'on');
       const spyForOff = spyOn(testCreateReport, 'off');
-      component.eventHandlers = eventHandlers;
+      component.eventHandlers = newEventHandlers;
       component.ngOnChanges({
         eventHandlers: new SimpleChange(undefined, component.eventHandlers, true),
       });
