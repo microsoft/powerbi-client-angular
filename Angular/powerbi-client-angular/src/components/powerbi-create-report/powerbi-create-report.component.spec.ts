@@ -150,7 +150,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
   });
 
   describe('Tests for setting event handlers', () => {
-    let testCreateReport: any = undefined;
+    let testCreateReport: any;
     const eventHandlers = new Map([
       ['loaded', () => {}],
       ['rendered', () => {}],

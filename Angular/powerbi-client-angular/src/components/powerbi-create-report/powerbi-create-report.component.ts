@@ -19,11 +19,11 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
   // Configuration for embedding the PowerBI Create report (Required)
   @Input() embedConfig!: IReportCreateConfiguration;
 
-  // Ref to the HTML div container element
-  @ViewChild('createReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
-
   // Map of event name and handler methods pairs to be triggered on the event (Optional)
   @Input() eventHandlers?: Map<string, EventHandler | null>;
+
+  // Ref to the HTML div container element
+  @ViewChild('createReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
