@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, Report } from 'powerbi-client';
+import { Embed } from 'powerbi-client';
+import { Create } from 'create';
 import { IReportCreateConfiguration } from 'powerbi-models';
 
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
@@ -44,16 +45,16 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
   }
 
   // Returns embed object to calling function
-  getEmbed(): Report {
-    return this._embed as Report;
+  public getEmbed(): Create {
+    return this._embed as Create;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
       const prevEmbedConfig = changes.embedConfig.previousValue as IReportCreateConfiguration;
 
@@ -72,12 +73,9 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
     }
   }
 
-  ngAfterViewInit(): void {
-    // Check if container exists on the UI
-    if (this.containerRef.nativeElement) {
+  public ngAfterViewInit(): void {
       // Decide to embed
       this.embedCreateReport();
-    }
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
@@ -115,7 +113,7 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
 
     // Embed in the following scenario
     // Embed URL is updated (E.g. New create report is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
+    if (this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
       this.embedCreateReport();
     }
   }
