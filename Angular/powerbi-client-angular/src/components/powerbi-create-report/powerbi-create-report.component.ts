@@ -3,7 +3,6 @@
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed } from 'powerbi-client';
-import { Create } from 'create';
 import { IReportCreateConfiguration } from 'powerbi-models';
 
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
@@ -44,9 +43,10 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
     super();
   }
 
+  // To do - Return type should be create instead of Embed
   // Returns embed object to calling function
-  public getEmbed(): Create {
-    return this._embed as Create;
+  public getEmbed(): Embed {
+    return this._embed as Embed;
   }
 
   public ngOnInit(): void {
