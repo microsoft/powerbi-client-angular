@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed } from 'powerbi-client';
+import { Embed, Create } from 'powerbi-client';
 import { IReportCreateConfiguration } from 'powerbi-models';
 
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
@@ -15,7 +15,6 @@ import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-em
   template: '<div class={{cssClassName}} #createReportContainer></div>',
 })
 export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
-  // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Create report (Required)
   @Input() embedConfig!: IReportCreateConfiguration;
 
@@ -43,10 +42,9 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
     super();
   }
 
-  // To do - Return type should be create instead of Embed
   // Returns embed object to calling function
-  public getEmbed(): Embed {
-    return this._embed as Embed;
+  public getCreateObject(): Create {
+    return this._embed as Create;
   }
 
   public ngOnInit(): void {
@@ -74,8 +72,8 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
   }
 
   public ngAfterViewInit(): void {
-      // Decide to embed
-      this.embedCreateReport();
+    // Decide to embed
+    this.embedCreateReport();
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
