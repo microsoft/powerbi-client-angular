@@ -162,7 +162,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Initialize testCreateReport
-      testCreateReport = component.getEmbed();
+      testCreateReport = component.getCreateObject();
     });
 
     it('clears previous event handlers and sets new event handlers', () => {
