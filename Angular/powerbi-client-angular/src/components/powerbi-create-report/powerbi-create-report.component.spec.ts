@@ -95,7 +95,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       expect(mockPowerBIService.createReport).toHaveBeenCalledTimes(1);
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again when embedUrl is same', () => {
       const newConfig: IReportCreateConfiguration = {
         ...config,
       };
@@ -111,6 +111,33 @@ describe('PowerBICreateReportEmbedComponent', () => {
 
       // Act
       // With accessToken (embed)
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
+      fixture.detectChanges();
+
+      // Assert
+      expect(mockPowerBIService.createReport).not.toHaveBeenCalled();
+    });
+
+    it('does not embed again when embedUrl or accessToken is missing', () => {
+      const newConfig: IReportCreateConfiguration = {
+        ...config,
+        embedUrl: undefined,
+        accessToken: undefined
+      };
+
+      // Act
+      component.embedConfig = config;
+      component.service = mockPowerBIService;
+      fixture.detectChanges();
+
+      // Assert
+      expect(mockPowerBIService.createReport).toHaveBeenCalledTimes(1);
+      mockPowerBIService.createReport.calls.reset();
+
+      // Act
       component.embedConfig = newConfig;
       component.ngOnChanges({
         embedConfig: new SimpleChange(config, component.embedConfig, false),
