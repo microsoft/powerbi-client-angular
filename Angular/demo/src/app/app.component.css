@@ -90,9 +90,3 @@ body {
 iframe {
   border: none;
 }
-
-.report-container {
-  height: 75vh;
-  margin: 8px auto;
-  width: 90%;
-}
