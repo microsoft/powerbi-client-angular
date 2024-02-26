@@ -42,6 +42,5 @@
         }
       }
     }
-  },
-  "defaultProject": "powerbi-client-angular"
+  }
 }
