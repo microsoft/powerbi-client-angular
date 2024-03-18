@@ -87,7 +87,7 @@ extends:
           - task: NodeTool@0
             displayName: 'Install Node.js'
             inputs:
-              versionSpec: '16.x'
+              versionSpec: '18.x'
 
           - task: npmAuthenticate@0
             displayName: 'NPM Authenticate'
