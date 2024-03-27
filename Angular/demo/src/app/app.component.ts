@@ -6,6 +6,7 @@ import { IReportEmbedConfiguration, models, Page, Report, service, Embed } from 
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import { IHttpPostMessageResponse } from 'http-post-message';
 import 'powerbi-report-authoring';
+import { lastValueFrom } from 'rxjs';
 
 import { reportUrl } from '../public/constants';
 import { HttpService } from './services/http.service';
@@ -87,7 +88,7 @@ export class AppComponent {
 
     // Get the embed config from the service and set the reportConfigResponse
     try {
-      reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
+      reportConfigResponse = await lastValueFrom(this.httpService.getEmbedConfig(reportUrl));
     } catch (error: any) {
       this.displayMessage = `Failed to fetch config for report. Status: ${error.status} ${error.statusText}`;
       console.error(this.displayMessage);

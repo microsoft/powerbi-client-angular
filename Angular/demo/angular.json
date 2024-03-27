@@ -84,6 +84,5 @@
         }
       }
     }
-  },
-  "defaultProject": "powerbi-client-angular-demo"
+  }
 }
