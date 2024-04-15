@@ -28,7 +28,7 @@
     "tag": "beta"
   },
   "dependencies": {
-    "powerbi-client": "^2.22.3",
+    "powerbi-client": "^2.23.1",
     "tslib": "^2.1.0"
   },
   "devDependencies": {

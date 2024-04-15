@@ -101,7 +101,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -120,7 +120,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'dashboard',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -142,7 +142,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const newConfig = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -178,7 +178,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -188,7 +188,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different dashboard
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -203,14 +203,14 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
       const newConfig = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

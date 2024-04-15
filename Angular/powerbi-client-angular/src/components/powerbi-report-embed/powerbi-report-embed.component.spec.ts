@@ -103,7 +103,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -122,7 +122,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'report',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -144,7 +144,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const newConfig = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -180,7 +180,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -190,7 +190,7 @@ describe('PowerBIReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different report
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -205,7 +205,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -228,7 +228,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -251,7 +251,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -273,14 +273,14 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
       const newConfig = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

@@ -108,7 +108,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         pageName: 'fakePage',
         type: 'visual',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -128,7 +128,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         type: 'visual',
         id: 'visual',
         visualName: '',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -153,7 +153,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -191,7 +191,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -201,7 +201,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different visual
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -218,7 +218,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -227,7 +227,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

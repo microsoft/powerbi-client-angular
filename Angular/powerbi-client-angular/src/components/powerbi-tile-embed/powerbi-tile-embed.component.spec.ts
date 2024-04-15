@@ -106,7 +106,7 @@ describe('PowerBITileEmbedComponent', () => {
         dashboardId: 'fakeId',
         type: 'tile',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -126,7 +126,7 @@ describe('PowerBITileEmbedComponent', () => {
         type: 'tile',
         id: 'tile',
         dashboardId: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -150,7 +150,7 @@ describe('PowerBITileEmbedComponent', () => {
         type: 'tile',
         id: 'fakeId',
         dashboardId: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -187,7 +187,7 @@ describe('PowerBITileEmbedComponent', () => {
         type: 'tile',
         id: 'fakeId',
         dashboardId: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -197,7 +197,7 @@ describe('PowerBITileEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different tile
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -213,7 +213,7 @@ describe('PowerBITileEmbedComponent', () => {
         type: 'tile',
         id: 'fakeId',
         dashboardId: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -221,7 +221,7 @@ describe('PowerBITileEmbedComponent', () => {
         type: 'tile',
         id: 'fakeId',
         dashboardId: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

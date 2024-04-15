@@ -106,7 +106,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         datasetIds: ['fakeId'],
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -126,7 +126,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'qna visual',
         datasetIds: [],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -150,7 +150,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -187,7 +187,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -197,7 +197,7 @@ describe('PowerBIQnaEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different qna visual
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -213,7 +213,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -221,7 +221,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -253,7 +253,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
       component.embedConfig = config;

@@ -13,7 +13,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
   let fixture: ComponentFixture<PowerBICreateReportEmbedComponent>;
   const config: IReportCreateConfiguration = {
     type: 'create',
-    embedUrl: 'fakeUrl',
+    embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
     accessToken: 'fakeToken',
     datasetId: 'fakeId',
   };
@@ -161,7 +161,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       // Embed URL of different create report
       const newConfig = {
         ...config,
-        embedUrl: 'newFakeUrl'
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
       };
 
       // Act

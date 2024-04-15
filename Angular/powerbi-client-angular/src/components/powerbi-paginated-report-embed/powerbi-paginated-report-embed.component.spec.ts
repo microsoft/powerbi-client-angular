@@ -30,7 +30,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -47,7 +47,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -65,7 +65,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -85,7 +85,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -113,7 +113,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -131,7 +131,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -141,7 +141,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       fixture.detectChanges();
 
       // Embed URL of different paginated report
-      config.embedUrl = 'newFakeUrl';
+      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
 
       // Act
       component.embedConfig = config;
@@ -156,14 +156,14 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
       const newConfig = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
