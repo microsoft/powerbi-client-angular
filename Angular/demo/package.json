@@ -1,9 +1,9 @@
 {
   "name": "powerbi-client-angular-demo",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "private": true,
   "dependencies": {
-    "powerbi-client-angular": "^3.0.5",
+    "powerbi-client-angular": "^4.0.0",
     "powerbi-report-authoring": "^1.1.1",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2"
