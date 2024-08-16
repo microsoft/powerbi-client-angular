@@ -12,7 +12,7 @@ Write-Host "Global npm version"
 $exitCode = 0;
 
 Write-Host "start: try install latest Angular Client CLI version"
-& npm install @angular/cli@16.2.12 -g --globalconfig "$env:BUILD_SOURCESDIRECTORY\Angular\powerbi-client-angular\.npmrc" --loglevel verbose
+& npm install @angular/cli@16.2.12 -g --globalconfig "$env:BUILD_SOURCESDIRECTORY\Angular\powerbi-client-angular\.npmrc"
 Write-Host "done: try install latest Angular Client CLI version"
 
 Write-Host "Global ng path.."
