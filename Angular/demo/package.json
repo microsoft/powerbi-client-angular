@@ -3,9 +3,9 @@
   "version": "6.0.0",
   "private": true,
   "dependencies": {
+    "@fluentui/web-components": "^2.6.1",
     "powerbi-client-angular": "^4.0.0",
     "powerbi-report-authoring": "^1.1.1",
-    "rxjs": "~7.8.1",
     "tslib": "^2.6.2"
   },
   "devDependencies": {

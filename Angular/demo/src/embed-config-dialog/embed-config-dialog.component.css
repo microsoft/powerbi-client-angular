@@ -1,0 +1,81 @@
+/* Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. */
+
+p {
+    text-align: start;
+    margin: 10px 0
+}
+
+span {
+    font-weight: 500;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    text-align: start;
+}
+
+.dialog-title {
+    margin: 10px 0;
+}
+
+.close-icon-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dialog-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dialog-field {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.dialog-buttons {
+    display: flex;
+    margin: 15px 0;
+    justify-content: flex-end;
+}
+
+.dialog-buttons .run-button.active::part(control) {
+    background-color: #117865;
+    color: white;
+}
+
+.dialog-buttons .run-button:disabled {
+    background-color: #f0f0f0;
+    color: #7a7a7a;
+}
+
+.run-button {
+    margin: 0 10px;
+}
+
+fluent-button{
+    width: 88px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+fluent-dialog::part(control) {
+    width: auto;
+    height: auto;
+    padding: 24px;
+}
+
+fluent-text-field::part(root) {
+    height: 32px;
+    border: 1px solid #8A8886;
+    border-radius: 2px;
+    font-size: 16px;
+}

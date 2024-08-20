@@ -1,0 +1,22 @@
+<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. -->
+
+<fluent-dialog>
+    <div class="dialog-header">
+      <h2 class="dialog-title">Use your own Microsoft Entra token</h2>
+      <button class="close-icon-button" (click)="hideEmbedConfigDialog()">&#x2715;</button>
+    </div>
+    <div class="dialog-main">
+      <p>Follow the <a href="https://learn.microsoft.com/power-bi/developer/embedded/embed-tokens?tabs=embed-for-customers#microsoft-entra-token">Microsoft Entra Token</a> documentation to generate a Microsoft Entra Token.</p>
+      <span>Insert your Microsoft Entra token</span>
+      <fluent-text-field class="dialog-field" (input)="onAadTokenChange($event)"></fluent-text-field>
+
+      <p>Use the <a href="https://learn.microsoft.com/rest/api/power-bi/reports/get-report-in-group" target="_blank">Get Report In Group</a> REST API to get your embed URL.</p>
+      <span>Insert your embed URL</span>
+      <fluent-text-field class="dialog-field" (input)="onEmbedUrlChange($event)"></fluent-text-field>
+    </div>
+    <div class="dialog-buttons">
+      <fluent-button appearance="primary" class="run-button" [ngClass]="{ 'active': areFieldsFilled }" [disabled]="!areFieldsFilled" (click)="runConfig()">Run</fluent-button>
+      <fluent-button appearance="outline" class="close-button" (click)="hideEmbedConfigDialog()">Close</fluent-button>
+    </div>
+</fluent-dialog>
