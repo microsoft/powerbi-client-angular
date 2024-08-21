@@ -11,8 +11,10 @@ Write-Host "Global npm version"
 
 $exitCode = 0;
 
+Write-Host "Repo Root is $REPOROOT"
+
 Write-Host "start: try install latest Angular Client CLI version"
-& npm install @angular/cli@16.2.12 -g --globalconfig "$env:BUILD_SOURCESDIRECTORY\Angular\powerbi-client-angular\.npmrc"
+& npm install @angular/cli@16.2.12 -g --globalconfig "$REPOROOT\Angular\powerbi-client-angular\.npmrc"
 Write-Host "done: try install latest Angular Client CLI version"
 
 Write-Host "Global ng path.."
@@ -29,7 +31,7 @@ if ($exitCode -ne 0) {
 }
 
 Write-Host "start: try install latest npm version"
-& npm install npm@latest -g
+& npm install npm@latest -g --globalconfig "$REPOROOT\Angular\powerbi-client-angular\.npmrc"
 Write-Host "done: try install latest npm version"
 
 # Do not update $exitCode because we do not want to fail if install latest npm version fails.
