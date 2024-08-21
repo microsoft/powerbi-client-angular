@@ -11,9 +11,6 @@ Write-Host "Global npm version"
 
 $exitCode = 0;
 
-Write-Host "Repo Root is"
-$env:REPOROOT
-
 Write-Host "start: try install latest Angular Client CLI version"
 & npm install @angular/cli@16.2.12 -g --globalconfig "$env:REPOROOT\Angular\powerbi-client-angular\.npmrc"
 Write-Host "done: try install latest Angular Client CLI version"
