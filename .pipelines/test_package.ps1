@@ -16,6 +16,7 @@ Write-Host "done: verify package name"
 
 Write-Host "start: install package in test environment"
 mkdir testProject
+Copy-Item -Path ".npmrc" -Destination "testProject"
 cd .\testProject
 npm init -y
 npm install $packPath
