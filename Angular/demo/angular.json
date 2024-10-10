@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "powerbi-report-authoring"
+              "powerbi-report-authoring",
+              "powerbi-client"
             ],
             "outputPath": "dist/demo",
             "index": "src/index.html",
@@ -70,14 +71,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "powerbi-client-angular-demo:build"
+            "buildTarget": "powerbi-client-angular-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "powerbi-client-angular-demo:build:production"
+              "buildTarget": "powerbi-client-angular-demo:build:production"
             },
             "development": {
-              "browserTarget": "powerbi-client-angular-demo:build:development"
+              "buildTarget": "powerbi-client-angular-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
