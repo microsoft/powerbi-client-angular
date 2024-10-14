@@ -36,7 +36,7 @@ export class AppComponent {
   public isEmbedded = false;
 
   // Overall status message of embedding
-  public displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
+  public displayMessage = 'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
   public reportClass = 'report-container';
@@ -47,10 +47,13 @@ export class AppComponent {
   // Flag for button toggles
   private isFilterPaneVisible: boolean = true;
   private isThemeApplied: boolean = false;
+  private isZoomedOut: boolean = false;
 
   // Button text
   public filterPaneBtnText: string = "Hide filter pane";
   public themeBtnText: string = "Set theme";
+  public zoomBtnText: string = "Zoom out";
+  public dataSelectedBtnText = "Set 'dataSelected' event";
 
   // Flag to display the embed config dialog
   public isEmbedConfigDialogVisible = false;
@@ -159,7 +162,6 @@ export class AppComponent {
 
       this.filterPaneBtnText = this.isFilterPaneVisible ? "Hide filter pane" : "Show filter pane";
       this.displayMessage = this.isFilterPaneVisible ? "Filter pane is visible" : "Filter pane is hidden";
-      console.log(this.displayMessage);
 
       return response;
     } catch (error) {
@@ -186,6 +188,7 @@ export class AppComponent {
   */
   public async toggleTheme(): Promise<void> {
     const report: Report = this.reportObj.getReport();
+
     if (!report) {
       this.displayMessage = 'Report not available.';
       console.log(this.displayMessage);
@@ -205,11 +208,70 @@ export class AppComponent {
 
       this.themeBtnText = this.isThemeApplied ? "Reset theme" : "Set theme";
       this.displayMessage = this.isThemeApplied ? "Theme has been applied" : "Theme has been reset to default";
-      console.log(this.displayMessage);
     }
     catch (error) {
       this.displayMessage = `Failed to apply theme: ${error}`;
       console.log(this.displayMessage);
     }
+  }
+
+  /**
+   * Toggle zoom
+  */
+  public async toggleZoom(): Promise<void> {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    try {
+      const newZoomLevel = this.isZoomedOut ? 0.9 : 0.5;
+      this.isZoomedOut = !this.isZoomedOut;
+      this.zoomBtnText = this.isZoomedOut ? "Zoom in" : "Zoom out";
+      await report.setZoom(newZoomLevel);
+    }
+    catch (errors) {
+      console.log(errors);
+    }
+  }
+
+  /**
+   * Refresh report event
+  */
+  public async refreshReport(): Promise<void> {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    try {
+      await report.refresh();
+      this.displayMessage = 'The report has been refreshed successfully.';
+    }
+    catch (errors) {
+      this.displayMessage = errors.detailedMessage;
+      console.log(errors);
+    }
+  }
+
+  /**
+   * Full screen event
+  */
+  public enableFullScreen(): void {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    report.fullscreen();
   }
 }

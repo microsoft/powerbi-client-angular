@@ -11,7 +11,6 @@ import { EmbedConfigDialogComponent } from '../embed-config-dialog/embed-config-
 @NgModule({
   declarations: [AppComponent, EmbedConfigDialogComponent],
   imports: [BrowserModule, HttpClientModule, PowerBIEmbedModule],
-  providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

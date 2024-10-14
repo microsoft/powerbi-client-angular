@@ -8,7 +8,10 @@ Licensed under the MIT License. -->
     <ng-container *ngIf="isEmbedded; else embedReportFlow">
       <button (click)="toggleFilterPane()">{{filterPaneBtnText}}</button>
       <button (click)="toggleTheme()">{{themeBtnText}}</button>
-      <button (click)="setDataSelectedEvent()">Set 'dataSelected' event</button>
+      <button (click)="setDataSelectedEvent()">{{dataSelectedBtnText}}</button>
+      <button (click)="toggleZoom()">{{zoomBtnText}}</button>
+      <button (click)="refreshReport()">Refresh report</button>
+      <button (click)="enableFullScreen()">Full screen</button>
       <label class="display-message">{{ displayMessage }}</label>
     </ng-container>
     <ng-template #embedReportFlow>
