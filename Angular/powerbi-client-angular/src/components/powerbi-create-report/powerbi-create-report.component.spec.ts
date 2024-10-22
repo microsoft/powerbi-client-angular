@@ -95,7 +95,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       expect(mockPowerBIService.createReport).toHaveBeenCalledTimes(1);
     });
 
-    it('does not embed again when embedUrl is same', () => {
+    it('does not embed again if no changes in the embedConfig', () => {
       const newConfig: IReportCreateConfiguration = {
         ...config,
       };
@@ -148,7 +148,7 @@ describe('PowerBICreateReportEmbedComponent', () => {
       expect(mockPowerBIService.createReport).not.toHaveBeenCalled();
     });
 
-    it('embeds when embedUrl of report is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Act
       component.embedConfig = config;
       component.service = mockPowerBIService;

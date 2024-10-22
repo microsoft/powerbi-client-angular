@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { ElementRef } from '@angular/core';
 import { EventHandler } from '../components/powerbi-embed/powerbi-embed.component';
 
 /**
@@ -26,6 +27,17 @@ export const stringifyMap = (map: Map<string, EventHandler | null> | undefined):
     )
   );
 };
+
+/**
+ * Check if the container element, access token, and embed URL are available.
+ *
+ * @param containerRef Reference to the container element
+ * @param embedConfig Configuration object for the embed, containing access token and embed URL
+ *
+ */
+export const isEmbedSetupValid = (containerRef: ElementRef<HTMLDivElement>, embedConfig: any): boolean => {
+  return !!containerRef.nativeElement && !!embedConfig.accessToken && !!embedConfig.embedUrl;
+}
 
 // SDK information to be used with service instance
 export const sdkType = 'powerbi-client-angular';

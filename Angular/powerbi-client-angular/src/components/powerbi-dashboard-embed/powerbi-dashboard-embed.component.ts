@@ -4,6 +4,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Dashboard, Embed, IDashboardEmbedConfiguration } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Dashboard component to embed the dashboard, extends the Base component
@@ -53,15 +54,17 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IDashboardEmbedConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
-      this.embedOrUpdateDashboard(prevEmbedConfig);
+      const prevEmbedConfig: IDashboardEmbedConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IDashboardEmbedConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embedDashboard function
+        this.embedDashboard();
+      }
     }
 
     // Set event handlers if available
@@ -93,31 +96,10 @@ export class PowerBIDashboardEmbedComponent extends PowerBIEmbedComponent implem
    * @returns void
    */
   private embedDashboard(): void {
-    // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
     this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-  }
-
-  /**
-   * When component updates, choose to _embed_ the powerbi dashboard
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig IDashboardEmbedConfiguration
-   * @returns void
-   */
-  private embedOrUpdateDashboard(prevEmbedConfig: IDashboardEmbedConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed in the following scenario
-    // Embed URL is updated (E.g. New dashboard is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedDashboard();
-    }
   }
 }

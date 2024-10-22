@@ -184,7 +184,7 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of visual is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'visual',
@@ -200,18 +200,28 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different visual
-      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'visual',

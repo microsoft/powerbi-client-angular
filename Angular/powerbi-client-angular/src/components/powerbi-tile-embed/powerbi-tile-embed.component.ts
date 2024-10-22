@@ -4,6 +4,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, ITileEmbedConfiguration, Tile } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Tile component to embed the tile, extends Base component
@@ -53,15 +54,17 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as ITileEmbedConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
-      this.embedOrUpdateTile(prevEmbedConfig);
+      const prevEmbedConfig: ITileEmbedConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: ITileEmbedConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embedTile function
+        this.embedTile();
+      }
     }
 
     // Set event handlers if available
@@ -94,30 +97,10 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
    */
   private embedTile(): void {
     // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!this.containerRef.nativeElement || !this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
       return;
     }
 
     this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-  }
-
-  /**
-   * When component updates, choose to _embed_ the powerbi tile
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig ITileEmbedConfiguration
-   * @returns void
-   */
-  private embedOrUpdateTile(prevEmbedConfig: ITileEmbedConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed in the following scenario
-    // Embed URL is updated (E.g. New tile is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedTile();
-    }
   }
 }

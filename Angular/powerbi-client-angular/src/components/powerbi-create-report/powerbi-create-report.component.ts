@@ -6,6 +6,7 @@ import { Embed, Create } from 'powerbi-client';
 import { IReportCreateConfiguration } from 'powerbi-models';
 
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Create report component to embed the entity, extends the Base component
@@ -54,15 +55,17 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IReportCreateConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateCreateReport function
-      this.embedOrUpdatedCreateReport(prevEmbedConfig);
+      const prevEmbedConfig: IReportCreateConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IReportCreateConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embedCreateReport function
+        this.embedCreateReport();
+      }
     }
 
     // Set event handlers if available
@@ -88,31 +91,11 @@ export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent imp
    */
   private embedCreateReport(): void {
     // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
     // Embed create report
     this.embed = this.powerbi.createReport(this.containerRef.nativeElement, this.embedConfig);
-  }
-
-  /**
-   * When component updates, choose to _embed_ the powerbi create report
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig IReportCreateConfiguration
-   * @returns void
-   */
-  private embedOrUpdatedCreateReport(prevEmbedConfig: IReportCreateConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed in the following scenario
-    // Embed URL is updated (E.g. New create report is to be embedded)
-    if (this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedCreateReport();
-    }
   }
 }

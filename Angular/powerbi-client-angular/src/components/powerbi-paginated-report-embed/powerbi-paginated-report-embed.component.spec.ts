@@ -126,7 +126,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of paginated report is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'report',
@@ -140,18 +140,28 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different paginated report
-      config.embedUrl = 'https://app.powerbi.com/newFakeEmbedUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      })
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'report',
