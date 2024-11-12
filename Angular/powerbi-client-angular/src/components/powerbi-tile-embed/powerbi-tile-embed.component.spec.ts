@@ -12,7 +12,7 @@ describe('PowerBITileEmbedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PowerBITileEmbedComponent],
+      imports: [PowerBITileEmbedComponent],
     }).compileComponents();
 
     // Arrange

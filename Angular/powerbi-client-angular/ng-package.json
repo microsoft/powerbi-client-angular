@@ -7,8 +7,6 @@
   "allowedNonPeerDependencies": [
     "powerbi-client",
     "powerbi-report-authoring",
-    "prettier",
-    "tslib",
-    "zone.js"
+    "prettier"
   ]
 }

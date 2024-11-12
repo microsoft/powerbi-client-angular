@@ -11,6 +11,7 @@ import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-em
 @Component({
   selector: 'powerbi-qna[embedConfig]',
   template: '<div class={{cssClassName}} #qnaContainer></div>',
+  standalone: true,
 })
 export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent

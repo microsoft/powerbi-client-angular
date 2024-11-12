@@ -12,3 +12,5 @@ export * from './components/powerbi-paginated-report-embed/powerbi-paginated-rep
 export * from './components/powerbi-visual-embed/powerbi-visual-embed.component';
 export * from './components/powerbi-qna-embed/powerbi-qna-embed.component';
 export * from './powerbi-embed.module';
+
+export * from './private-api';

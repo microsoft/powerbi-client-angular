@@ -11,6 +11,7 @@ import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-em
 @Component({
   selector: 'powerbi-tile[embedConfig]',
   template: '<div class={{cssClassName}} #tileContainer></div>',
+  standalone: true,
 })
 export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
