@@ -12,7 +12,7 @@ describe('PowerBIQnaEmbedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PowerBIQnaEmbedComponent],
+      imports: [PowerBIQnaEmbedComponent],
     }).compileComponents();
 
     // Arrange

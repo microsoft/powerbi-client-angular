@@ -13,7 +13,7 @@ describe('PowerBIVisualEmbedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PowerBIVisualEmbedComponent],
+      imports: [PowerBIVisualEmbedComponent],
     }).compileComponents();
 
     // Arrange

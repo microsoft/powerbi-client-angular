@@ -12,7 +12,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PowerBIDashboardEmbedComponent],
+      imports: [PowerBIDashboardEmbedComponent],
     }).compileComponents();
 
     // Arrange

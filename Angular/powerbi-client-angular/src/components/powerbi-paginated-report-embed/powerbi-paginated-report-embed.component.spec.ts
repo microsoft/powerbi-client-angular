@@ -12,7 +12,7 @@ describe('PowerBIPaginatedReportEmbedComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PowerBIPaginatedReportEmbedComponent],
+      imports: [PowerBIPaginatedReportEmbedComponent],
     }).compileComponents();
 
     // Arrange

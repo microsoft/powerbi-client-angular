@@ -10,24 +10,18 @@ import { PowerBIReportEmbedComponent } from './components/powerbi-report-embed/p
 import { PowerBITileEmbedComponent } from './components/powerbi-tile-embed/powerbi-tile-embed.component';
 import { PowerBIVisualEmbedComponent } from './components/powerbi-visual-embed/powerbi-visual-embed.component';
 
+const components = [
+  PowerBIEmbedComponent,
+  PowerBIDashboardEmbedComponent,
+  PowerBIPaginatedReportEmbedComponent,
+  PowerBIQnaEmbedComponent,
+  PowerBIReportEmbedComponent,
+  PowerBITileEmbedComponent,
+  PowerBIVisualEmbedComponent,
+];
+
 @NgModule({
-  declarations: [
-    PowerBIEmbedComponent,
-    PowerBIDashboardEmbedComponent,
-    PowerBIPaginatedReportEmbedComponent,
-    PowerBIQnaEmbedComponent,
-    PowerBIReportEmbedComponent,
-    PowerBITileEmbedComponent,
-    PowerBIVisualEmbedComponent,
-  ],
-  imports: [],
-  exports: [
-    PowerBIDashboardEmbedComponent,
-    PowerBIPaginatedReportEmbedComponent,
-    PowerBIQnaEmbedComponent,
-    PowerBIReportEmbedComponent,
-    PowerBITileEmbedComponent,
-    PowerBIVisualEmbedComponent,
-  ],
+  imports: components,
+  exports: components,
 })
 export class PowerBIEmbedModule {}

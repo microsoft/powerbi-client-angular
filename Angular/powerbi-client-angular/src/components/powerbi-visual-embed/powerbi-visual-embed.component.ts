@@ -11,6 +11,7 @@ import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-em
 @Component({
   selector: 'powerbi-visual[embedConfig]',
   template: '<div class={{cssClassName}} #visualContainer></div>',
+  standalone: true,
 })
 export class PowerBIVisualEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent

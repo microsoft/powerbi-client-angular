@@ -16,6 +16,7 @@ export type EventHandler = (event?: service.ICustomEvent<any>, embeddedEntity?: 
 @Component({
   selector: 'powerbi-embed',
   template: '',
+  standalone: true,
 })
 export class PowerBIEmbedComponent implements OnInit {
   // Input() specify the properties that will be passed from the parent
