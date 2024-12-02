@@ -48,15 +48,24 @@ export class AppComponent {
   private isFilterPaneVisible: boolean = true;
   private isThemeApplied: boolean = false;
   private isZoomedOut: boolean = false;
+  private isDataSelectedEvent = false;
+
+  // Constants for zoom levels
+  private zoomOutLevel = 0.5;
+  private zoomInLevel = 0.9;
 
   // Button text
   public filterPaneBtnText: string = "Hide filter pane";
   public themeBtnText: string = "Set theme";
   public zoomBtnText: string = "Zoom out";
-  public dataSelectedBtnText = "Set 'dataSelected' event";
+  public dataSelectedBtnText = "Show dataSelected event in dialog";
 
   // Flag to display the embed config dialog
   public isEmbedConfigDialogVisible = false;
+
+  // Flag to display the data selected event details dialog
+  public isEventDetailsDialogVisible = false;
+  public dataSelectedEventDetails: any;
 
   // Pass the basic embed configurations to the wrapper to bootstrap the report on first load
   // Values for properties like embedUrl, accessToken and settings will be set on click of button
@@ -174,13 +183,32 @@ export class AppComponent {
    * Set data selected event
   */
   public setDataSelectedEvent(): void {
-    // Adding dataSelected event in eventHandlersMap
-    this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>([
-      ...this.eventHandlersMap,
-      ['dataSelected', (event) => console.log(event)],
-    ]);
+    const report: Report = this.reportObj.getReport();
+    this.isDataSelectedEvent = !this.isDataSelectedEvent;
 
-    this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';
+    if(this.isDataSelectedEvent) {
+      // Adding dataSelected event handler to the report
+      report.on('dataSelected', (event: service.ICustomEvent<any>) => {
+        if (event?.detail.dataPoints.length) {
+          this.dataSelectedEventDetailsDialog(event.detail);
+        }
+      });
+    }
+    else {
+      report.off('dataSelected');
+    }
+
+    this.dataSelectedBtnText = this.isDataSelectedEvent ? "Hide dataSelected event in dialog" : "Show dataSelected event in dialog";
+    this.displayMessage = this.isDataSelectedEvent ? 'Data Selected event has been successfully set. Click on a data point to see the details.' : 'Data Selected event has been successfully unset.';
+  }
+
+  dataSelectedEventDetailsDialog(dataSelectedEventDetails: any): void {
+    this.dataSelectedEventDetails = dataSelectedEventDetails;
+    this.isEventDetailsDialogVisible = true;
+  }
+
+  closeDataSelectedEventDetailsDialog() {
+    this.isEventDetailsDialogVisible = false;
   }
 
   /**
@@ -228,7 +256,7 @@ export class AppComponent {
     }
 
     try {
-      const newZoomLevel = this.isZoomedOut ? 0.9 : 0.5;
+      const newZoomLevel = this.isZoomedOut ? this.zoomInLevel : this.zoomOutLevel;
       this.isZoomedOut = !this.isZoomedOut;
       this.zoomBtnText = this.isZoomedOut ? "Zoom in" : "Zoom out";
       await report.setZoom(newZoomLevel);
@@ -254,7 +282,7 @@ export class AppComponent {
       await report.refresh();
       this.displayMessage = 'The report has been refreshed successfully.';
     }
-    catch (errors) {
+    catch (errors: any) {
       this.displayMessage = errors.detailedMessage;
       console.log(errors);
     }

@@ -6,12 +6,14 @@ Licensed under the MIT License. -->
 
   <div class="controls">
     <ng-container *ngIf="isEmbedded; else embedReportFlow">
-      <button (click)="toggleFilterPane()">{{filterPaneBtnText}}</button>
-      <button (click)="toggleTheme()">{{themeBtnText}}</button>
-      <button (click)="setDataSelectedEvent()">{{dataSelectedBtnText}}</button>
-      <button (click)="toggleZoom()">{{zoomBtnText}}</button>
-      <button (click)="refreshReport()">Refresh report</button>
-      <button (click)="enableFullScreen()">Full screen</button>
+      <div class="button-container">
+        <button (click)="toggleFilterPane()">{{filterPaneBtnText}}</button>
+        <button (click)="toggleTheme()">{{themeBtnText}}</button>
+        <button (click)="setDataSelectedEvent()">{{dataSelectedBtnText}}</button>
+        <button (click)="toggleZoom()">{{zoomBtnText}}</button>
+        <button (click)="refreshReport()">Refresh report</button>
+        <button (click)="enableFullScreen()">Full screen</button>
+      </div>
       <label class="display-message">{{ displayMessage }}</label>
     </ng-container>
     <ng-template #embedReportFlow>
@@ -39,3 +41,4 @@ Licensed under the MIT License. -->
 </div>
 
 <embed-config-dialog *ngIf="isEmbedConfigDialogVisible" (embedConfigEvent)="handleEmbedConfigEventReceived($event)" (close)="hideEmbedConfigDialog()"></embed-config-dialog>
+<event-details-dialog *ngIf="isEventDetailsDialogVisible" [dataSelectedEventDetails]="dataSelectedEventDetails" (closeDataSelectedEventDetailsDialog)="closeDataSelectedEventDetailsDialog()"></event-details-dialog>
