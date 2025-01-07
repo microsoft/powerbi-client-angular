@@ -41,4 +41,4 @@ export const isEmbedSetupValid = (containerRef: ElementRef<HTMLDivElement>, embe
 
 // SDK information to be used with service instance
 export const sdkType = 'powerbi-client-angular';
-export const sdkWrapperVersion = '4.0.0';
+export const sdkWrapperVersion = '5.0.0';

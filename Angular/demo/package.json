@@ -1,10 +1,10 @@
 {
   "name": "powerbi-client-angular-demo",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "private": true,
   "dependencies": {
     "@fluentui/web-components": "^2.6.1",
-    "powerbi-client-angular": "^4.0.0",
+    "powerbi-client-angular": "^5.0.0",
     "powerbi-report-authoring": "^1.1.1",
     "tslib": "^2.6.2"
   },
