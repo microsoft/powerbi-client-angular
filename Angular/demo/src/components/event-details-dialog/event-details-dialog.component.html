@@ -1,0 +1,13 @@
+<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. -->
+
+<fluent-dialog>
+  <div class="dialog-header-event-details">
+      <h1>Event Details</h1>
+      <button class="close-icon-button" (click)="closeSelectedEventDetailsDialog()">&#x2715;</button>
+  </div>
+  <div class="dialog-main-event-details">
+      <pre>{{ dataSelectedEventDetails | json }}</pre>
+  </div>
+  <fluent-button class="close-button" (click)="closeSelectedEventDetailsDialog()">Close</fluent-button>
+</fluent-dialog>

@@ -4,6 +4,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, IQnaEmbedConfiguration, Qna } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Qna component to embed the Qna visual, extends Base component
@@ -53,15 +54,17 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IQnaEmbedConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
-      this.embedOrUpdateQna(prevEmbedConfig);
+      const prevEmbedConfig: IQnaEmbedConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IQnaEmbedConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embedQnaVisual function
+        this.embedQnaVisual();
+      }
     }
 
     // Set event handlers if available
@@ -94,30 +97,10 @@ export class PowerBIQnaEmbedComponent extends PowerBIEmbedComponent implements O
    */
   private embedQnaVisual(): void {
     // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
     this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-  }
-
-  /**
-   * When component updates, choose to _embed_ the powerbi qna visual
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig IQnaEmbedConfiguration
-   * @returns void
-   */
-  private embedOrUpdateQna(prevEmbedConfig: IQnaEmbedConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed in the following scenario
-    // Embed URL is updated (E.g. New Qna visual is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedQnaVisual();
-    }
   }
 }

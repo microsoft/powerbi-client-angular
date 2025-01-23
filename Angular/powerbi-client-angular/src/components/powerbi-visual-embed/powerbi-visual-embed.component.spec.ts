@@ -108,7 +108,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         pageName: 'fakePage',
         type: 'visual',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -128,7 +128,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         type: 'visual',
         id: 'visual',
         visualName: '',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -153,7 +153,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -184,14 +184,14 @@ describe('PowerBIVisualEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of visual is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'visual',
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -200,25 +200,35 @@ describe('PowerBIVisualEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different visual
-      config.embedUrl = 'newFakeUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'visual',
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -227,7 +237,7 @@ describe('PowerBIVisualEmbedComponent', () => {
         id: 'fakeId',
         visualName: 'fakeVisual',
         pageName: 'fakePage',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

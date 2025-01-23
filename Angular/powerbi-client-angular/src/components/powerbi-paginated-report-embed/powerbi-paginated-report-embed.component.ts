@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, IEmbedConfiguration } from 'powerbi-client';
+import { Embed } from 'powerbi-client';
+import { IPaginatedReportLoadConfiguration } from 'powerbi-models';
 import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Paginated report component to embed the entity, extends the Base component
@@ -15,7 +17,7 @@ import { PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component'
 export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
   // Input() specify properties that will be passed from parent
   // Configuration for embedding the PowerBI Paginated report (Required)
-  @Input() embedConfig!: IEmbedConfiguration;
+  @Input() embedConfig!: IPaginatedReportLoadConfiguration;
 
   // Ref to the HTML div container element
   @ViewChild('paginatedReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
@@ -45,15 +47,17 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IEmbedConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateDashboard function
-      this.embedOrUpdatedPaginatedReport(prevEmbedConfig);
+      const prevEmbedConfig: IPaginatedReportLoadConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IPaginatedReportLoadConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embedPaginatedReport function
+        this.embedPaginatedReport();
+      }
     }
   }
 
@@ -72,31 +76,11 @@ export class PowerBIPaginatedReportEmbedComponent extends PowerBIEmbedComponent 
    */
   private embedPaginatedReport(): void {
     // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
     // Embed paginated report
     this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-  }
-
-  /**
-   * When component updates, choose to _embed_ the powerbi paginated report
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig IEmbedConfiguration
-   * @returns void
-   */
-  private embedOrUpdatedPaginatedReport(prevEmbedConfig: IEmbedConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed in the following scenario
-    // Embed URL is updated (E.g. New paginated report is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedPaginatedReport();
-    }
   }
 }

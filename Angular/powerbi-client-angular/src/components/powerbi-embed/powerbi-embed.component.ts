@@ -18,6 +18,9 @@ export type EventHandler = (event?: service.ICustomEvent<any>, embeddedEntity?: 
   template: '',
 })
 export class PowerBIEmbedComponent implements OnInit {
+  // Power BI service instance to be used if user doesnt provide custom service
+  private static _powerbi: service.Service;
+
   // Input() specify the properties that will be passed from the parent
   // CSS class to be set on the embedding container (Optional)
   @Input() cssClassName?: string;
@@ -36,7 +39,13 @@ export class PowerBIEmbedComponent implements OnInit {
     if (this.service) {
       this.powerbi = this.service;
     } else {
-      this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
+      if (!PowerBIEmbedComponent._powerbi) {
+        PowerBIEmbedComponent._powerbi = new service.Service(
+          factories.hpmFactory,
+          factories.wpmpFactory,
+          factories.routerFactory);
+      }
+      this.powerbi = PowerBIEmbedComponent._powerbi;
     }
 
     this.powerbi.setSdkInfo(sdkType, sdkWrapperVersion);

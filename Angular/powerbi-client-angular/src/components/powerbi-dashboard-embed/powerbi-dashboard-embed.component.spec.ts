@@ -101,7 +101,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -120,7 +120,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const config = {
         type: 'dashboard',
         id: 'dashboard',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -142,7 +142,7 @@ describe('PowerBIDashboardEmbedComponent', () => {
       const newConfig = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -173,12 +173,12 @@ describe('PowerBIDashboardEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of dashboard is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -187,30 +187,40 @@ describe('PowerBIDashboardEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different dashboard
-      config.embedUrl = 'newFakeUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
       const newConfig = {
         type: 'dashboard',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
