@@ -103,7 +103,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -122,7 +122,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'report',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -144,7 +144,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const newConfig = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -175,12 +175,12 @@ describe('PowerBIReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of report is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -189,11 +189,21 @@ describe('PowerBIReportEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different report
-      config.embedUrl = 'newFakeUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      });
       fixture.detectChanges();
 
       // Assert
@@ -205,7 +215,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -228,7 +238,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -251,7 +261,7 @@ describe('PowerBIReportEmbedComponent', () => {
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -268,19 +278,19 @@ describe('PowerBIReportEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
       const newConfig = {
         type: 'report',
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 

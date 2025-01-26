@@ -2,27 +2,28 @@
 // Licensed under the MIT License.
 
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Embed, ITileEmbedConfiguration, Tile } from 'powerbi-client';
+import { Embed, Create } from 'powerbi-client';
+import { IReportCreateConfiguration } from 'powerbi-models';
+
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
 import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
- * Tile component to embed the tile, extends Base component
+ * Create report component to embed the entity, extends the Base component
  */
 @Component({
-  selector: 'powerbi-tile[embedConfig]',
-  template: '<div class={{cssClassName}} #tileContainer></div>',
+  selector: 'powerbi-create-report[embedConfig]',
+  template: '<div class={{cssClassName}} #createReportContainer></div>',
 })
-export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
-  // Input() specify properties that will be passed from parent
-  // Configuration for embedding the PowerBI Tile (Required)
-  @Input() embedConfig!: ITileEmbedConfiguration;
+export class PowerBICreateReportEmbedComponent extends PowerBIEmbedComponent implements OnInit, OnChanges, AfterViewInit {
+  // Configuration for embedding the PowerBI Create report (Required)
+  @Input() embedConfig!: IReportCreateConfiguration;
 
   // Map of event name and handler methods pairs to be triggered on the event (Optional)
   @Input() eventHandlers?: Map<string, EventHandler | null>;
 
   // Ref to the HTML div container element
-  @ViewChild('tileContainer') private containerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('createReportContainer') private containerRef!: ElementRef<HTMLDivElement>;
 
   // Embedded entity
   // Note: Do not read or assign to this member variable directly, instead use the getter and setter
@@ -43,27 +44,27 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   }
 
   // Returns embed object to calling function
-  getTile(): Tile {
-    return this._embed as Tile;
+  public getCreateObject(): Create {
+    return this._embed as Create;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Initialize PowerBI service instance variable from parent
     super.ngOnInit();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
       // Check if the function is being called for the first time
       if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      const prevEmbedConfig: ITileEmbedConfiguration = changes.embedConfig.previousValue;
-      const currentEmbedConfig: ITileEmbedConfiguration = changes.embedConfig.currentValue;
+      const prevEmbedConfig: IReportCreateConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IReportCreateConfiguration = changes.embedConfig.currentValue;
       if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
-        // Input from parent get updated, thus call embedTile function
-        this.embedTile();
+        // Input from parent get updated, thus call embedCreateReport function
+        this.embedCreateReport();
       }
     }
 
@@ -73,16 +74,9 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
     }
   }
 
-  ngAfterViewInit(): void {
-    // Check if container exists on the UI
-    if (this.containerRef.nativeElement) {
-      // Decide to embed or bootstrap
-      if (this.embedConfig.accessToken && this.embedConfig.embedUrl) {
-        this.embedTile();
-      } else {
-        this.embed = this.powerbi.bootstrap(this.containerRef.nativeElement, this.embedConfig);
-      }
-    }
+  public ngAfterViewInit(): void {
+    // Decide to embed
+    this.embedCreateReport();
 
     // Set event handlers if available
     if (this.eventHandlers && this.embed) {
@@ -91,16 +85,17 @@ export class PowerBITileEmbedComponent extends PowerBIEmbedComponent implements 
   }
 
   /**
-   * Embed the PowerBI Tile
+   * Embed the PowerBI Create report
    *
    * @returns void
    */
-  private embedTile(): void {
+  private embedCreateReport(): void {
     // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement || !this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
-    this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
+    // Embed create report
+    this.embed = this.powerbi.createReport(this.containerRef.nativeElement, this.embedConfig);
   }
 }

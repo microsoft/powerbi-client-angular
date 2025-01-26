@@ -4,6 +4,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Embed, IReportEmbedConfiguration, Report } from 'powerbi-client';
 import { EventHandler, PowerBIEmbedComponent } from '../powerbi-embed/powerbi-embed.component';
+import { isEmbedSetupValid } from '../../utils/utils';
 
 /**
  * Report component to embed the report, extends the Base Component
@@ -56,15 +57,17 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.embedConfig) {
-      const prevEmbedConfig = changes.embedConfig.previousValue as IReportEmbedConfiguration;
-
       // Check if the function is being called for the first time
-      if (!prevEmbedConfig) {
+      if (changes.embedConfig.isFirstChange()) {
         return;
       }
 
-      // Input from parent get updated, thus call embedOrUpdateReport function
-      this.embedOrUpdateReport(prevEmbedConfig);
+      const prevEmbedConfig: IReportEmbedConfiguration = changes.embedConfig.previousValue;
+      const currentEmbedConfig: IReportEmbedConfiguration = changes.embedConfig.currentValue;
+      if (JSON.stringify(prevEmbedConfig) !== JSON.stringify(currentEmbedConfig)) {
+        // Input from parent get updated, thus call embed function to re-embed the report
+        this.embedReport();
+      }
     }
 
     // Set event handlers if available
@@ -96,8 +99,7 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
    * @returns void
    */
   private embedReport(): void {
-    // Check if the HTML container is rendered and available
-    if (!this.containerRef.nativeElement) {
+    if (!isEmbedSetupValid(this.containerRef, this.embedConfig)) {
       return;
     }
 
@@ -106,26 +108,6 @@ export class PowerBIReportEmbedComponent extends PowerBIEmbedComponent implement
       this.embed = this.powerbi.load(this.containerRef.nativeElement, this.embedConfig);
     } else {
       this.embed = this.powerbi.embed(this.containerRef.nativeElement, this.embedConfig);
-    }
-  }
-
-  /**
-   * When component updates, choose to _embed_ or _load_ the powerbi report
-   * or do nothing if the embedUrl and accessToken did not update in the new properties
-   *
-   * @param prevEmbedConfig IReportEmbedConfiguration
-   * @returns void
-   */
-  private embedOrUpdateReport(prevEmbedConfig: IReportEmbedConfiguration): void {
-    // Check if Embed URL and Access Token are present in current properties
-    if (!this.embedConfig.accessToken || !this.embedConfig.embedUrl) {
-      return;
-    }
-
-    // Embed or load in the following scenario
-    // Embed URL is updated (E.g. New report is to be embedded)
-    if (this.containerRef.nativeElement && this.embedConfig.embedUrl !== prevEmbedConfig.embedUrl) {
-      this.embedReport();
     }
   }
 }

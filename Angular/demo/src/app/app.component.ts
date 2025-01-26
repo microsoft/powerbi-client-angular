@@ -1,14 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IReportEmbedConfiguration, models, Page, Report, service, Embed } from 'powerbi-client';
+import { Component, ViewChild } from '@angular/core';
+import { provideFluentDesignSystem, fluentDialog, fluentButton, fluentTextField } from '@fluentui/web-components';
+import { IReportEmbedConfiguration, models, Report, service, Embed } from 'powerbi-client';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import { IHttpPostMessageResponse } from 'http-post-message';
 import 'powerbi-report-authoring';
 
-import { reportUrl } from '../public/constants';
 import { HttpService } from './services/http.service';
+import { sampletheme } from './constants/constants';
+
+provideFluentDesignSystem()
+  .register(fluentDialog(), fluentButton(), fluentTextField());
 
 // Handles the embed config response for embedding
 export interface ConfigResponse {
@@ -26,26 +30,49 @@ export interface ConfigResponse {
 })
 export class AppComponent {
   // Wrapper object to access report properties
-  @ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;
+  @ViewChild(PowerBIReportEmbedComponent) public reportObj!: PowerBIReportEmbedComponent;
 
   // Track Report embedding status
-  isEmbedded = false;
+  public isEmbedded = false;
 
   // Overall status message of embedding
-  displayMessage = 'The report is bootstrapped. Click Embed Report button to set the access token.';
+  public displayMessage = 'The report is bootstrapped. Click the Embed Report button to set the access token.';
 
   // CSS Class to be passed to the wrapper
-  reportClass = 'report-container';
+  public reportClass = 'report-container';
 
   // Flag which specify the type of embedding
-  phasedEmbeddingFlag = false;
+  public phasedEmbeddingFlag = false;
+
+  // Flag for button toggles
+  private isFilterPaneVisible: boolean = true;
+  private isThemeApplied: boolean = false;
+  private isZoomedOut: boolean = false;
+  private isDataSelectedEvent = false;
+
+  // Constants for zoom levels
+  private zoomOutLevel = 0.5;
+  private zoomInLevel = 0.9;
+
+  // Button text
+  public filterPaneBtnText: string = "Hide filter pane";
+  public themeBtnText: string = "Set theme";
+  public zoomBtnText: string = "Zoom out";
+  public dataSelectedBtnText = "Show dataSelected event in dialog";
+
+  // Flag to display the embed config dialog
+  public isEmbedConfigDialogVisible = false;
+
+  // Flag to display the data selected event details dialog
+  public isEventDetailsDialogVisible = false;
+  public dataSelectedEventDetails: any;
 
   // Pass the basic embed configurations to the wrapper to bootstrap the report on first load
   // Values for properties like embedUrl, accessToken and settings will be set on click of button
-  reportConfig: IReportEmbedConfiguration = {
+  public reportConfig: IReportEmbedConfiguration = {
     type: 'report',
     embedUrl: undefined,
-    tokenType: models.TokenType.Embed,
+    tokenType: models.TokenType.Aad,
     accessToken: undefined,
     settings: undefined,
   };
@@ -57,7 +84,7 @@ export class AppComponent {
   // Set event handler to null if event needs to be removed
   // More events can be provided from here
   // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
-  eventHandlersMap = new Map ([
+  public eventHandlersMap = new Map ([
     ['loaded', () => {
         const report = this.reportObj.getReport();
         report.setComponentTitle('Embedded report');
@@ -75,31 +102,33 @@ export class AppComponent {
     ['pageChanged', (event) => console.log(event)],
   ]) as Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>;
 
-  constructor(public httpService: HttpService, private element: ElementRef<HTMLDivElement>) {}
+  constructor(public httpService: HttpService) { }
+
+  /**
+    * Show the dailog for Embed Config input
+  */
+  public openEmbedConfigDialog(): void {
+    this.isEmbedConfigDialogVisible = true;
+  }
+
+  public hideEmbedConfigDialog(): void {
+    this.isEmbedConfigDialogVisible = false;
+  }
+
+  public handleEmbedConfigEventReceived(event: { aadToken: string, embedUrl: string }): void {
+    this.embedReport(event.aadToken, event.embedUrl);
+    this.hideEmbedConfigDialog();
+  }
 
   /**
    * Embeds report
-   *
-   * @returns Promise<void>
-   */
-  async embedReport(): Promise<void> {
-    let reportConfigResponse: ConfigResponse;
-
-    // Get the embed config from the service and set the reportConfigResponse
-    try {
-      reportConfigResponse = await this.httpService.getEmbedConfig(reportUrl).toPromise();
-    } catch (error: any) {
-      this.displayMessage = `Failed to fetch config for report. Status: ${error.status} ${error.statusText}`;
-      console.error(this.displayMessage);
-      return;
-    }
-
+  */
+  public embedReport(accessToken: string, embedUrl: string): void {
     // Update the reportConfig to embed the PowerBI report
     this.reportConfig = {
       ...this.reportConfig,
-      id: reportConfigResponse.Id,
-      embedUrl: reportConfigResponse.EmbedUrl,
-      accessToken: reportConfigResponse.EmbedToken.Token,
+      embedUrl,
+      accessToken
     };
 
     // Update embed status
@@ -110,65 +139,11 @@ export class AppComponent {
   }
 
   /**
-   * Change Visual type
-   *
-   * @returns Promise<void>
-   */
-  async changeVisualType(): Promise<void> {
-    // Get report from the wrapper component
-    const report: Report = this.reportObj.getReport();
-
-    if (!report) {
-      this.displayMessage = 'Report not available.';
-      console.log(this.displayMessage);
-      return;
-    }
-
-    // Get all the pages of the report
-    const pages: Page[] = await report.getPages();
-
-    // Check if the pages are available
-    if (pages.length === 0) {
-      this.displayMessage = 'No pages found.';
-      return;
-    }
-
-    // Get active page of the report
-    const activePage: Page | undefined = pages.find((page) => page.isActive);
-
-    if (!activePage) {
-      this.displayMessage = 'No Active page found';
-      return;
-    }
-
-    try {
-      // Change the visual type using powerbi-report-authoring
-      // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview
-      // Get the visual
-      const visual = await activePage.getVisualByName('VisualContainer6');
-
-      const response = await visual.changeType('lineChart');
-
-      this.displayMessage = `The ${visual.type} was updated to lineChart.`;
-
-      console.log(this.displayMessage);
-
-      return response;
-    } catch (error) {
-      if (error === 'PowerBIEntityNotFound') {
-        console.log('No Visual found with that name');
-      } else {
-        console.log(error);
-      }
-    }
-  }
-
-  /**
-   * Hide Filter Pane
+   * Toggle Filter Pane
    *
    * @returns Promise<IHttpPostMessageResponse<void> | undefined>
-   */
-  async hideFilterPane(): Promise<IHttpPostMessageResponse<void> | undefined> {
+  */
+  public async toggleFilterPane(): Promise<IHttpPostMessageResponse<void> | undefined> {
     // Get report from the wrapper component
     const report: Report = this.reportObj.getReport();
 
@@ -178,20 +153,24 @@ export class AppComponent {
       return;
     }
 
-    // New settings to hide filter pane
+    this.isFilterPaneVisible = !this.isFilterPaneVisible;
+
+    // Update the settings to show/hide the filter pane
     const settings = {
       panes: {
         filters: {
-          expanded: false,
-          visible: false,
+          expanded: this.isFilterPaneVisible,
+          visible: this.isFilterPaneVisible,
         },
       },
     };
 
     try {
+
       const response = await report.updateSettings(settings);
-      this.displayMessage = 'Filter pane is hidden.';
-      console.log(this.displayMessage);
+
+      this.filterPaneBtnText = this.isFilterPaneVisible ? "Hide filter pane" : "Show filter pane";
+      this.displayMessage = this.isFilterPaneVisible ? "Filter pane is visible" : "Filter pane is hidden";
 
       return response;
     } catch (error) {
@@ -202,16 +181,125 @@ export class AppComponent {
 
   /**
    * Set data selected event
-   *
-   * @returns void
-   */
-  setDataSelectedEvent(): void {
-    // Adding dataSelected event in eventHandlersMap
-    this.eventHandlersMap = new Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>([
-      ...this.eventHandlersMap,
-      ['dataSelected', (event) => console.log(event)],
-    ]);
+  */
+  public setDataSelectedEvent(): void {
+    const report: Report = this.reportObj.getReport();
+    this.isDataSelectedEvent = !this.isDataSelectedEvent;
 
-    this.displayMessage = 'Data Selected event set successfully. Select data to see event in console.';
+    if(this.isDataSelectedEvent) {
+      // Adding dataSelected event handler to the report
+      report.on('dataSelected', (event: service.ICustomEvent<any>) => {
+        if (event?.detail.dataPoints.length) {
+          this.dataSelectedEventDetailsDialog(event.detail);
+        }
+      });
+    }
+    else {
+      report.off('dataSelected');
+    }
+
+    this.dataSelectedBtnText = this.isDataSelectedEvent ? "Hide dataSelected event in dialog" : "Show dataSelected event in dialog";
+    this.displayMessage = this.isDataSelectedEvent ? 'Data Selected event has been successfully set. Click on a data point to see the details.' : 'Data Selected event has been successfully unset.';
+  }
+
+  dataSelectedEventDetailsDialog(dataSelectedEventDetails: any): void {
+    this.dataSelectedEventDetails = dataSelectedEventDetails;
+    this.isEventDetailsDialogVisible = true;
+  }
+
+  closeDataSelectedEventDetailsDialog() {
+    this.isEventDetailsDialogVisible = false;
+  }
+
+  /**
+   * Toggle theme
+  */
+  public async toggleTheme(): Promise<void> {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    // Update the theme by passing in the custom theme.
+    // Some theme properties might not be applied if your report has custom colors set.
+    try {
+      if (this.isThemeApplied) {
+        await report.resetTheme();
+      } else {
+        await report.applyTheme({ themeJson: sampletheme });
+      }
+
+      this.isThemeApplied = !this.isThemeApplied;
+
+      this.themeBtnText = this.isThemeApplied ? "Reset theme" : "Set theme";
+      this.displayMessage = this.isThemeApplied ? "Theme has been applied" : "Theme has been reset to default";
+    }
+    catch (error) {
+      this.displayMessage = `Failed to apply theme: ${error}`;
+      console.log(this.displayMessage);
+    }
+  }
+
+  /**
+   * Toggle zoom
+  */
+  public async toggleZoom(): Promise<void> {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    try {
+      const newZoomLevel = this.isZoomedOut ? this.zoomInLevel : this.zoomOutLevel;
+      this.isZoomedOut = !this.isZoomedOut;
+      this.zoomBtnText = this.isZoomedOut ? "Zoom in" : "Zoom out";
+      await report.setZoom(newZoomLevel);
+    }
+    catch (errors) {
+      console.log(errors);
+    }
+  }
+
+  /**
+   * Refresh report event
+  */
+  public async refreshReport(): Promise<void> {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    try {
+      await report.refresh();
+      this.displayMessage = 'The report has been refreshed successfully.';
+    }
+    catch (errors: any) {
+      this.displayMessage = errors.detailedMessage;
+      console.log(errors);
+    }
+  }
+
+  /**
+   * Full screen event
+  */
+  public enableFullScreen(): void {
+    const report: Report = this.reportObj.getReport();
+
+    if (!report) {
+      this.displayMessage = 'Report not available.';
+      console.log(this.displayMessage);
+      return;
+    }
+
+    report.fullscreen();
   }
 }

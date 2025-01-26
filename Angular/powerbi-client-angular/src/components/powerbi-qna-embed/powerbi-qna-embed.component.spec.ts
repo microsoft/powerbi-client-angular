@@ -106,7 +106,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         datasetIds: ['fakeId'],
         id: 'fakeId',
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -126,7 +126,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'qna visual',
         datasetIds: [],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
       };
 
       // Act
@@ -150,7 +150,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -181,13 +181,13 @@ describe('PowerBIQnaEmbedComponent', () => {
       expect(mockPowerBIService.embed).toHaveBeenCalledTimes(1);
     });
 
-    it('embeds when embedUrl of qna visual is updated in new input data', () => {
+    it('embeds when embedConfig is updated in new input data', () => {
       // Arrange
       const config = {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -196,24 +196,34 @@ describe('PowerBIQnaEmbedComponent', () => {
       component.service = mockPowerBIService;
       fixture.detectChanges();
 
+      // Assert
+      expect(mockPowerBIService.embed).toHaveBeenCalled();
+      mockPowerBIService.embed.calls.reset();
+
       // Embed URL of different qna visual
-      config.embedUrl = 'newFakeUrl';
+      const newConfig = {
+        ...config,
+        embedUrl: 'https://app.powerbi.com/newFakeEmbedUrl'
+      };
 
       // Act
-      component.embedConfig = config;
+      component.embedConfig = newConfig;
+      component.ngOnChanges({
+        embedConfig: new SimpleChange(config, component.embedConfig, false),
+      })
       fixture.detectChanges();
 
       // Assert
       expect(mockPowerBIService.embed).toHaveBeenCalled();
     });
 
-    it('does not embed again when accessToken and embedUrl are same', () => {
+    it('does not embed again if no changes in embedConfig', () => {
       // Arrange
       const config = {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -221,7 +231,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
 
@@ -253,7 +263,7 @@ describe('PowerBIQnaEmbedComponent', () => {
         type: 'qna',
         id: 'fakeId',
         datasetIds: ['fakeId'],
-        embedUrl: 'fakeUrl',
+        embedUrl: 'https://app.powerbi.com/fakeEmbedUrl',
         accessToken: 'fakeToken',
       };
       component.embedConfig = config;

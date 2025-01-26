@@ -6,16 +6,21 @@ Licensed under the MIT License. -->
 
   <div class="controls">
     <ng-container *ngIf="isEmbedded; else embedReportFlow">
-      <button (click)="changeVisualType()">Change visual type</button>
-      <button (click)="hideFilterPane()">Hide filter pane</button>
-      <button (click)="setDataSelectedEvent()">Set event</button>
+      <div class="button-container">
+        <button (click)="toggleFilterPane()">{{filterPaneBtnText}}</button>
+        <button (click)="toggleTheme()">{{themeBtnText}}</button>
+        <button (click)="setDataSelectedEvent()">{{dataSelectedBtnText}}</button>
+        <button (click)="toggleZoom()">{{zoomBtnText}}</button>
+        <button (click)="refreshReport()">Refresh report</button>
+        <button (click)="enableFullScreen()">Full screen</button>
+      </div>
       <label class="display-message">{{ displayMessage }}</label>
     </ng-container>
     <ng-template #embedReportFlow>
       <label class="display-message position">
         {{ displayMessage }}
       </label>
-      <button (click)="embedReport()" class="embed-report">Embed Report</button>
+      <button (click)="openEmbedConfigDialog()" class="embed-report">Embed Report</button>
     </ng-template>
 
     <ng-container *ngIf="isEmbedded">
@@ -34,3 +39,6 @@ Licensed under the MIT License. -->
     <p>Find the<a href="https://github.com/microsoft/powerBI-client-angular" target="_blank" rel="noreferrer noopener">source code</a></p>
   </div>
 </div>
+
+<embed-config-dialog *ngIf="isEmbedConfigDialogVisible" (embedConfigEvent)="handleEmbedConfigEventReceived($event)" (close)="hideEmbedConfigDialog()"></embed-config-dialog>
+<event-details-dialog *ngIf="isEventDetailsDialogVisible" [dataSelectedEventDetails]="dataSelectedEventDetails" (closeDataSelectedEventDetailsDialog)="closeDataSelectedEventDetailsDialog()"></event-details-dialog>
